@@ -4,9 +4,15 @@
 
 ## 先阅读最新研究结论
 
+[Goal-Aware Macro V3](Flowevo-Bot/experiments/goal_aware_macro_v3/README.md) · [目标解析与覆盖](Flowevo-Bot/experiments/goal_aware_macro_v3/02_GOAL_PARSER_AND_COVERAGE.md) · [自动程序构建](Flowevo-Bot/experiments/goal_aware_macro_v3/03_AUTOMATIC_MACRO_DISCOVERY.md) · [条件试验结果](Flowevo-Bot/experiments/goal_aware_macro_v3/05_PILOT_RESULTS.md) · [归档](Flowevo-Bot/goal_aware_macro_v3.zip)
+
+本轮完成结构化Goal、数学Guard、完整任务验证和受限DSL程序合成。原dev 1,549题，人工工具可完整求解20题，自动bank为2题；独立保留池1,115题仅1题适用，未达到预注册对照规模。因此新增API调用与tokens均为0，未运行MATH500。两条程序由成功训练轨迹自动合成，但目标语法、基础算子和验证器为人工先验，尚未观察到相对人工工具的额外收益。132项测试通过，下一轮优先改进自动宏发现与独立数据设计。本轮产物版本0.4.0。
+
+以下为保留的上一轮RMMD研究。
+
 [RMMD 宏发现研究](Flowevo-Bot/experiments/macro_discovery_pilot/README.md) · [三组结果](Flowevo-Bot/experiments/macro_discovery_pilot/reports/06_SMALL_BUDGET_EXPERIMENT.md) · [配对与完整成本](Flowevo-Bot/experiments/macro_discovery_pilot/reports/07_PAIRED_COST_ANALYSIS.md) · [本轮ZIP](Flowevo-Bot/macro_discovery_pilot.zip)
 
-最新一轮从1,840条真实记录筛出603条干净训练首次成功轨迹，实现根对称量和多项式余式两个宏。14题三组均14/14正确：NoBank 9,936、Compact 14,396、Executable 10,564 tokens。4道余式题由精确执行完成，不调用LLM；根中间量增加的消耗抵消了其收益。本轮38次调用共34,896 tokens，107项回归通过。决策“继续改进”，优先任务级解析与可执行覆盖，未运行新MATH500。不得将14道条件筛选题当作MATH总体结果。
+上一轮从1,840条真实记录筛出603条干净训练首次成功轨迹，实现根对称量和多项式余式两个宏。14题三组均14/14正确：NoBank 9,936、Compact 14,396、Executable 10,564 tokens。4道余式题由精确执行完成，不调用LLM；根中间量增加的消耗抵消了其收益。本轮38次调用共34,896 tokens，107项回归通过。决策“继续改进”，优先任务级解析与可执行覆盖，未运行新MATH500。不得将14道条件筛选题当作MATH总体结果。
 
 下列为保持原样的上一轮 V2 结论。
 

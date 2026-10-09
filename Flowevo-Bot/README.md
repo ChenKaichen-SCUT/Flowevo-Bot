@@ -2,7 +2,9 @@
 
 按照父目录《指引.txt》实现的独立数学策略库研究原型。将 FlowEvo 的数学解题/历史解答基线与 BoT 的策略蒸馏思想结合，加入多题聚合、七学科检索、独立 admission、成本路由和 gold 隔离。
 
-**最新 RMMD 宏发现试验：603 条干净训练轨迹，14 题三组均14/14正确；NoBank 9,936、Compact 14,396、Executable 10,564 tokens。38次API共34,896 tokens，未运行新500题。** 余式工具直接完成4题省2,950 tokens，但根对称量中间提示增加消耗；决策为继续改进任务级解析与可执行覆盖，暂停扩展当前提示路线。[最新研究包](experiments/macro_discovery_pilot/README.md) · [三组结果](experiments/macro_discovery_pilot/reports/06_SMALL_BUDGET_EXPERIMENT.md) · [配对与成本](experiments/macro_discovery_pilot/reports/07_PAIRED_COST_ANALYSIS.md) · [独立ZIP](macro_discovery_pilot.zip)。这些是条件筛选的小样本，不能外推MATH总体准确率。
+**最新 Goal-Aware Macro V3 已完成离线研究，付费门槛未通过。** 原dev 1,549题中，人工工具完整求解20题、自动构建宏完整求解2题；直接提交均正确，但不代表端到端准确率。独立保留池1,115题仅1题适用，因此本轮新增API调用和tokens均为0，未运行MATH500。受限DSL自动合成根和/根积两个程序，尚未超过人工工具基线。[本轮报告](experiments/goal_aware_macro_v3/README.md) · [自动构建机制](experiments/goal_aware_macro_v3/03_AUTOMATIC_MACRO_DISCOVERY.md) · [条件试验结果](experiments/goal_aware_macro_v3/05_PILOT_RESULTS.md) · [归档](goal_aware_macro_v3.zip)。新增模块 `src/flowevo_bot/goal_v3/`，包版本0.4.0，132项测试通过。
+
+**上一轮 RMMD 宏发现试验：603 条干净训练轨迹，14 题三组均14/14正确；NoBank 9,936、Compact 14,396、Executable 10,564 tokens。38次API共34,896 tokens，未运行新500题。** 余式工具直接完成4题省2,950 tokens，但根对称量中间提示增加消耗；决策为继续改进任务级解析与可执行覆盖，暂停扩展当前提示路线。[RMMD研究包](experiments/macro_discovery_pilot/README.md) · [三组结果](experiments/macro_discovery_pilot/reports/06_SMALL_BUDGET_EXPERIMENT.md) · [配对与成本](experiments/macro_discovery_pilot/reports/07_PAIRED_COST_ANALYSIS.md) · [独立ZIP](macro_discovery_pilot.zip)。这些是条件筛选的小样本，不能外推MATH总体准确率。
 
 历史研究完整保留：[V2 20题研究](experiments/flowevo_bot_v2_math500/03_MATH500_RESULTS.md) · [V1 500题实验](experiments/math500_goldfree_20261009/REPORT.md)。以下原始CLI示例仍为v1离线演示，mock分数不代表模型性能。
 

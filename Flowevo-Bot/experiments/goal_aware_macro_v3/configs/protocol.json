@@ -1,0 +1,32 @@
+{
+  "experiment": "goal_aware_macro_v3",
+  "reference_commit": "245ce20d9cc7a70ac8f5119bf29d374039d24a53",
+  "stages": ["goal_parser", "offline_coverage", "automatic_discovery", "ABC_control", "conditional_paid_pilot", "mechanism", "publish_and_stop"],
+  "manual_baseline": "same Goal Parser; human-written exact SymPy operators; independent certificate",
+  "automatic_arm": "same Goal Parser; admitted arithmetic programs induced only from 603 training traces; no manual operator substitution",
+  "fallback": "Bot-NoBank unchanged prompt, no partial-result injection",
+  "cpu_workers": 12,
+  "api_workers_max": 64,
+  "api_workers_planned": 16,
+  "model": "deepseek-flash",
+  "temperature": 0.0,
+  "max_tokens": 4096,
+  "max_new_api_calls": 120,
+  "max_new_total_tokens": 200000,
+  "gold_reflection": false,
+  "paid_gate": {
+    "all_tests_pass": true,
+    "minimum_certified_automatic_macros": 1,
+    "minimum_fresh_eligible_dev_tasks": 12,
+    "minimum_fresh_automatic_macro_tasks": 3,
+    "minimum_fresh_structural_classes": 3,
+    "maximum_selected_eligible": 24,
+    "maximum_noneligible_controls": 6,
+    "fresh_policy": "original grouped dev only; exclude prior used tasks, all prior root/remainder coverage-screen tasks, all this-round engineering tasks; reject digit/variable clones and near duplicates; fixed code before inspecting reserved pool"
+  },
+  "gate_rationale": "At least12 eligible tasks over3 structures and3 genuine automatic-bank cases permits a minimal comparison without filling with ineligible controls. This is a feasibility gate, not a power calculation or noninferiority claim.",
+  "engineering_split_policy": "All previously inspected or used development tasks are development evidence, never newly independent tests.",
+  "no_new_math500": true,
+  "no_outcome_driven_retuning": true,
+  "new_api_calls_before_gate": 0
+}

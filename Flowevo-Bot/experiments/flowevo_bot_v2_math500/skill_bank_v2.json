@@ -1,0 +1,1041 @@
+{
+  "run_id": "flowevo_bot_v2_math500",
+  "schema_version": "2.0",
+  "skills": [
+    {
+      "schema_version": "2.0",
+      "skill_id": "S04_v2_591ca36f47b0",
+      "predecessor": "counting_probability_669101e83d955915",
+      "subject": "counting_probability",
+      "name": "Constrained Counting by Complement or Disjoint Cases",
+      "steps": [
+        "Determine the counting model: whether order matters, whether items are distinct or repeated, and allowed repetitions; identify the total space and constraints.",
+        "Partition into disjoint, exhaustive cases, often valid cases directly or total minus complement/forbidden cases; check pairwise overlaps and exact coverage.",
+        "Count each case with ordered choices, permutations, products, or multinomial coefficients, respecting constraints and fixed positions.",
+        "Combine case counts by addition/subtraction. For symmetry, divide by orbit size only after proving equal orbit sizes or a free action; otherwise count fixed points/cases."
+      ],
+      "compact_prompt": "Model count: fix order, distinctness, repetition. Count all, or split valid into disjoint exhaustive cases (or total minus complement). Check overlaps exactly once. Use permutations/products/multinomials per case. For symmetry, divide only if all orbits equal/free; otherwise count fixed cases. Sum/subtract cases.",
+      "trigger": {
+        "feature": null,
+        "all_of": [
+          {
+            "feature": "subject:counting_probability",
+            "all_of": null,
+            "any_of": null,
+            "not": null,
+            "optional": null,
+            "guard": null
+          },
+          {
+            "feature": "lex:count_request",
+            "all_of": null,
+            "any_of": null,
+            "not": null,
+            "optional": null,
+            "guard": null
+          },
+          {
+            "feature": "lex:count_constraints",
+            "all_of": null,
+            "any_of": null,
+            "not": null,
+            "optional": null,
+            "guard": null
+          },
+          {
+            "feature": null,
+            "all_of": null,
+            "any_of": null,
+            "not": null,
+            "optional": {
+              "feature": "lex:order",
+              "all_of": null,
+              "any_of": null,
+              "not": null,
+              "optional": null,
+              "guard": null
+            },
+            "guard": null
+          },
+          {
+            "feature": null,
+            "all_of": null,
+            "any_of": null,
+            "not": null,
+            "optional": null,
+            "guard": "disjoint_exhaustive_cases"
+          }
+        ],
+        "any_of": null,
+        "not": null,
+        "optional": null,
+        "guard": null
+      },
+      "guards": [
+        {
+          "kind": "order_repetition",
+          "instruction": "Establish order, distinguishability, and permitted repetitions from the question.",
+          "policy": "verify_or_fallback"
+        },
+        {
+          "kind": "disjoint_exhaustive_cases",
+          "instruction": "Ensure cases exhaust the valid sample space and count overlaps exactly once.",
+          "policy": "verify_or_fallback"
+        },
+        {
+          "kind": "equal_orbit_size",
+          "instruction": "Divide a symmetry count only after proving equal orbit sizes or a free action; otherwise count fixed points/cases.",
+          "policy": "verify_or_fallback"
+        }
+      ],
+      "source_task_ids": [
+        "math_train_counting_probability_679",
+        "math_train_counting_probability_715",
+        "math_train_counting_probability_195",
+        "math_train_counting_probability_323",
+        "math_train_counting_probability_690",
+        "math_train_counting_probability_265"
+      ],
+      "source_trace_hashes": [
+        "dadcbd120d2a11ce172bcfaa7093fe39043554901cbbc5a7149c15d7c2de2783",
+        "82fb24c41c52df2570db4137283bd65a1bf3c37821c84f60ff47d760bb1f4ee5",
+        "9b389be31d56fd2241687d74ea7b782a87e8c07b381d8c61673504205240131a",
+        "9258525852e2fa81ab40115f192a88f037713cc36aeb820a1365c05f6ee6b87b",
+        "a0f95c5c9888e8c34341cd60a60011a0bf1d0dba84948bb1d1eb8fc10607e34d",
+        "1f695ea37bc7ad8b01f8a31c914e104d17f4f8615bd1602eb44584a1d5cb7d13"
+      ],
+      "transformation_evidence": [
+        {
+          "task_id": "math_train_counting_probability_679",
+          "trace_hash": "dadcbd120d2a11ce172bcfaa7093fe39043554901cbbc5a7149c15d7c2de2783",
+          "stages": [
+            {
+              "stage": "decomposition",
+              "span": [
+                261,
+                268
+              ],
+              "excerpt": " digits: \\(1\\) through \\(9\\), so \\(9\\) choices each.\n\nSo numbers with no zero:\n\\[\n9^5 = 59049\n\\]\n\nTherefore, numbers with at least one zero:\n\\[\n90000 - 59049 = 30951\n\\]\n\nThe answer is 30951."
+            },
+            {
+              "stage": "count_operation",
+              "span": [
+                162,
+                169
+              ],
+              "excerpt": "s with **no zero**:\n- First digit: \\(1\\) through \\(9\\), so \\(9\\) choices.\n- Each of the remaining 4 digits: \\(1\\) through \\(9\\), so \\(9\\) choices each.\n\nSo numbers with no zero:\n\\[\n9^5 = 59049\n\\]\n\nThere"
+            },
+            {
+              "stage": "recombine",
+              "span": [
+                20,
+                25
+              ],
+              "excerpt": "There are \\(90000\\) total 5-digit numbers, from \\(10000\\) to \\(99999\\).\n\nCount the 5-digit numbers with **no zero**:\n- First digit: \\(1\\) through \\(9\\), so"
+            }
+          ],
+          "structural_signature": {
+            "order": true,
+            "repetition": false,
+            "symmetry": false
+          }
+        },
+        {
+          "task_id": "math_train_counting_probability_715",
+          "trace_hash": "82fb24c41c52df2570db4137283bd65a1bf3c37821c84f60ff47d760bb1f4ee5",
+          "stages": [
+            {
+              "stage": "decomposition",
+              "span": [
+                0,
+                4
+              ],
+              "excerpt": "Case 1: Neither Penelope nor Quentin is selected.  \nChoose 3 officers from the remaining 20 members and assign them to the 3 distinct "
+            },
+            {
+              "stage": "count_operation",
+              "span": [
+                162,
+                168
+              ],
+              "excerpt": "rs and assign them to the 3 distinct offices:\n\\[\n{}^{20}P_3 = 20 \\times 19 \\times 18 = 6840\n\\]\n\nCase 2: Both Penelope and Quentin are selected.  \nThen they occupy 2 of the 3 officer positions, and the "
+            },
+            {
+              "stage": "recombine",
+              "span": [
+                412,
+                417
+              ],
+              "excerpt": "mbers.  \nNumber of ways:\n\\[\n20 \\times 3! = 20 \\times 6 = 120\n\\]\n\nTotal ways:\n\\[\n6840 + 120 = 6960\n\\]\n\nThe answer is 6960."
+            }
+          ],
+          "structural_signature": {
+            "order": false,
+            "repetition": false,
+            "symmetry": false
+          }
+        },
+        {
+          "task_id": "math_train_counting_probability_195",
+          "trace_hash": "9b389be31d56fd2241687d74ea7b782a87e8c07b381d8c61673504205240131a",
+          "stages": [
+            {
+              "stage": "decomposition",
+              "span": [
+                107,
+                110
+              ],
+              "excerpt": "nt, where rotations and reflections are considered the same.\n\n1. Fix the house key \\(H\\) in one position to remove rotational symmetry.\n2. The car key \\(C\\) must be next to \\(H\\), so it can be place"
+            },
+            {
+              "stage": "count_operation",
+              "span": [
+                269,
+                276
+              ],
+              "excerpt": "be next to \\(H\\), so it can be placed on either side of \\(H\\): 2 choices.\n3. The remaining 3 keys can be arranged in the remaining 3 positions in  \n   \\[\n   3! = 6\n   \\]\n   ways.\n4. So ignoring reflecti"
+            },
+            {
+              "stage": "recombine",
+              "span": [
+                222,
+                224
+              ],
+              "excerpt": "rotational symmetry.\n2. The car key \\(C\\) must be next to \\(H\\), so it can be placed on either side of \\(H\\): 2 choices.\n3. The remaining 3 keys can be arranged in the remaining 3 positions in  \n  "
+            }
+          ],
+          "structural_signature": {
+            "order": true,
+            "repetition": true,
+            "symmetry": true
+          }
+        },
+        {
+          "task_id": "math_train_counting_probability_323",
+          "trace_hash": "9258525852e2fa81ab40115f192a88f037713cc36aeb820a1365c05f6ee6b87b",
+          "stages": [
+            {
+              "stage": "decomposition",
+              "span": [
+                425,
+                438
+              ],
+              "excerpt": "lections} = 10\n\\]\n\nsymmetries.\n\nBecause all shells are distinct, no nontrivial rotation or reflection can leave an arrangement unchanged. Therefore, every arrangement has exactly \\(10\\) equivalent versions: o"
+            },
+            {
+              "stage": "count_operation",
+              "span": [
+                224,
+                226
+              ],
+              "excerpt": " total number of placements without considering symmetry is\n\n\\[\n10!\n\\]\n\nThe symmetry group of a regular five-pointed star is the dihedral group \\(D_5\\), which has\n\n\\[\n5 \\text{ rotations} + 5 \\text{"
+            },
+            {
+              "stage": "recombine",
+              "span": [
+                160,
+                165
+              ],
+              "excerpt": "inner points. Since the \\(10\\) sea shells are all different, the total number of placements without considering symmetry is\n\n\\[\n10!\n\\]\n\nThe symmetry group of a regular five-pointed star is the dihedra"
+            }
+          ],
+          "structural_signature": {
+            "order": true,
+            "repetition": false,
+            "symmetry": true
+          }
+        },
+        {
+          "task_id": "math_train_counting_probability_690",
+          "trace_hash": "a0f95c5c9888e8c34341cd60a60011a0bf1d0dba84948bb1d1eb8fc10607e34d",
+          "stages": [
+            {
+              "stage": "decomposition",
+              "span": [
+                511,
+                519
+              ],
+              "excerpt": "n be chosen from the remaining 5 letters:\n\\[\n5 \\times 4 = 20\n\\]\n\nSubtract the forbidden ones:\n\\[\n120 - 20 = 100\n\\]\n\nThe answer is 100."
+            },
+            {
+              "stage": "count_operation",
+              "span": [
+                312,
+                318
+              ],
+              "excerpt": "t **not end with P**.\n\nCount all sequences starting with L:\n\\[\n6 \\times 5 \\times 4 = 120\n\\]\n\nCount those that start with L and end with P:\n- Position 1 is L.\n- Position 4 is P.\n- Positions 2 and 3 can "
+            },
+            {
+              "stage": "recombine",
+              "span": [
+                105,
+                107
+              ],
+              "excerpt": "ers: P, R, O, B, L, E, M.\n\n- The sequence must begin with **L**, so that position is fixed.\n- The sequence has 4 letters total, so we need to fill positions 2, 3, and 4 from the remaining 6 letters"
+            }
+          ],
+          "structural_signature": {
+            "order": true,
+            "repetition": false,
+            "symmetry": false
+          }
+        },
+        {
+          "task_id": "math_train_counting_probability_265",
+          "trace_hash": "1f695ea37bc7ad8b01f8a31c914e104d17f4f8615bd1602eb44584a1d5cb7d13",
+          "stages": [
+            {
+              "stage": "decomposition",
+              "span": [
+                139,
+                147
+              ],
+              "excerpt": "nct arrangements of these 5 digits:\n\n\\[\n\\frac{5!}{2!}=60\n\\]\n\nNow subtract arrangements that begin with \\(0\\). If the first digit is \\(0\\), the remaining digits are \\(4,5,5,2\\), which can be arranged in\n\n"
+            },
+            {
+              "stage": "count_operation",
+              "span": [
+                78,
+                90
+              ],
+              "excerpt": "e \\(4, 5, 5, 2, 0\\), with two identical \\(5\\)'s.\n\nTotal distinct arrangements of these 5 digits:\n\n\\[\n\\frac{5!}{2!}=60\n\\]\n\nNow subtract arrangements that begin with \\(0\\). If the first digit is \\(0\\), the rem"
+            },
+            {
+              "stage": "recombine",
+              "span": [
+                63,
+                68
+              ],
+              "excerpt": "The digits are \\(4, 5, 5, 2, 0\\), with two identical \\(5\\)'s.\n\nTotal distinct arrangements of these 5 digits:\n\n\\[\n\\frac{5!}{2!}=60\n\\]\n\nNow subtract arrangements that begin with \\(0\\). If the first d"
+            }
+          ],
+          "structural_signature": {
+            "order": true,
+            "repetition": false,
+            "symmetry": false
+          }
+        }
+      ],
+      "status": "shadow",
+      "validation_stats": {
+        "n": 10,
+        "independent": true,
+        "unknown_pairs": 0,
+        "harm": 0,
+        "benefit": 1,
+        "mean_saving": 85,
+        "saving_lower_bound": -389.2383713047456,
+        "confidence": 0.5,
+        "accuracy_drop_upper": 0.25966441925089545,
+        "projected_100_use_net_saving": -56802,
+        "pairwise": [
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_counting_probability_647",
+            "family": "S04",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 1421,
+            "skill_tokens": 1170,
+            "input_saving": -80,
+            "output_saving": 331,
+            "reasoning_saving": 374,
+            "total_saving": 251,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "7beb6bcd6b9589c44c584d879d7826bae6a84e7743b07bb6651608f465cb9ca2",
+            "skill_seal": "4a053831fb3a404dcd492b1451973cf09727469747a32205b25e32eced016172",
+            "problem_tokens": 109,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_counting_probability_52",
+            "family": "S04",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 507,
+            "skill_tokens": 797,
+            "input_saving": -80,
+            "output_saving": -210,
+            "reasoning_saving": -126,
+            "total_saving": -290,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "c2185d733eb8d2bbb0a2c1e11eea9bc296919bfe99f65f3c4ff9e7c415d5a6ed",
+            "skill_seal": "1cfc7921494562e2af8e044eb3ae2afebe645d4dd4334c3dcd45722dd30c9447",
+            "problem_tokens": 111,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_counting_probability_226",
+            "family": "S04",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 696,
+            "skill_tokens": 616,
+            "input_saving": -80,
+            "output_saving": 160,
+            "reasoning_saving": 202,
+            "total_saving": 80,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "7d336e72afa901ea0ad4a029d2a7b4d993289de2f3aefa87fa918b0c6f7bab5d",
+            "skill_seal": "d20fb5b317d4e471229a287a2dae83f051e4e0445851752389d83c3218bea4b8",
+            "problem_tokens": 32,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_counting_probability_616",
+            "family": "S04",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 419,
+            "skill_tokens": 562,
+            "input_saving": -80,
+            "output_saving": -63,
+            "reasoning_saving": -75,
+            "total_saving": -143,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "365a3f29eb6c6901fe2ab33c5a443eb8705f7b84c8f6623023ae8ff10bd4be7c",
+            "skill_seal": "9b41d94332c80875fb02b0182336a79cabee07a69b757fada9e943148784ed58",
+            "problem_tokens": 79,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_counting_probability_684",
+            "family": "S04",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 360,
+            "skill_tokens": 458,
+            "input_saving": -80,
+            "output_saving": -18,
+            "reasoning_saving": -9,
+            "total_saving": -98,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "218e62321010a83c92f84cff331e02d5a1e5c739cc55588b676ddce17041740d",
+            "skill_seal": "a46ff49bd03b02b745a08fcc82b3aa8962759e494083c6e9177414eac03a7da3",
+            "problem_tokens": 85,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_counting_probability_642",
+            "family": "S04",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 1581,
+            "skill_tokens": 1796,
+            "input_saving": -80,
+            "output_saving": -135,
+            "reasoning_saving": -44,
+            "total_saving": -215,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "c90b8fdad3631c1d916de8c7c24706b18a45bddc0f219dd77ac14aab4c657bb7",
+            "skill_seal": "15966ee7adf94d5bc9b6cae7b8f48507b866264ab89940dc6db5ea687e667bd3",
+            "problem_tokens": 46,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_counting_probability_212",
+            "family": "S04",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 1299,
+            "skill_tokens": 1905,
+            "input_saving": -80,
+            "output_saving": -526,
+            "reasoning_saving": -573,
+            "total_saving": -606,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "8d73bbe46c9b8a25192718c433d2b3b271dd0fff22b68dc8ebafe27d5ab20699",
+            "skill_seal": "f2c86d59c6103f94340f80a58afbf1db6012ab9a2bdcdc3406678bc391519311",
+            "problem_tokens": 47,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_counting_probability_306",
+            "family": "S04",
+            "comparison": "C_RevisedContent",
+            "base_correct": false,
+            "skill_correct": true,
+            "base_tokens": 4317,
+            "skill_tokens": 2151,
+            "input_saving": -80,
+            "output_saving": 2246,
+            "reasoning_saving": 2407,
+            "total_saving": 2166,
+            "base_truncated": true,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "a9fed9dbe8c09881e6ae87976ff4c974f9b8bc334eab10789f0f269c8c6d4166",
+            "skill_seal": "34b9985e880941b0563afc44650bcc30b6715e50b298fcb2ead90f4877b2f7f3",
+            "problem_tokens": 239,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_counting_probability_444",
+            "family": "S04",
+            "comparison": "C_RevisedContent",
+            "base_correct": false,
+            "skill_correct": false,
+            "base_tokens": 4282,
+            "skill_tokens": 4362,
+            "input_saving": -80,
+            "output_saving": 0,
+            "reasoning_saving": 0,
+            "total_saving": -80,
+            "base_truncated": true,
+            "skill_truncated": true,
+            "skill_injected": true,
+            "base_seal": "0108b139fe9bad6a958af5335d822142b4e2bc175fc6f873dfecc126c1721d78",
+            "skill_seal": "fe7c29214ede4a77426d698bb441a37efe916a8bed04b0884192960384dde47d",
+            "problem_tokens": 176,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_counting_probability_502",
+            "family": "S04",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 750,
+            "skill_tokens": 965,
+            "input_saving": -80,
+            "output_saving": -135,
+            "reasoning_saving": -113,
+            "total_saving": -215,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "c382b13c1b2761c9d951219b2be3e68e79b870489291afa5e523f12d830b0782",
+            "skill_seal": "c6aecaa1f7e41a1f74f7919c8c048f803863209b85aa2b5b038f43b3a61b0db4",
+            "problem_tokens": 94,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          }
+        ],
+        "evidence_hash": "dad3e24f4152f32488306bea210b3f6929a54926f4236df48ac038feb768c507"
+      },
+      "token_history": {
+        "distillation_and_revision": 14051,
+        "admission_full_allocated_cost": 65302
+      },
+      "admission_certificate": ""
+    },
+    {
+      "schema_version": "2.0",
+      "skill_id": "S07_v2_3602556c556a",
+      "predecessor": "intermediate_algebra_4a5d6d54c25d8d89",
+      "subject": "intermediate_algebra",
+      "name": "Guarded substitution and denominator clearing",
+      "steps": [
+        "Identify a repeated radical, ratio, or denominator expression; set a single new variable t for it and record its admissible range, including strict positivity or zero/nonzero cases.",
+        "Record every original denominator zero and exclude it before any clearing or multiplying; for inequalities, determine the sign of each denominator factor or use sign cases instead of multiplying by an unknown sign.",
+        "Clear denominators only by nonzero factors, reduce to a polynomial/equation/inequality in t, and solve it.",
+        "Back-substitute into the original variables, enforce the recorded t-range and excluded zero cases, and test all final candidates/endpoints in the original relation."
+      ],
+      "compact_prompt": "Use t for repeated radical/ratio. Record original denominator zeros and t's range/zero cases. Clear denominators only by nonzero factors. For inequalities, use denominator sign or sign cases; never multiply by unknown sign. Solve. Back-substitute within t range, handle excluded zeros, and check solutions/endpoints in original relation.",
+      "trigger": {
+        "feature": null,
+        "all_of": [
+          {
+            "feature": "subject:intermediate_algebra",
+            "all_of": null,
+            "any_of": null,
+            "not": null,
+            "optional": null,
+            "guard": null
+          },
+          {
+            "feature": null,
+            "all_of": null,
+            "any_of": [
+              {
+                "feature": "math:rational_equation",
+                "all_of": null,
+                "any_of": null,
+                "not": null,
+                "optional": null,
+                "guard": null
+              },
+              {
+                "feature": "math:rational_inequality",
+                "all_of": null,
+                "any_of": null,
+                "not": null,
+                "optional": null,
+                "guard": null
+              }
+            ],
+            "not": null,
+            "optional": null,
+            "guard": null
+          },
+          {
+            "feature": null,
+            "all_of": null,
+            "any_of": null,
+            "not": {
+              "feature": "lex:trigonometric",
+              "all_of": null,
+              "any_of": null,
+              "not": null,
+              "optional": null,
+              "guard": null
+            },
+            "optional": null,
+            "guard": null
+          },
+          {
+            "feature": null,
+            "all_of": null,
+            "any_of": null,
+            "not": {
+              "feature": "lex:hypothetical_options",
+              "all_of": null,
+              "any_of": null,
+              "not": null,
+              "optional": null,
+              "guard": null
+            },
+            "optional": null,
+            "guard": null
+          },
+          {
+            "feature": null,
+            "all_of": null,
+            "any_of": null,
+            "not": null,
+            "optional": null,
+            "guard": "denominator_nonzero"
+          }
+        ],
+        "any_of": null,
+        "not": null,
+        "optional": null,
+        "guard": null
+      },
+      "guards": [
+        {
+          "kind": "denominator_nonzero",
+          "instruction": "Record and exclude zeros of every original denominator.",
+          "policy": "verify_or_fallback"
+        },
+        {
+          "kind": "inequality_sign",
+          "instruction": "Never multiply an inequality by an unknown-sign denominator; use sign cases or a sign chart.",
+          "policy": "verify_or_fallback"
+        },
+        {
+          "kind": "back_substitution",
+          "instruction": "Retain substitution range and separately handle excluded zero cases; check solutions/endpoints in the original relation.",
+          "policy": "verify_or_fallback"
+        }
+      ],
+      "source_task_ids": [
+        "math_train_intermediate_algebra_1030",
+        "math_train_intermediate_algebra_902",
+        "math_train_intermediate_algebra_704"
+      ],
+      "source_trace_hashes": [
+        "d4d45758f0c854788d82a6d598cb584a3453bda8604efb004a5dd25d7dc41190",
+        "f6ad52fdaaeafa9e6df353bdea60c162a803834bdae0c6d5d4889bf97347e796",
+        "6f046574727b1157e15d42b8e169127701befb210323b9589002faf3d2791d9a"
+      ],
+      "transformation_evidence": [
+        {
+          "task_id": "math_train_intermediate_algebra_1030",
+          "trace_hash": "d4d45758f0c854788d82a6d598cb584a3453bda8604efb004a5dd25d7dc41190",
+          "stages": [
+            {
+              "stage": "denominator_elimination",
+              "span": [
+                71,
+                90
+              ],
+              "excerpt": "nominator \\((x-4)^2\\) is positive for all \\(x \\ne 4\\), so we can multiply both sides by \\((x-4)^2\\) without changing the inequality direction:\n\n\\[\nx(x+1) \\ge 12(x-4)^2\n\\]\n\nExpanding:\n\n\\[\nx^2+x \\ge 12x^2-96x+192\n\\]\n"
+            },
+            {
+              "stage": "reduce_or_solve",
+              "span": [
+                61,
+                63
+              ],
+              "excerpt": "The denominator \\((x-4)^2\\) is positive for all \\(x \\ne 4\\), so we can multiply both sides by \\((x-4)^2\\) without changing the inequality direction:\n\n\\[\nx(x+1) \\ge 12(x-4)^2\n\\]\n\nExpanding:\n\n\\[\n"
+            },
+            {
+              "stage": "domain_recovery",
+              "span": [
+                4,
+                15
+              ],
+              "excerpt": "The denominator \\((x-4)^2\\) is positive for all \\(x \\ne 4\\), so we can multiply both sides by \\((x-4)^2\\) without changing the inequality directi"
+            }
+          ],
+          "structural_signature": [
+            [
+              "inequality",
+              2,
+              "direct"
+            ]
+          ]
+        },
+        {
+          "task_id": "math_train_intermediate_algebra_902",
+          "trace_hash": "f6ad52fdaaeafa9e6df353bdea60c162a803834bdae0c6d5d4889bf97347e796",
+          "stages": [
+            {
+              "stage": "denominator_elimination",
+              "span": [
+                106,
+                117
+              ],
+              "excerpt": "oot is in the denominator, \\(t>0\\).\n\nThen\n\\[\nt+\\frac{10}{t}=7\n\\]\nMultiply by \\(t\\):\n\\[\nt^2+10=7t\n\\]\n\\[\nt^2-7t+10=0\n\\]\n\\[\n(t-5)(t-2)=0\n\\]\nSo\n\\[\nt=5 \\quad \\text{or} \\quad t=2.\n\\]\n\nNow solve for \\(x\\):\n\n- If \\"
+            },
+            {
+              "stage": "reduce_or_solve",
+              "span": [
+                178,
+                180
+              ],
+              "excerpt": "y by \\(t\\):\n\\[\nt^2+10=7t\n\\]\n\\[\nt^2-7t+10=0\n\\]\n\\[\n(t-5)(t-2)=0\n\\]\nSo\n\\[\nt=5 \\quad \\text{or} \\quad t=2.\n\\]\n\nNow solve for \\(x\\):\n\n- If \\(\\sqrt{4x-3}=5\\), then \\(4x-3=25\\), so \\(4x=28\\), giving \\(x=7\\"
+            },
+            {
+              "stage": "domain_recovery",
+              "span": [
+                23,
+                28
+              ],
+              "excerpt": "Let \\(t=\\sqrt{4x-3}\\). Since the square root is in the denominator, \\(t>0\\).\n\nThen\n\\[\nt+\\frac{10}{t}=7\n\\]\nMultiply by \\(t\\):\n\\[\nt^2+10=7t\n\\]\n\\[\nt^2-7t+10=0\n\\]"
+            }
+          ],
+          "structural_signature": [
+            [
+              "equation",
+              2,
+              "repeated_radical"
+            ]
+          ]
+        },
+        {
+          "task_id": "math_train_intermediate_algebra_704",
+          "trace_hash": "6f046574727b1157e15d42b8e169127701befb210323b9589002faf3d2791d9a",
+          "stages": [
+            {
+              "stage": "denominator_elimination",
+              "span": [
+                146,
+                167
+              ],
+              "excerpt": "x+y}{x-y}+\\frac{x-y}{x+y}\n=\\frac{t+1}{t-1}+\\frac{t-1}{t+1}=1.\n\\]\nCombine the fractions:\n\\[\n\\frac{(t+1)^2+(t-1)^2}{t^2-1}\n=\\frac{2t^2+2}{t^2-1}=1.\n\\]\nThus\n\\[\n2t^2+2=t^2-1,\n\\]\nso\n\\[\nt^2=-3.\n\\]\nTherefore,\n\\[\n\\frac{x^4}{"
+            },
+            {
+              "stage": "reduce_or_solve",
+              "span": [
+                230,
+                234
+              ],
+              "excerpt": "ns:\n\\[\n\\frac{(t+1)^2+(t-1)^2}{t^2-1}\n=\\frac{2t^2+2}{t^2-1}=1.\n\\]\nThus\n\\[\n2t^2+2=t^2-1,\n\\]\nso\n\\[\nt^2=-3.\n\\]\nTherefore,\n\\[\n\\frac{x^4}{y^4}=t^4=(t^2)^2=(-3)^2=9.\n\\]\n\nNow let\n\\[\ns=\\frac{x^4}{y^4}=9.\n\\]\nT"
+            },
+            {
+              "stage": "domain_recovery",
+              "span": [
+                25,
+                30
+              ],
+              "excerpt": "Let\n\\[\nt=\\frac{x}{y}.\n\\]\nSince \\(y\\neq 0\\) and \\(x\\neq \\pm y\\), we have\n\\[\n\\frac{x+y}{x-y}+\\frac{x-y}{x+y}\n=\\frac{t+1}{t-1}+\\frac{t-1}{t+1}=1.\n\\]\nCombine the fr"
+            }
+          ],
+          "structural_signature": [
+            [
+              "equation",
+              2,
+              "homogeneous_ratio"
+            ]
+          ]
+        }
+      ],
+      "status": "shadow",
+      "validation_stats": {
+        "n": 10,
+        "independent": true,
+        "unknown_pairs": 0,
+        "harm": 0,
+        "benefit": 0,
+        "mean_saving": -370.1,
+        "saving_lower_bound": -602.1596315279521,
+        "confidence": 0.5,
+        "accuracy_drop_upper": 0.2775401687666166,
+        "projected_100_use_net_saving": -82171.0,
+        "pairwise": [
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_intermediate_algebra_1076",
+            "family": "S07",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 334,
+            "skill_tokens": 468,
+            "input_saving": -81,
+            "output_saving": -53,
+            "reasoning_saving": -48,
+            "total_saving": -134,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "385454fd98577dd3919013cebe6bbd1b6596482bd22ccbd260a7ab434f057c4b",
+            "skill_seal": "4d3fe022da0accccc0e37361aecc1318f23fdb72b35a51d97c31acf901a4107e",
+            "problem_tokens": 39,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_intermediate_algebra_1278",
+            "family": "S07",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 340,
+            "skill_tokens": 552,
+            "input_saving": -81,
+            "output_saving": -131,
+            "reasoning_saving": -93,
+            "total_saving": -212,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "e034bf7436790e6ca26f9887f886e2c84d33b4c1fa2d088e0ce44a8ce40ac2ad",
+            "skill_seal": "169e4ee2138350c879bb986d1bae2262d67a002551339f5aff653b2b0c2c7917",
+            "problem_tokens": 22,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_intermediate_algebra_312",
+            "family": "S07",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 1448,
+            "skill_tokens": 2481,
+            "input_saving": -81,
+            "output_saving": -952,
+            "reasoning_saving": -1013,
+            "total_saving": -1033,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "ad8e521afa6340278bfd42bd12379ea3520933cdfdeaa4125961e2d97110195a",
+            "skill_seal": "627b0062ebd4860b631e9c874b4ef24fca865ceb6a09a2f32fff7d949d7a8863",
+            "problem_tokens": 73,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_intermediate_algebra_483",
+            "family": "S07",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 1190,
+            "skill_tokens": 2239,
+            "input_saving": -81,
+            "output_saving": -968,
+            "reasoning_saving": -1099,
+            "total_saving": -1049,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "6e221992b1a4ca8f9b2d53ce5386f58d930f0e49c46cf61c1339ad71bc1a3f30",
+            "skill_seal": "470e8f46e19ddc9cd35efa738570cf93f43d0e03236eeddce8e1a8df71176080",
+            "problem_tokens": 33,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_intermediate_algebra_201",
+            "family": "S07",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 1251,
+            "skill_tokens": 1653,
+            "input_saving": -81,
+            "output_saving": -321,
+            "reasoning_saving": -261,
+            "total_saving": -402,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "bec3ef553cfdb66ba87334e62f7b3b461b1c25ee8c8d7b925e276d6243e75126",
+            "skill_seal": "38aeb686d54225d3d9557764dc9d885b721d4834b472100d7ea1dd8783091688",
+            "problem_tokens": 23,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_intermediate_algebra_769",
+            "family": "S07",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 605,
+            "skill_tokens": 748,
+            "input_saving": -81,
+            "output_saving": -62,
+            "reasoning_saving": -66,
+            "total_saving": -143,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "a4ccf24cd8146403678d38d25e6e9a8385202c8c2ff1a4f3b7063c2774ff4c38",
+            "skill_seal": "3b524261418a4e8e1921f15816e134495f9e59f0cab0d8fe967a1768236ba5a0",
+            "problem_tokens": 36,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_intermediate_algebra_1204",
+            "family": "S07",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 406,
+            "skill_tokens": 548,
+            "input_saving": -81,
+            "output_saving": -61,
+            "reasoning_saving": -93,
+            "total_saving": -142,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "1bcf7f0880e2d5604951d53295464ddb685da8d686ecc68db3350c6d53ecd05c",
+            "skill_seal": "75702f0f9c978fbdb2b9f115c3ef7b4e353816d47cac18a338fe9c855091b32d",
+            "problem_tokens": 36,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_intermediate_algebra_1261",
+            "family": "S07",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 889,
+            "skill_tokens": 1305,
+            "input_saving": -81,
+            "output_saving": -335,
+            "reasoning_saving": -302,
+            "total_saving": -416,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "10687cea4abe887a0485ea5632a1af1e469d5c2fca55ffc542d0e19c8bf3b369",
+            "skill_seal": "1bb32c48a507c0ef3d93e45cda01787530658c2a47715f58c6465c942ff5dd8f",
+            "problem_tokens": 17,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_intermediate_algebra_546",
+            "family": "S07",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 1646,
+            "skill_tokens": 1656,
+            "input_saving": -81,
+            "output_saving": 71,
+            "reasoning_saving": 143,
+            "total_saving": -10,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "930e76e89abef0e6c0f74af801910924112e4a3d0c44075b69698ab322472a10",
+            "skill_seal": "549435418003aa540b5cda15d7e53eb784bee0ccc0ef99e98da70dcdf51217ef",
+            "problem_tokens": 30,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          },
+          {
+            "run_id": "flowevo_bot_v2_math500",
+            "task_id": "math_train_intermediate_algebra_1084",
+            "family": "S07",
+            "comparison": "C_RevisedContent",
+            "base_correct": true,
+            "skill_correct": true,
+            "base_tokens": 1987,
+            "skill_tokens": 2147,
+            "input_saving": -81,
+            "output_saving": -79,
+            "reasoning_saving": -26,
+            "total_saving": -160,
+            "base_truncated": false,
+            "skill_truncated": false,
+            "skill_injected": true,
+            "base_seal": "dc437be748907ce2608f750f884e7c771510809e960d79e4dd8431e7c1c4d71c",
+            "skill_seal": "4f5143a5323c11406561848413ca00ddc233c6ca827a27f150dfb802415733ba",
+            "problem_tokens": 40,
+            "structurally_distinct": true,
+            "structural_evidence_limit": "digit-masked nonduplicate, not proof of mathematical novelty"
+          }
+        ],
+        "evidence_hash": "165e08b3630874659f6e5b2aa515c9302a4d075638cb0973b193faea98294f98"
+      },
+      "token_history": {
+        "distillation_and_revision": 7522,
+        "admission_full_allocated_cost": 45161
+      },
+      "admission_certificate": ""
+    }
+  ],
+  "frozen": true,
+  "test_feedback_used": false,
+  "historical_bank_sha256": "46292be88c11b059c06f800d70ab2dfacad1cd983957097462e0251b903c31cc",
+  "bank_hash": "baf13036198a6e45571def94ddc77d416c14672202a478fe225e98d2b9e48933"
+}

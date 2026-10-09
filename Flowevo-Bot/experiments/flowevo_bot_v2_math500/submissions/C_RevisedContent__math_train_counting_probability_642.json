@@ -1,0 +1,99 @@
+{
+  "run_id": "flowevo_bot_v2_math500",
+  "task_id": "math_train_counting_probability_642",
+  "subject": "counting_probability",
+  "level": "Level 4",
+  "original_category": "Counting & Probability",
+  "method": "C_RevisedContent",
+  "task_order": 4,
+  "model": "deepseek-flash",
+  "prompt_hash": "707210e6179043e4924b499884512bf1be8ab3a58bc0886b423f6858e5c968a5",
+  "config_hash": "517c8422f0e5c4fe90e3296edf9362fa88558caa1d1089ef8e327184162fb05f",
+  "bank_hash": "38f2c8d6531fba0a6773ad66aaaba0b637d52a0ff76b4631e83ad98d3cfad351",
+  "route": "shadow_strategy",
+  "retrieved_skill_ids": [
+    "S04_v2_591ca36f47b0"
+  ],
+  "selected_skill_id": "S04_v2_591ca36f47b0",
+  "family": "S04",
+  "skill_status": "shadow",
+  "trigger_result": {
+    "value": true,
+    "all_of": [
+      {
+        "value": true,
+        "feature": "subject:counting_probability",
+        "reason": "observed"
+      },
+      {
+        "value": true,
+        "feature": "lex:count_request",
+        "reason": "observed"
+      },
+      {
+        "value": true,
+        "feature": "lex:count_constraints",
+        "reason": "observed"
+      },
+      {
+        "value": true,
+        "optional_evidence": {
+          "value": true,
+          "feature": "lex:order",
+          "reason": "observed"
+        }
+      },
+      {
+        "value": true,
+        "guard_obligation": "disjoint_exhaustive_cases",
+        "guard_passed": false,
+        "reason": "deferred_to_solver"
+      }
+    ]
+  },
+  "guard_result": [
+    {
+      "kind": "order_repetition",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Establish order, distinguishability, and permitted repetitions from the question.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    },
+    {
+      "kind": "disjoint_exhaustive_cases",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Ensure cases exhaust the valid sample space and count overlaps exactly once.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    },
+    {
+      "kind": "equal_orbit_size",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Divide a symmetry count only after proving equal orbit sizes or a free action; otherwise count fixed points/cases.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    }
+  ],
+  "guard_enforcement": "conditional natural-language solver instructions; not machine proof",
+  "router_decision_reason": "independent shadow validation bypasses cost gate",
+  "skill_injected": true,
+  "skill_prompt_tokens": 105,
+  "skill_prompt_tokens_method": "UTF8 bytes/3 estimate; provider input total is actual",
+  "input_tokens": 164,
+  "output_tokens": 1632,
+  "total_tokens": 1796,
+  "reasoning_tokens": 1251,
+  "latency": 7.153016232012305,
+  "llm_call_count": 1,
+  "infrastructure_attempts": 1,
+  "call_id": "c01058e023eb8a9f1ea154cf79ff3abb050d92d0b8d55a2b5462bb84bb38a1f4",
+  "solution": "Let the three positive perfect squares be \\(a^2 \\le b^2 \\le c^2\\), so \\(a \\le b \\le c\\). We need\n\n\\[\na^2+b^2+c^2=81.\n\\]\n\nSince \\(c\\) is the largest, \\(c \\ge 6\\) because \\(3\\cdot 5^2=75<81\\). Also \\(c\\le 8\\) because \\(c^2<81\\). So check \\(c=6,7,8\\).\n\n### Case 1: \\(c=8\\)\n\\[\na^2+b^2=81-64=17.\n\\]\nThe only positive square pair summing to 17 is\n\\[\n1+16,\n\\]\nso we get\n\\[\n(1,4,8) \\quad \\text{or squares } 1,16,64.\n\\]\n\n### Case 2: \\(c=7\\)\n\\[\na^2+b^2=81-49=32.\n\\]\nThe only positive square pair summing to 32 is\n\\[\n16+16,\n\\]\nso we get\n\\[\n(4,4,7) \\quad \\text{or squares } 16,16,49.\n\\]\n\n### Case 3: \\(c=6\\)\n\\[\na^2+b^2=81-36=45.\n\\]\nThe only positive square pair summing to 45 is\n\\[\n9+36,\n\\]\nso we get\n\\[\n(3,6,6) \\quad \\text{or squares } 9,36,36.\n\\]\n\nThus the valid unordered triples are:\n\n\\[\n(1,16,64),\\quad (16,16,49),\\quad (9,36,36).\n\\]\n\nThere are \\(3\\) ways.\n\nThe answer is 3.",
+  "truncated": false,
+  "gold_exposed": false,
+  "error_type": null,
+  "math_retries": 0,
+  "seal": "15966ee7adf94d5bc9b6cae7b8f48507b866264ab89940dc6db5ea687e667bd3"
+}

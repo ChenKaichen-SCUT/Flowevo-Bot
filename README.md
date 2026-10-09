@@ -1,12 +1,14 @@
 # FlowEvo + Buffer of Thoughts / Flowevo-Bot
 
-这是完整研究工作区的可发布快照，包含原始实现的本地修改版、独立 Flowevo-Bot 项目、MATH/GSM8K 数据集、既有真实实验和下一阶段离线诊断。
+这是完整研究工作区的可发布快照，包含原始实现的本地修改版、独立 Flowevo-Bot 项目、MATH/GSM8K 数据集、历史实验、离线诊断和 V2 真实研究。
 
 ## 先阅读最新研究结论
 
-[Skill Admission 研究摘要](Flowevo-Bot/diagnostics/skill_admission_audit/reports/00_EXECUTIVE_SUMMARY.md) · [12 个 Skill 原文](Flowevo-Bot/diagnostics/skill_admission_audit/reports/01_ALL_SKILLS.md) · [诊断包下载](Flowevo-Bot/diagnostics/skill_admission_audit.zip)
+[V2 实验结果](Flowevo-Bot/experiments/flowevo_bot_v2_math500/03_MATH500_RESULTS.md) · [实现报告](Flowevo-Bot/experiments/flowevo_bot_v2_math500/01_IMPLEMENTATION_REPORT.md) · [机制与成本](Flowevo-Bot/experiments/flowevo_bot_v2_math500/04_MECHANISM_ANALYSIS.md) · [完整研究包](Flowevo-Bot/experiments/flowevo_bot_v2_math500.zip)
 
-本轮为零新增 API 的离线诊断：9/12 策略不能匹配来源题、8/12 缺少可用开发验证；另外发现条件语义和两次评分假阴性。500题Bot本轮请求路径等价于空库，测试token节省不能归因于BoT复用。原始结果与核心实现均保留，未降低阈值或新增真实实验。
+本轮修复评分、结构化 Trigger/Guard、多轨迹蒸馏及 shadow 准入，完成20题三组真实对照：NoBank 18/20、25,728 tokens；旧策略19/20、26,436 tokens；新策略19/20、28,579 tokens。两条新卡均为shadow、0 active，按指引停止正式500。63次新增API调用共102,316 tokens，未降低准入门槛。Guard为求解期指令，尚未实现机器证明；唯一正确率提升来自基础组截断、策略组完成，不能认定稳定数学推理提升。
+
+[上一轮离线诊断](Flowevo-Bot/diagnostics/skill_admission_audit/reports/00_EXECUTIVE_SUMMARY.md) · [旧12卡原文](Flowevo-Bot/diagnostics/skill_admission_audit/reports/01_ALL_SKILLS.md)。历史数据与原始评分保留。
 
 ## 工作区结构
 
@@ -24,13 +26,13 @@
 cd Flowevo-Bot
 python3 -m venv .venv
 .venv/bin/pip install -e '.[dev,experiment]'
-.venv/bin/python diagnostics/skill_admission_audit/scripts/analyze.py
-.venv/bin/python diagnostics/skill_admission_audit/scripts/render_reports.py
-.venv/bin/python -m pytest diagnostics/skill_admission_audit/tests -q
+.venv/bin/python -m pytest tests -q
+.venv/bin/python scripts/verify_v2_research.py
+.venv/bin/python scripts/report_v2_research.py
 ```
 
-历史manifest包含运行时绝对路径和哈希，迁移后需保持相同内容并按目录调整路径。诊断分析自身从当前源码目录定位实验文件；历史完整性测试中的原始绝对路径反映原实验环境。旧dist wheel是之前开发阶段的构建产物，复现新诊断使用当前源码。
+历史manifest包含运行时绝对路径和哈希，迁移后需保持相同内容并按目录调整路径。旧诊断脚本属于冻结历史，V2 使用新入口。V2 的构建产物为0.2.0；0.1.0旧wheel保留作历史记录。
 
-不上传 `miyao.txt`、环境变量文件、私钥、虚拟环境、缓存及嵌套Git内部目录。数据集与真实实验记录已包含；新增付费模型实验须单独授权并自行在本地配置密钥。本轮仅完成诊断与发布。
+不上传 `miyao.txt`、环境变量文件、私钥、虚拟环境、缓存及嵌套Git内部目录。数据集与真实请求/响应安全日志已包含。后续每轮按已确认的单连字符仓库地址发布，见 [PUBLISHING.md](PUBLISHING.md)。新付费实验需明确预算和独立新目录；本轮已在用户授权范围内执行并结束。
 
 原项目各自许可证及数据集说明均保留，见各子目录 LICENSE、NOTICE.md、licenses 和数据卡；本仓库不重新授权第三方内容。

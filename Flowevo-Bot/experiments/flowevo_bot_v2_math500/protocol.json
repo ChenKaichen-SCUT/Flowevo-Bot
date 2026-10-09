@@ -1,0 +1,66 @@
+{
+  "run_id": "flowevo_bot_v2_math500",
+  "timestamp": "2026-10-10T01:18:43.042414+08:00",
+  "model": "deepseek-flash",
+  "endpoint": "https://api.deepseek.com/chat/completions",
+  "temperature": 0.0,
+  "max_tokens": 4096,
+  "thinking": "omitted, provider default enabled/high; temperature may be ignored",
+  "global_api_workers": 64,
+  "local_workers": 12,
+  "max_logical_calls": 64,
+  "max_token_reservation": 400000,
+  "distillation_calls": {
+    "initial": 2,
+    "repair_max": 2,
+    "max_tokens": 16384
+  },
+  "dev_calls": 60,
+  "estimated_upper_usd": 0.48,
+  "price_source": "https://api-docs.deepseek.com/quick_start/pricing",
+  "price_usd_per_million_peak": {
+    "input_cache_miss": 0.3,
+    "output": 1.2
+  },
+  "seed": 20261010,
+  "methods": [
+    "A_NoBank",
+    "B_OriginalContent",
+    "C_RevisedContent"
+  ],
+  "control_B": "original compact content with COMMON repaired question-only trigger; isolates content, not a rerun of broken legacy trigger",
+  "shadow_policy": "bypass production cost router only in independent dev; conditional solver guards, no claim of machine-proved guard compliance",
+  "thresholds": {
+    "min_source_traces": 3,
+    "min_dev_eligible_cases": 10,
+    "reject_observed_harm": true,
+    "saving_lower_bound_gt": 0,
+    "expected_future_uses": 100,
+    "router_min_confidence": 0.8,
+    "router_max_accuracy_drop": 0.01
+  },
+  "admission_cost_scope": "current candidate source calls + candidate distillation/repair + all three dev groups; full historical pipeline accounted separately at bank level",
+  "noninferiority_margin": 0.01,
+  "gold_feedback": false,
+  "math_retries": 0,
+  "format_retries": 0,
+  "formal_gate": "at least one independently admitted active macro with interpretable positive evidence and a usable unchanged production route",
+  "formal_budget_if_gate_passes": {
+    "logical_calls": 1500,
+    "token_reservation": 7000000,
+    "peak_usd_upper": 8.4
+  },
+  "code_hashes": {
+    "src/flowevo_bot/v2/__init__.py": "a2a39ff998125c489b6a9adcbc372a4e5752eda4ed5c615e454b0338aa61254b",
+    "src/flowevo_bot/v2/admission.py": "fd96b977d29fc6b6bbbd0008eb2f6e912cc6c7bf4e96a94ef88021f9b4e01822",
+    "src/flowevo_bot/v2/client.py": "81c01f8b0e150620bbf235af7e8bad81cfcd2ec4629cdc2ba262819c7ceeaa37",
+    "src/flowevo_bot/v2/distiller.py": "538bdc5295d787798c206c28dc1a8496039a5e7079ea243d0ab762e3ac35c577",
+    "src/flowevo_bot/v2/evaluator.py": "529e453ddefb6b95399bcf09780a3e3a17130b878821456368b7aadcee117cf5",
+    "src/flowevo_bot/v2/features.py": "e75e439e4f5a530049d158b06593f600c4921faedaaeeb52e1b07422a00d7e71",
+    "src/flowevo_bot/v2/skills.py": "0b1b651ae44801cbabc073e1e0bf3b7e39d04871579eb7f2069e627e87fe29cc"
+  },
+  "dataset_manifest_hash": "94ef2c3c701c00a4b2cedd54aa8caa2a8aaf93171bc7aee2937cd215214dff95",
+  "repository": "https://github.com/ChenKaichen-SCUT/Flowevo-Bot",
+  "runner_sha256": "812f8fd8e9d0278580673f60b1dd48aa452415913038e3f1e76a0f2ea8ed770c",
+  "pre_api_tests": "87 passed (54 existing + 33 V2)"
+}

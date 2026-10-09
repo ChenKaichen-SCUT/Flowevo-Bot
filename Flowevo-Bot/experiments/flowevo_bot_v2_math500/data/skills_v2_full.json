@@ -1,0 +1,563 @@
+[
+  {
+    "schema_version": "2.0",
+    "skill_id": "S04_v2_591ca36f47b0",
+    "predecessor": "counting_probability_669101e83d955915",
+    "subject": "counting_probability",
+    "name": "Constrained Counting by Complement or Disjoint Cases",
+    "steps": [
+      "Determine the counting model: whether order matters, whether items are distinct or repeated, and allowed repetitions; identify the total space and constraints.",
+      "Partition into disjoint, exhaustive cases, often valid cases directly or total minus complement/forbidden cases; check pairwise overlaps and exact coverage.",
+      "Count each case with ordered choices, permutations, products, or multinomial coefficients, respecting constraints and fixed positions.",
+      "Combine case counts by addition/subtraction. For symmetry, divide by orbit size only after proving equal orbit sizes or a free action; otherwise count fixed points/cases."
+    ],
+    "compact_prompt": "Model count: fix order, distinctness, repetition. Count all, or split valid into disjoint exhaustive cases (or total minus complement). Check overlaps exactly once. Use permutations/products/multinomials per case. For symmetry, divide only if all orbits equal/free; otherwise count fixed cases. Sum/subtract cases.",
+    "trigger": {
+      "feature": null,
+      "all_of": [
+        {
+          "feature": "subject:counting_probability",
+          "all_of": null,
+          "any_of": null,
+          "not": null,
+          "optional": null,
+          "guard": null
+        },
+        {
+          "feature": "lex:count_request",
+          "all_of": null,
+          "any_of": null,
+          "not": null,
+          "optional": null,
+          "guard": null
+        },
+        {
+          "feature": "lex:count_constraints",
+          "all_of": null,
+          "any_of": null,
+          "not": null,
+          "optional": null,
+          "guard": null
+        },
+        {
+          "feature": null,
+          "all_of": null,
+          "any_of": null,
+          "not": null,
+          "optional": {
+            "feature": "lex:order",
+            "all_of": null,
+            "any_of": null,
+            "not": null,
+            "optional": null,
+            "guard": null
+          },
+          "guard": null
+        },
+        {
+          "feature": null,
+          "all_of": null,
+          "any_of": null,
+          "not": null,
+          "optional": null,
+          "guard": "disjoint_exhaustive_cases"
+        }
+      ],
+      "any_of": null,
+      "not": null,
+      "optional": null,
+      "guard": null
+    },
+    "guards": [
+      {
+        "kind": "order_repetition",
+        "instruction": "Establish order, distinguishability, and permitted repetitions from the question.",
+        "policy": "verify_or_fallback"
+      },
+      {
+        "kind": "disjoint_exhaustive_cases",
+        "instruction": "Ensure cases exhaust the valid sample space and count overlaps exactly once.",
+        "policy": "verify_or_fallback"
+      },
+      {
+        "kind": "equal_orbit_size",
+        "instruction": "Divide a symmetry count only after proving equal orbit sizes or a free action; otherwise count fixed points/cases.",
+        "policy": "verify_or_fallback"
+      }
+    ],
+    "source_task_ids": [
+      "math_train_counting_probability_679",
+      "math_train_counting_probability_715",
+      "math_train_counting_probability_195",
+      "math_train_counting_probability_323",
+      "math_train_counting_probability_690",
+      "math_train_counting_probability_265"
+    ],
+    "source_trace_hashes": [
+      "dadcbd120d2a11ce172bcfaa7093fe39043554901cbbc5a7149c15d7c2de2783",
+      "82fb24c41c52df2570db4137283bd65a1bf3c37821c84f60ff47d760bb1f4ee5",
+      "9b389be31d56fd2241687d74ea7b782a87e8c07b381d8c61673504205240131a",
+      "9258525852e2fa81ab40115f192a88f037713cc36aeb820a1365c05f6ee6b87b",
+      "a0f95c5c9888e8c34341cd60a60011a0bf1d0dba84948bb1d1eb8fc10607e34d",
+      "1f695ea37bc7ad8b01f8a31c914e104d17f4f8615bd1602eb44584a1d5cb7d13"
+    ],
+    "transformation_evidence": [
+      {
+        "task_id": "math_train_counting_probability_679",
+        "trace_hash": "dadcbd120d2a11ce172bcfaa7093fe39043554901cbbc5a7149c15d7c2de2783",
+        "stages": [
+          {
+            "stage": "decomposition",
+            "span": [
+              261,
+              268
+            ],
+            "excerpt": " digits: \\(1\\) through \\(9\\), so \\(9\\) choices each.\n\nSo numbers with no zero:\n\\[\n9^5 = 59049\n\\]\n\nTherefore, numbers with at least one zero:\n\\[\n90000 - 59049 = 30951\n\\]\n\nThe answer is 30951."
+          },
+          {
+            "stage": "count_operation",
+            "span": [
+              162,
+              169
+            ],
+            "excerpt": "s with **no zero**:\n- First digit: \\(1\\) through \\(9\\), so \\(9\\) choices.\n- Each of the remaining 4 digits: \\(1\\) through \\(9\\), so \\(9\\) choices each.\n\nSo numbers with no zero:\n\\[\n9^5 = 59049\n\\]\n\nThere"
+          },
+          {
+            "stage": "recombine",
+            "span": [
+              20,
+              25
+            ],
+            "excerpt": "There are \\(90000\\) total 5-digit numbers, from \\(10000\\) to \\(99999\\).\n\nCount the 5-digit numbers with **no zero**:\n- First digit: \\(1\\) through \\(9\\), so"
+          }
+        ],
+        "structural_signature": {
+          "order": true,
+          "repetition": false,
+          "symmetry": false
+        }
+      },
+      {
+        "task_id": "math_train_counting_probability_715",
+        "trace_hash": "82fb24c41c52df2570db4137283bd65a1bf3c37821c84f60ff47d760bb1f4ee5",
+        "stages": [
+          {
+            "stage": "decomposition",
+            "span": [
+              0,
+              4
+            ],
+            "excerpt": "Case 1: Neither Penelope nor Quentin is selected.  \nChoose 3 officers from the remaining 20 members and assign them to the 3 distinct "
+          },
+          {
+            "stage": "count_operation",
+            "span": [
+              162,
+              168
+            ],
+            "excerpt": "rs and assign them to the 3 distinct offices:\n\\[\n{}^{20}P_3 = 20 \\times 19 \\times 18 = 6840\n\\]\n\nCase 2: Both Penelope and Quentin are selected.  \nThen they occupy 2 of the 3 officer positions, and the "
+          },
+          {
+            "stage": "recombine",
+            "span": [
+              412,
+              417
+            ],
+            "excerpt": "mbers.  \nNumber of ways:\n\\[\n20 \\times 3! = 20 \\times 6 = 120\n\\]\n\nTotal ways:\n\\[\n6840 + 120 = 6960\n\\]\n\nThe answer is 6960."
+          }
+        ],
+        "structural_signature": {
+          "order": false,
+          "repetition": false,
+          "symmetry": false
+        }
+      },
+      {
+        "task_id": "math_train_counting_probability_195",
+        "trace_hash": "9b389be31d56fd2241687d74ea7b782a87e8c07b381d8c61673504205240131a",
+        "stages": [
+          {
+            "stage": "decomposition",
+            "span": [
+              107,
+              110
+            ],
+            "excerpt": "nt, where rotations and reflections are considered the same.\n\n1. Fix the house key \\(H\\) in one position to remove rotational symmetry.\n2. The car key \\(C\\) must be next to \\(H\\), so it can be place"
+          },
+          {
+            "stage": "count_operation",
+            "span": [
+              269,
+              276
+            ],
+            "excerpt": "be next to \\(H\\), so it can be placed on either side of \\(H\\): 2 choices.\n3. The remaining 3 keys can be arranged in the remaining 3 positions in  \n   \\[\n   3! = 6\n   \\]\n   ways.\n4. So ignoring reflecti"
+          },
+          {
+            "stage": "recombine",
+            "span": [
+              222,
+              224
+            ],
+            "excerpt": "rotational symmetry.\n2. The car key \\(C\\) must be next to \\(H\\), so it can be placed on either side of \\(H\\): 2 choices.\n3. The remaining 3 keys can be arranged in the remaining 3 positions in  \n  "
+          }
+        ],
+        "structural_signature": {
+          "order": true,
+          "repetition": true,
+          "symmetry": true
+        }
+      },
+      {
+        "task_id": "math_train_counting_probability_323",
+        "trace_hash": "9258525852e2fa81ab40115f192a88f037713cc36aeb820a1365c05f6ee6b87b",
+        "stages": [
+          {
+            "stage": "decomposition",
+            "span": [
+              425,
+              438
+            ],
+            "excerpt": "lections} = 10\n\\]\n\nsymmetries.\n\nBecause all shells are distinct, no nontrivial rotation or reflection can leave an arrangement unchanged. Therefore, every arrangement has exactly \\(10\\) equivalent versions: o"
+          },
+          {
+            "stage": "count_operation",
+            "span": [
+              224,
+              226
+            ],
+            "excerpt": " total number of placements without considering symmetry is\n\n\\[\n10!\n\\]\n\nThe symmetry group of a regular five-pointed star is the dihedral group \\(D_5\\), which has\n\n\\[\n5 \\text{ rotations} + 5 \\text{"
+          },
+          {
+            "stage": "recombine",
+            "span": [
+              160,
+              165
+            ],
+            "excerpt": "inner points. Since the \\(10\\) sea shells are all different, the total number of placements without considering symmetry is\n\n\\[\n10!\n\\]\n\nThe symmetry group of a regular five-pointed star is the dihedra"
+          }
+        ],
+        "structural_signature": {
+          "order": true,
+          "repetition": false,
+          "symmetry": true
+        }
+      },
+      {
+        "task_id": "math_train_counting_probability_690",
+        "trace_hash": "a0f95c5c9888e8c34341cd60a60011a0bf1d0dba84948bb1d1eb8fc10607e34d",
+        "stages": [
+          {
+            "stage": "decomposition",
+            "span": [
+              511,
+              519
+            ],
+            "excerpt": "n be chosen from the remaining 5 letters:\n\\[\n5 \\times 4 = 20\n\\]\n\nSubtract the forbidden ones:\n\\[\n120 - 20 = 100\n\\]\n\nThe answer is 100."
+          },
+          {
+            "stage": "count_operation",
+            "span": [
+              312,
+              318
+            ],
+            "excerpt": "t **not end with P**.\n\nCount all sequences starting with L:\n\\[\n6 \\times 5 \\times 4 = 120\n\\]\n\nCount those that start with L and end with P:\n- Position 1 is L.\n- Position 4 is P.\n- Positions 2 and 3 can "
+          },
+          {
+            "stage": "recombine",
+            "span": [
+              105,
+              107
+            ],
+            "excerpt": "ers: P, R, O, B, L, E, M.\n\n- The sequence must begin with **L**, so that position is fixed.\n- The sequence has 4 letters total, so we need to fill positions 2, 3, and 4 from the remaining 6 letters"
+          }
+        ],
+        "structural_signature": {
+          "order": true,
+          "repetition": false,
+          "symmetry": false
+        }
+      },
+      {
+        "task_id": "math_train_counting_probability_265",
+        "trace_hash": "1f695ea37bc7ad8b01f8a31c914e104d17f4f8615bd1602eb44584a1d5cb7d13",
+        "stages": [
+          {
+            "stage": "decomposition",
+            "span": [
+              139,
+              147
+            ],
+            "excerpt": "nct arrangements of these 5 digits:\n\n\\[\n\\frac{5!}{2!}=60\n\\]\n\nNow subtract arrangements that begin with \\(0\\). If the first digit is \\(0\\), the remaining digits are \\(4,5,5,2\\), which can be arranged in\n\n"
+          },
+          {
+            "stage": "count_operation",
+            "span": [
+              78,
+              90
+            ],
+            "excerpt": "e \\(4, 5, 5, 2, 0\\), with two identical \\(5\\)'s.\n\nTotal distinct arrangements of these 5 digits:\n\n\\[\n\\frac{5!}{2!}=60\n\\]\n\nNow subtract arrangements that begin with \\(0\\). If the first digit is \\(0\\), the rem"
+          },
+          {
+            "stage": "recombine",
+            "span": [
+              63,
+              68
+            ],
+            "excerpt": "The digits are \\(4, 5, 5, 2, 0\\), with two identical \\(5\\)'s.\n\nTotal distinct arrangements of these 5 digits:\n\n\\[\n\\frac{5!}{2!}=60\n\\]\n\nNow subtract arrangements that begin with \\(0\\). If the first d"
+          }
+        ],
+        "structural_signature": {
+          "order": true,
+          "repetition": false,
+          "symmetry": false
+        }
+      }
+    ],
+    "status": "shadow",
+    "validation_stats": {},
+    "token_history": {
+      "distillation_and_revision": 14051
+    },
+    "admission_certificate": ""
+  },
+  {
+    "schema_version": "2.0",
+    "skill_id": "S07_v2_3602556c556a",
+    "predecessor": "intermediate_algebra_4a5d6d54c25d8d89",
+    "subject": "intermediate_algebra",
+    "name": "Guarded substitution and denominator clearing",
+    "steps": [
+      "Identify a repeated radical, ratio, or denominator expression; set a single new variable t for it and record its admissible range, including strict positivity or zero/nonzero cases.",
+      "Record every original denominator zero and exclude it before any clearing or multiplying; for inequalities, determine the sign of each denominator factor or use sign cases instead of multiplying by an unknown sign.",
+      "Clear denominators only by nonzero factors, reduce to a polynomial/equation/inequality in t, and solve it.",
+      "Back-substitute into the original variables, enforce the recorded t-range and excluded zero cases, and test all final candidates/endpoints in the original relation."
+    ],
+    "compact_prompt": "Use t for repeated radical/ratio. Record original denominator zeros and t's range/zero cases. Clear denominators only by nonzero factors. For inequalities, use denominator sign or sign cases; never multiply by unknown sign. Solve. Back-substitute within t range, handle excluded zeros, and check solutions/endpoints in original relation.",
+    "trigger": {
+      "feature": null,
+      "all_of": [
+        {
+          "feature": "subject:intermediate_algebra",
+          "all_of": null,
+          "any_of": null,
+          "not": null,
+          "optional": null,
+          "guard": null
+        },
+        {
+          "feature": null,
+          "all_of": null,
+          "any_of": [
+            {
+              "feature": "math:rational_equation",
+              "all_of": null,
+              "any_of": null,
+              "not": null,
+              "optional": null,
+              "guard": null
+            },
+            {
+              "feature": "math:rational_inequality",
+              "all_of": null,
+              "any_of": null,
+              "not": null,
+              "optional": null,
+              "guard": null
+            }
+          ],
+          "not": null,
+          "optional": null,
+          "guard": null
+        },
+        {
+          "feature": null,
+          "all_of": null,
+          "any_of": null,
+          "not": {
+            "feature": "lex:trigonometric",
+            "all_of": null,
+            "any_of": null,
+            "not": null,
+            "optional": null,
+            "guard": null
+          },
+          "optional": null,
+          "guard": null
+        },
+        {
+          "feature": null,
+          "all_of": null,
+          "any_of": null,
+          "not": {
+            "feature": "lex:hypothetical_options",
+            "all_of": null,
+            "any_of": null,
+            "not": null,
+            "optional": null,
+            "guard": null
+          },
+          "optional": null,
+          "guard": null
+        },
+        {
+          "feature": null,
+          "all_of": null,
+          "any_of": null,
+          "not": null,
+          "optional": null,
+          "guard": "denominator_nonzero"
+        }
+      ],
+      "any_of": null,
+      "not": null,
+      "optional": null,
+      "guard": null
+    },
+    "guards": [
+      {
+        "kind": "denominator_nonzero",
+        "instruction": "Record and exclude zeros of every original denominator.",
+        "policy": "verify_or_fallback"
+      },
+      {
+        "kind": "inequality_sign",
+        "instruction": "Never multiply an inequality by an unknown-sign denominator; use sign cases or a sign chart.",
+        "policy": "verify_or_fallback"
+      },
+      {
+        "kind": "back_substitution",
+        "instruction": "Retain substitution range and separately handle excluded zero cases; check solutions/endpoints in the original relation.",
+        "policy": "verify_or_fallback"
+      }
+    ],
+    "source_task_ids": [
+      "math_train_intermediate_algebra_1030",
+      "math_train_intermediate_algebra_902",
+      "math_train_intermediate_algebra_704"
+    ],
+    "source_trace_hashes": [
+      "d4d45758f0c854788d82a6d598cb584a3453bda8604efb004a5dd25d7dc41190",
+      "f6ad52fdaaeafa9e6df353bdea60c162a803834bdae0c6d5d4889bf97347e796",
+      "6f046574727b1157e15d42b8e169127701befb210323b9589002faf3d2791d9a"
+    ],
+    "transformation_evidence": [
+      {
+        "task_id": "math_train_intermediate_algebra_1030",
+        "trace_hash": "d4d45758f0c854788d82a6d598cb584a3453bda8604efb004a5dd25d7dc41190",
+        "stages": [
+          {
+            "stage": "denominator_elimination",
+            "span": [
+              71,
+              90
+            ],
+            "excerpt": "nominator \\((x-4)^2\\) is positive for all \\(x \\ne 4\\), so we can multiply both sides by \\((x-4)^2\\) without changing the inequality direction:\n\n\\[\nx(x+1) \\ge 12(x-4)^2\n\\]\n\nExpanding:\n\n\\[\nx^2+x \\ge 12x^2-96x+192\n\\]\n"
+          },
+          {
+            "stage": "reduce_or_solve",
+            "span": [
+              61,
+              63
+            ],
+            "excerpt": "The denominator \\((x-4)^2\\) is positive for all \\(x \\ne 4\\), so we can multiply both sides by \\((x-4)^2\\) without changing the inequality direction:\n\n\\[\nx(x+1) \\ge 12(x-4)^2\n\\]\n\nExpanding:\n\n\\[\n"
+          },
+          {
+            "stage": "domain_recovery",
+            "span": [
+              4,
+              15
+            ],
+            "excerpt": "The denominator \\((x-4)^2\\) is positive for all \\(x \\ne 4\\), so we can multiply both sides by \\((x-4)^2\\) without changing the inequality directi"
+          }
+        ],
+        "structural_signature": [
+          [
+            "inequality",
+            2,
+            "direct"
+          ]
+        ]
+      },
+      {
+        "task_id": "math_train_intermediate_algebra_902",
+        "trace_hash": "f6ad52fdaaeafa9e6df353bdea60c162a803834bdae0c6d5d4889bf97347e796",
+        "stages": [
+          {
+            "stage": "denominator_elimination",
+            "span": [
+              106,
+              117
+            ],
+            "excerpt": "oot is in the denominator, \\(t>0\\).\n\nThen\n\\[\nt+\\frac{10}{t}=7\n\\]\nMultiply by \\(t\\):\n\\[\nt^2+10=7t\n\\]\n\\[\nt^2-7t+10=0\n\\]\n\\[\n(t-5)(t-2)=0\n\\]\nSo\n\\[\nt=5 \\quad \\text{or} \\quad t=2.\n\\]\n\nNow solve for \\(x\\):\n\n- If \\"
+          },
+          {
+            "stage": "reduce_or_solve",
+            "span": [
+              178,
+              180
+            ],
+            "excerpt": "y by \\(t\\):\n\\[\nt^2+10=7t\n\\]\n\\[\nt^2-7t+10=0\n\\]\n\\[\n(t-5)(t-2)=0\n\\]\nSo\n\\[\nt=5 \\quad \\text{or} \\quad t=2.\n\\]\n\nNow solve for \\(x\\):\n\n- If \\(\\sqrt{4x-3}=5\\), then \\(4x-3=25\\), so \\(4x=28\\), giving \\(x=7\\"
+          },
+          {
+            "stage": "domain_recovery",
+            "span": [
+              23,
+              28
+            ],
+            "excerpt": "Let \\(t=\\sqrt{4x-3}\\). Since the square root is in the denominator, \\(t>0\\).\n\nThen\n\\[\nt+\\frac{10}{t}=7\n\\]\nMultiply by \\(t\\):\n\\[\nt^2+10=7t\n\\]\n\\[\nt^2-7t+10=0\n\\]"
+          }
+        ],
+        "structural_signature": [
+          [
+            "equation",
+            2,
+            "repeated_radical"
+          ]
+        ]
+      },
+      {
+        "task_id": "math_train_intermediate_algebra_704",
+        "trace_hash": "6f046574727b1157e15d42b8e169127701befb210323b9589002faf3d2791d9a",
+        "stages": [
+          {
+            "stage": "denominator_elimination",
+            "span": [
+              146,
+              167
+            ],
+            "excerpt": "x+y}{x-y}+\\frac{x-y}{x+y}\n=\\frac{t+1}{t-1}+\\frac{t-1}{t+1}=1.\n\\]\nCombine the fractions:\n\\[\n\\frac{(t+1)^2+(t-1)^2}{t^2-1}\n=\\frac{2t^2+2}{t^2-1}=1.\n\\]\nThus\n\\[\n2t^2+2=t^2-1,\n\\]\nso\n\\[\nt^2=-3.\n\\]\nTherefore,\n\\[\n\\frac{x^4}{"
+          },
+          {
+            "stage": "reduce_or_solve",
+            "span": [
+              230,
+              234
+            ],
+            "excerpt": "ns:\n\\[\n\\frac{(t+1)^2+(t-1)^2}{t^2-1}\n=\\frac{2t^2+2}{t^2-1}=1.\n\\]\nThus\n\\[\n2t^2+2=t^2-1,\n\\]\nso\n\\[\nt^2=-3.\n\\]\nTherefore,\n\\[\n\\frac{x^4}{y^4}=t^4=(t^2)^2=(-3)^2=9.\n\\]\n\nNow let\n\\[\ns=\\frac{x^4}{y^4}=9.\n\\]\nT"
+          },
+          {
+            "stage": "domain_recovery",
+            "span": [
+              25,
+              30
+            ],
+            "excerpt": "Let\n\\[\nt=\\frac{x}{y}.\n\\]\nSince \\(y\\neq 0\\) and \\(x\\neq \\pm y\\), we have\n\\[\n\\frac{x+y}{x-y}+\\frac{x-y}{x+y}\n=\\frac{t+1}{t-1}+\\frac{t-1}{t+1}=1.\n\\]\nCombine the fr"
+          }
+        ],
+        "structural_signature": [
+          [
+            "equation",
+            2,
+            "homogeneous_ratio"
+          ]
+        ]
+      }
+    ],
+    "status": "shadow",
+    "validation_stats": {},
+    "token_history": {
+      "distillation_and_revision": 7522
+    },
+    "admission_certificate": ""
+  }
+]

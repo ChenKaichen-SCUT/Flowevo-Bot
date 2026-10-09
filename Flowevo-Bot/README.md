@@ -2,7 +2,9 @@
 
 按照父目录《指引.txt》实现的独立数学策略库研究原型。将 FlowEvo 的数学解题/历史解答基线与 BoT 的策略蒸馏思想结合，加入多题聚合、七学科检索、独立 admission、成本路由和 gold 隔离。
 
-**当前交付为 Stage 0–6 的离线开发版本。没有调用真实 DeepSeek API，没有运行真实 MATH 推理实验；mock 分数不代表模型性能。** 原始 FlowEvo 和 BoT 目录保持不变。审计见 [SOURCE_AUDIT](docs/SOURCE_AUDIT.md)。
+**最新版本已完成真实 V2 研究：20题×3组、63次API调用（含蒸馏），102,316 tokens；0 active，按指引停止正式500。** [本轮结果](experiments/flowevo_bot_v2_math500/03_MATH500_RESULTS.md) · [研究包说明](experiments/flowevo_bot_v2_math500/README.md)。此前已完成[500题历史实验](experiments/math500_goldfree_20261009/REPORT.md)。以下原始CLI示例仍为v1离线演示，mock分数不代表模型性能。
+
+V2 使用 `scripts/run_v2_research.py` 分阶段运行，修复模块位于 `src/flowevo_bot/v2/`；旧实现保留以重放历史结果。安装数学实验依赖 `pip install -e '.[dev,experiment]'`。报告可离线重建：`python scripts/report_v2_research.py`；完整性检验：`python scripts/verify_v2_research.py`。
 
 ## 安装与检查
 

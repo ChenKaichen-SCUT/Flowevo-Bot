@@ -1,0 +1,119 @@
+{
+  "run_id": "flowevo_bot_v2_math500",
+  "task_id": "math_train_intermediate_algebra_769",
+  "subject": "intermediate_algebra",
+  "level": "Level 3",
+  "original_category": "Intermediate Algebra",
+  "method": "C_RevisedContent",
+  "task_order": 5,
+  "model": "deepseek-flash",
+  "prompt_hash": "6ceef410eb2dd1edc88140f8a8494f8707d56e629f97241e80bc2e78e1a60b2b",
+  "config_hash": "517c8422f0e5c4fe90e3296edf9362fa88558caa1d1089ef8e327184162fb05f",
+  "bank_hash": "38f2c8d6531fba0a6773ad66aaaba0b637d52a0ff76b4631e83ad98d3cfad351",
+  "route": "shadow_strategy",
+  "retrieved_skill_ids": [
+    "S07_v2_3602556c556a"
+  ],
+  "selected_skill_id": "S07_v2_3602556c556a",
+  "family": "S07",
+  "skill_status": "shadow",
+  "trigger_result": {
+    "value": true,
+    "all_of": [
+      {
+        "value": true,
+        "feature": "subject:intermediate_algebra",
+        "reason": "observed"
+      },
+      {
+        "value": true,
+        "any_of": [
+          {
+            "value": false,
+            "feature": "math:rational_equation",
+            "reason": "observed"
+          },
+          {
+            "value": true,
+            "feature": "math:rational_inequality",
+            "reason": "observed"
+          }
+        ]
+      },
+      {
+        "value": true,
+        "not": {
+          "value": false,
+          "feature": "lex:trigonometric",
+          "reason": "observed"
+        }
+      },
+      {
+        "value": true,
+        "not": {
+          "value": false,
+          "feature": "lex:hypothetical_options",
+          "reason": "observed"
+        }
+      },
+      {
+        "value": true,
+        "guard_obligation": "denominator_nonzero",
+        "guard_passed": false,
+        "reason": "deferred_to_solver"
+      }
+    ]
+  },
+  "guard_result": [
+    {
+      "kind": "denominator_nonzero",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Record and exclude zeros of every original denominator.",
+      "policy": "verify_or_fallback",
+      "public_evidence": [
+        {
+          "latex": "x-3",
+          "symbols": [
+            "x"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "inequality_sign",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Never multiply an inequality by an unknown-sign denominator; use sign cases or a sign chart.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    },
+    {
+      "kind": "back_substitution",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Retain substitution range and separately handle excluded zero cases; check solutions/endpoints in the original relation.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    }
+  ],
+  "guard_enforcement": "conditional natural-language solver instructions; not machine proof",
+  "router_decision_reason": "independent shadow validation bypasses cost gate",
+  "skill_injected": true,
+  "skill_prompt_tokens": 113,
+  "skill_prompt_tokens_method": "UTF8 bytes/3 estimate; provider input total is actual",
+  "input_tokens": 168,
+  "output_tokens": 580,
+  "total_tokens": 748,
+  "reasoning_tokens": 349,
+  "latency": 3.3064907750231214,
+  "llm_call_count": 1,
+  "infrastructure_attempts": 1,
+  "call_id": "44ebef4a74f64dd6d3ec5741913e5f8927de133fdcd404545c52f50d1dc88dbb",
+  "solution": "Subtract \\(2\\) from both sides:\n\\[\n\\frac{x-1}{x-3}-2\\ge 0\n\\]\n\\[\n\\frac{x-1-2(x-3)}{x-3}\\ge 0\n\\]\n\\[\n\\frac{x-1-2x+6}{x-3}\\ge 0\n\\]\n\\[\n\\frac{5-x}{x-3}\\ge 0\n\\]\n\nThe critical points are \\(x=3\\) and \\(x=5\\). Note that \\(x\\neq 3\\), since it makes the denominator zero.\n\nNow test intervals:\n\n- For \\(x<3\\): \\(\\frac{5-x}{x-3}<0\\)\n- For \\(3<x<5\\): \\(\\frac{5-x}{x-3}>0\\)\n- For \\(x>5\\): \\(\\frac{5-x}{x-3}<0\\)\n\nAt \\(x=5\\), \\(\\frac{5-5}{5-3}=0\\), so equality holds.\n\nThus the solution is:\n\\[\n(3,5]\n\\]\n\nThe answer is \\((3,5]\\).",
+  "truncated": false,
+  "gold_exposed": false,
+  "error_type": null,
+  "math_retries": 0,
+  "seal": "3b524261418a4e8e1921f15816e134495f9e59f0cab0d8fe967a1768236ba5a0"
+}

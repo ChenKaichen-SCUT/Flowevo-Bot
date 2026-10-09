@@ -68,6 +68,13 @@ class LLMClient:
                 data = response.json()
                 result = {'text': data['choices'][0]['message'].get('content') or '',
                           'usage': data.get('usage'), 'finish_reason': data['choices'][0].get('finish_reason')}
+                if self.ledger.path:
+                    # Preserve provider usage (including cache/reasoning fields)
+                    # and exact requested settings without headers or secrets.
+                    write_json(self.ledger.path.parent / (self.ledger.path.stem + '.provider') / (call_id + '.json'),
+                        {'call_id':call_id,'request':request,'provider_model':data.get('model'),
+                         'response_id':data.get('id'),'usage':data.get('usage'),
+                         'finish_reason':result['finish_reason']})
             except Exception as exc:
                 # Do not repeat an uncertain paid call automatically or disclose response bodies/secrets.
                 raise RuntimeError('Model request failed; inspect the pending journal before retrying') from None

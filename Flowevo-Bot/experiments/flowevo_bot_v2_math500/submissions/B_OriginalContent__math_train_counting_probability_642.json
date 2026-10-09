@@ -1,0 +1,99 @@
+{
+  "run_id": "flowevo_bot_v2_math500",
+  "task_id": "math_train_counting_probability_642",
+  "subject": "counting_probability",
+  "level": "Level 4",
+  "original_category": "Counting & Probability",
+  "method": "B_OriginalContent",
+  "task_order": 52,
+  "model": "deepseek-flash",
+  "prompt_hash": "7285c66a3bacc32ad5ccc82ba766879eb4b4e51769b344c3e5296b6d33d035ac",
+  "config_hash": "517c8422f0e5c4fe90e3296edf9362fa88558caa1d1089ef8e327184162fb05f",
+  "bank_hash": "38f2c8d6531fba0a6773ad66aaaba0b637d52a0ff76b4631e83ad98d3cfad351",
+  "route": "shadow_strategy",
+  "retrieved_skill_ids": [
+    "S04_v2_591ca36f47b0"
+  ],
+  "selected_skill_id": "counting_probability_669101e83d955915",
+  "family": "S04",
+  "skill_status": "shadow",
+  "trigger_result": {
+    "value": true,
+    "all_of": [
+      {
+        "value": true,
+        "feature": "subject:counting_probability",
+        "reason": "observed"
+      },
+      {
+        "value": true,
+        "feature": "lex:count_request",
+        "reason": "observed"
+      },
+      {
+        "value": true,
+        "feature": "lex:count_constraints",
+        "reason": "observed"
+      },
+      {
+        "value": true,
+        "optional_evidence": {
+          "value": true,
+          "feature": "lex:order",
+          "reason": "observed"
+        }
+      },
+      {
+        "value": true,
+        "guard_obligation": "disjoint_exhaustive_cases",
+        "guard_passed": false,
+        "reason": "deferred_to_solver"
+      }
+    ]
+  },
+  "guard_result": [
+    {
+      "kind": "order_repetition",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Establish order, distinguishability, and permitted repetitions from the question.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    },
+    {
+      "kind": "disjoint_exhaustive_cases",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Ensure cases exhaust the valid sample space and count overlaps exactly once.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    },
+    {
+      "kind": "equal_orbit_size",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Divide a symmetry count only after proving equal orbit sizes or a free action; otherwise count fixed points/cases.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    }
+  ],
+  "guard_enforcement": "original compact content; V2 obligations listed for audit only, not injected",
+  "router_decision_reason": "independent shadow validation bypasses cost gate",
+  "skill_injected": true,
+  "skill_prompt_tokens": 79,
+  "skill_prompt_tokens_method": "UTF8 bytes/3 estimate; provider input total is actual",
+  "input_tokens": 143,
+  "output_tokens": 1453,
+  "total_tokens": 1596,
+  "reasoning_tokens": 1209,
+  "latency": 7.526694041036535,
+  "llm_call_count": 1,
+  "infrastructure_attempts": 1,
+  "call_id": "ce1a880ce1551dc8121522f3a4c793bb47aa3ddb777d3b33bf61547febaf1f39",
+  "solution": "List the possible positive perfect squares that can appear:  \n\\(1,4,9,16,25,36,49,64\\).\n\nSince order does not matter, write the three squares in nondecreasing order:\n\\[\na \\le b \\le c,\\qquad a+b+c=81.\n\\]\n\nCheck possible largest square \\(c\\):\n\n- \\(c=64\\): then \\(a+b=17\\).  \n  The only positive-square pair is \\(1+16=17\\).  \n  Triple: \\((1,16,64)\\).\n\n- \\(c=49\\): then \\(a+b=32\\).  \n  The only possibility is \\(16+16=32\\).  \n  Triple: \\((16,16,49)\\).\n\n- \\(c=36\\): then \\(a+b=45\\).  \n  The only possibility is \\(9+36=45\\).  \n  Triple: \\((9,36,36)\\).\n\n- \\(c=25\\): then \\(a+b=56\\), but \\(a,b\\le25\\), so \\(a+b\\le50\\), impossible.\n- Smaller \\(c\\) are also impossible.\n\nThus there are \\(3\\) unordered triples.\n\nThe answer is 3.",
+  "truncated": false,
+  "gold_exposed": false,
+  "error_type": null,
+  "math_retries": 0,
+  "seal": "5e1e0be1db93d6ac65764eb431459142ec0c055fd30ac54e62c5682b6289fdc0"
+}

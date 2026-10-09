@@ -1,0 +1,125 @@
+{
+  "run_id": "flowevo_bot_v2_math500",
+  "task_id": "math_train_intermediate_algebra_1084",
+  "subject": "intermediate_algebra",
+  "level": "Level 4",
+  "original_category": "Intermediate Algebra",
+  "method": "C_RevisedContent",
+  "task_order": 48,
+  "model": "deepseek-flash",
+  "prompt_hash": "bd447e746ef7b9cf71aae357aba5b389ae4a10319d8bbc907b195cff9db9139e",
+  "config_hash": "517c8422f0e5c4fe90e3296edf9362fa88558caa1d1089ef8e327184162fb05f",
+  "bank_hash": "38f2c8d6531fba0a6773ad66aaaba0b637d52a0ff76b4631e83ad98d3cfad351",
+  "route": "shadow_strategy",
+  "retrieved_skill_ids": [
+    "S07_v2_3602556c556a"
+  ],
+  "selected_skill_id": "S07_v2_3602556c556a",
+  "family": "S07",
+  "skill_status": "shadow",
+  "trigger_result": {
+    "value": true,
+    "all_of": [
+      {
+        "value": true,
+        "feature": "subject:intermediate_algebra",
+        "reason": "observed"
+      },
+      {
+        "value": true,
+        "any_of": [
+          {
+            "value": false,
+            "feature": "math:rational_equation",
+            "reason": "observed"
+          },
+          {
+            "value": true,
+            "feature": "math:rational_inequality",
+            "reason": "observed"
+          }
+        ]
+      },
+      {
+        "value": true,
+        "not": {
+          "value": false,
+          "feature": "lex:trigonometric",
+          "reason": "observed"
+        }
+      },
+      {
+        "value": true,
+        "not": {
+          "value": false,
+          "feature": "lex:hypothetical_options",
+          "reason": "observed"
+        }
+      },
+      {
+        "value": true,
+        "guard_obligation": "denominator_nonzero",
+        "guard_passed": false,
+        "reason": "deferred_to_solver"
+      }
+    ]
+  },
+  "guard_result": [
+    {
+      "kind": "denominator_nonzero",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Record and exclude zeros of every original denominator.",
+      "policy": "verify_or_fallback",
+      "public_evidence": [
+        {
+          "latex": "x-1",
+          "symbols": [
+            "x"
+          ]
+        },
+        {
+          "latex": "2x",
+          "symbols": [
+            "x"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "inequality_sign",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Never multiply an inequality by an unknown-sign denominator; use sign cases or a sign chart.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    },
+    {
+      "kind": "back_substitution",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Retain substitution range and separately handle excluded zero cases; check solutions/endpoints in the original relation.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    }
+  ],
+  "guard_enforcement": "conditional natural-language solver instructions; not machine proof",
+  "router_decision_reason": "independent shadow validation bypasses cost gate",
+  "skill_injected": true,
+  "skill_prompt_tokens": 113,
+  "skill_prompt_tokens_method": "UTF8 bytes/3 estimate; provider input total is actual",
+  "input_tokens": 173,
+  "output_tokens": 1974,
+  "total_tokens": 2147,
+  "reasoning_tokens": 1670,
+  "latency": 8.382873702968936,
+  "llm_call_count": 1,
+  "infrastructure_attempts": 1,
+  "call_id": "0c145defbe94a030197289b63686143926eb5b2d2d8152ac33acdcd9a9cfbb1e",
+  "solution": "The domain excludes \\(x=0\\) and \\(x=1\\).\n\n\\[\n\\frac{x}{x-1}+\\frac{x+2}{2x}-3\\ge 0\n\\]\n\nCombine over \\(2x(x-1)\\):\n\n\\[\n\\frac{2x^2+(x+2)(x-1)-6x(x-1)}{2x(x-1)}\\ge 0\n\\]\n\n\\[\n\\frac{-3x^2+7x-2}{2x(x-1)}\\ge 0\n\\]\n\nFactor the numerator:\n\n\\[\n-3x^2+7x-2=(3x-1)(2-x)\n\\]\n\nSo the inequality becomes\n\n\\[\n\\frac{(3x-1)(2-x)}{2x(x-1)}\\ge 0.\n\\]\n\nCritical points are \\(x=0, \\frac13, 1, 2\\), with \\(x=0,1\\) excluded.\n\nChecking signs on the intervals:\n\n- \\((-\\infty,0)\\): negative\n- \\((0,\\frac13)\\): positive\n- \\((\\frac13,1)\\): negative\n- \\((1,2)\\): positive\n- \\((2,\\infty)\\): negative\n\nInclude where the numerator is zero: \\(x=\\frac13,2\\). Exclude \\(x=0,1\\).\n\nThus the solution is\n\n\\[\n(0,\\tfrac13]\\cup(1,2].\n\\]\n\nThe answer is \\((0,\\frac13]\\cup(1,2]\\).",
+  "truncated": false,
+  "gold_exposed": false,
+  "error_type": null,
+  "math_retries": 0,
+  "seal": "4f5143a5323c11406561848413ca00ddc233c6ca827a27f150dfb802415733ba"
+}

@@ -1,0 +1,125 @@
+{
+  "run_id": "flowevo_bot_v2_math500",
+  "task_id": "math_train_intermediate_algebra_483",
+  "subject": "intermediate_algebra",
+  "level": "Level 3",
+  "original_category": "Intermediate Algebra",
+  "method": "C_RevisedContent",
+  "task_order": 1,
+  "model": "deepseek-flash",
+  "prompt_hash": "7790cf3dd73865500a23b9d9189ac4efb91a7afcb9a84a97fb7e11219323ff7e",
+  "config_hash": "517c8422f0e5c4fe90e3296edf9362fa88558caa1d1089ef8e327184162fb05f",
+  "bank_hash": "38f2c8d6531fba0a6773ad66aaaba0b637d52a0ff76b4631e83ad98d3cfad351",
+  "route": "shadow_strategy",
+  "retrieved_skill_ids": [
+    "S07_v2_3602556c556a"
+  ],
+  "selected_skill_id": "S07_v2_3602556c556a",
+  "family": "S07",
+  "skill_status": "shadow",
+  "trigger_result": {
+    "value": true,
+    "all_of": [
+      {
+        "value": true,
+        "feature": "subject:intermediate_algebra",
+        "reason": "observed"
+      },
+      {
+        "value": true,
+        "any_of": [
+          {
+            "value": true,
+            "feature": "math:rational_equation",
+            "reason": "observed"
+          },
+          {
+            "value": false,
+            "feature": "math:rational_inequality",
+            "reason": "observed"
+          }
+        ]
+      },
+      {
+        "value": true,
+        "not": {
+          "value": false,
+          "feature": "lex:trigonometric",
+          "reason": "observed"
+        }
+      },
+      {
+        "value": true,
+        "not": {
+          "value": false,
+          "feature": "lex:hypothetical_options",
+          "reason": "observed"
+        }
+      },
+      {
+        "value": true,
+        "guard_obligation": "denominator_nonzero",
+        "guard_passed": false,
+        "reason": "deferred_to_solver"
+      }
+    ]
+  },
+  "guard_result": [
+    {
+      "kind": "denominator_nonzero",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Record and exclude zeros of every original denominator.",
+      "policy": "verify_or_fallback",
+      "public_evidence": [
+        {
+          "latex": "x^2+4x+1",
+          "symbols": [
+            "x"
+          ]
+        },
+        {
+          "latex": "x^2-10x",
+          "symbols": [
+            "x"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "inequality_sign",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Never multiply an inequality by an unknown-sign denominator; use sign cases or a sign chart.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    },
+    {
+      "kind": "back_substitution",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Retain substitution range and separately handle excluded zero cases; check solutions/endpoints in the original relation.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    }
+  ],
+  "guard_enforcement": "conditional natural-language solver instructions; not machine proof",
+  "router_decision_reason": "independent shadow validation bypasses cost gate",
+  "skill_injected": true,
+  "skill_prompt_tokens": 113,
+  "skill_prompt_tokens_method": "UTF8 bytes/3 estimate; provider input total is actual",
+  "input_tokens": 175,
+  "output_tokens": 2064,
+  "total_tokens": 2239,
+  "reasoning_tokens": 1787,
+  "latency": 9.206076487025712,
+  "llm_call_count": 1,
+  "infrastructure_attempts": 1,
+  "call_id": "35002ccf7d7b6c3dd6ceadf6f428c37e89d8c428b23989a4c6cbdc319ad76141",
+  "solution": "First note the denominator restrictions:\n\\[\nx^2+4x+1\\ne 0,\\qquad x^2-10x=x(x-10)\\ne 0.\n\\]\nSo \\(x\\ne 0,10\\), and also \\(x\\ne -2\\pm\\sqrt3\\).\n\nNow cross-multiply, since denominators are nonzero:\n\\[\n(x-2)(x^2-10x)=(x-5)(x^2+4x+1).\n\\]\nExpand both sides:\n\\[\nx^3-12x^2+20x=x^3-x^2-19x-5.\n\\]\nCancel \\(x^3\\) and simplify:\n\\[\n-12x^2+20x=-x^2-19x-5\n\\]\n\\[\n-11x^2+39x+5=0\n\\]\n\\[\n11x^2-39x-5=0.\n\\]\nThis quadratic has discriminant\n\\[\n(-39)^2-4(11)(-5)=1521+220=1741>0,\n\\]\nso it has two real solutions. None of them are excluded by the denominator restrictions.\n\nBy Vieta’s formula, the sum of the roots is\n\\[\n\\frac{39}{11}.\n\\]\n\nThe answer is \\(\\frac{39}{11}\\).",
+  "truncated": false,
+  "gold_exposed": false,
+  "error_type": null,
+  "math_retries": 0,
+  "seal": "470e8f46e19ddc9cd35efa738570cf93f43d0e03236eeddce8e1a8df71176080"
+}

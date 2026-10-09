@@ -56,7 +56,10 @@ class ThoughtDistiller:
                 'Generic advice like think step by step is not a mathematical strategy.',
                 'A bracketed problem operator is an unconfirmed name, never assume a factorization algorithm.'
             ],
+            'json_types': 'Return ONLY a JSON object. version is integer 1. trigger_features, preconditions, negative_triggers, strategy_steps, verification_rules, composition_tags are arrays of strings. optional_executor is null. All other requested fields are strings. Do not invent extra fields.',
+            'compression_contract': 'Use English; compact_prompt must be at most 280 UTF-8 bytes. Every precondition/negative_trigger feature identifier, with underscores replaced by spaces, must appear literally in compact_prompt, with the appropriate only-if/avoid meaning. Use only feature_vocabulary identifiers for these lists; express other mathematical caveats in strategy_steps and compact_prompt.',
             'subject':traces[0].problem.subject, 'observable_common_features':sorted(common),
+            'trigger_contract': 'trigger_features MUST be a nonempty subset of observable_common_features, copied verbatim; do not add natural-language features or use vocabulary features absent from this common list. Put descriptive mathematical applicability conditions in strategy_steps/compact_prompt, not in trigger_features.',
             'feature_vocabulary': sorted(PATTERNS), 'existing_strategy_names':[s.name for s in existing],
             'required_fields':['skill_id','version','subject','strategy_pattern','name','trigger_features','preconditions',
                                'negative_triggers','strategy_steps','verification_rules','composition_tags','compact_prompt','optional_executor'],

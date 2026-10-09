@@ -1,0 +1,99 @@
+{
+  "run_id": "flowevo_bot_v2_math500",
+  "task_id": "math_train_counting_probability_226",
+  "subject": "counting_probability",
+  "level": "Level 5",
+  "original_category": "Counting & Probability",
+  "method": "C_RevisedContent",
+  "task_order": 24,
+  "model": "deepseek-flash",
+  "prompt_hash": "b63dc2605517e8819df6e85d48e04a093de42b470b869c184330a96b161b2c8c",
+  "config_hash": "517c8422f0e5c4fe90e3296edf9362fa88558caa1d1089ef8e327184162fb05f",
+  "bank_hash": "38f2c8d6531fba0a6773ad66aaaba0b637d52a0ff76b4631e83ad98d3cfad351",
+  "route": "shadow_strategy",
+  "retrieved_skill_ids": [
+    "S04_v2_591ca36f47b0"
+  ],
+  "selected_skill_id": "S04_v2_591ca36f47b0",
+  "family": "S04",
+  "skill_status": "shadow",
+  "trigger_result": {
+    "value": true,
+    "all_of": [
+      {
+        "value": true,
+        "feature": "subject:counting_probability",
+        "reason": "observed"
+      },
+      {
+        "value": true,
+        "feature": "lex:count_request",
+        "reason": "observed"
+      },
+      {
+        "value": true,
+        "feature": "lex:count_constraints",
+        "reason": "observed"
+      },
+      {
+        "value": true,
+        "optional_evidence": {
+          "value": true,
+          "feature": "lex:order",
+          "reason": "observed"
+        }
+      },
+      {
+        "value": true,
+        "guard_obligation": "disjoint_exhaustive_cases",
+        "guard_passed": false,
+        "reason": "deferred_to_solver"
+      }
+    ]
+  },
+  "guard_result": [
+    {
+      "kind": "order_repetition",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Establish order, distinguishability, and permitted repetitions from the question.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    },
+    {
+      "kind": "disjoint_exhaustive_cases",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Ensure cases exhaust the valid sample space and count overlaps exactly once.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    },
+    {
+      "kind": "equal_orbit_size",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Divide a symmetry count only after proving equal orbit sizes or a free action; otherwise count fixed points/cases.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    }
+  ],
+  "guard_enforcement": "conditional natural-language solver instructions; not machine proof",
+  "router_decision_reason": "independent shadow validation bypasses cost gate",
+  "skill_injected": true,
+  "skill_prompt_tokens": 105,
+  "skill_prompt_tokens_method": "UTF8 bytes/3 estimate; provider input total is actual",
+  "input_tokens": 155,
+  "output_tokens": 461,
+  "total_tokens": 616,
+  "reasoning_tokens": 232,
+  "latency": 3.330831677012611,
+  "llm_call_count": 1,
+  "infrastructure_attempts": 1,
+  "call_id": "451f53efddb52b0ba6cc702a8e1da52d0d0e7c5af0ec426527d7113bcdbc4818",
+  "solution": "There are 400 positive three-digit integers less than 500:\n\n\\[\n100,101,\\dots,499\n\\]\n\nSo the total is:\n\n\\[\n499-100+1=400\n\\]\n\nInstead of counting those with repeated digits directly, count the complement: three-digit integers less than 500 whose digits are all distinct.\n\nLet the number be \\(HTU\\), where \\(H\\) is the hundreds digit.\n\n- Since the number is less than 500, \\(H \\in \\{1,2,3,4\\}\\), so there are \\(4\\) choices.\n- The tens digit \\(T\\) can be any digit \\(0\\) through \\(9\\) except \\(H\\), so \\(9\\) choices.\n- The units digit \\(U\\) can be any digit \\(0\\) through \\(9\\) except \\(H\\) and \\(T\\), so \\(8\\) choices.\n\nThus the number with all distinct digits is:\n\n\\[\n4 \\cdot 9 \\cdot 8 = 288\n\\]\n\nTherefore, the number with at least two digits the same is:\n\n\\[\n400-288=112\n\\]\n\nThe answer is 112.",
+  "truncated": false,
+  "gold_exposed": false,
+  "error_type": null,
+  "math_retries": 0,
+  "seal": "d20fb5b317d4e471229a287a2dae83f051e4e0445851752389d83c3218bea4b8"
+}

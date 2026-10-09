@@ -1,0 +1,125 @@
+{
+  "run_id": "flowevo_bot_v2_math500",
+  "task_id": "math_train_intermediate_algebra_483",
+  "subject": "intermediate_algebra",
+  "level": "Level 3",
+  "original_category": "Intermediate Algebra",
+  "method": "B_OriginalContent",
+  "task_order": 46,
+  "model": "deepseek-flash",
+  "prompt_hash": "d8e6b4656636520e3e555fd55229767a9ff7f180014df72604fc0c2f505ecc0e",
+  "config_hash": "517c8422f0e5c4fe90e3296edf9362fa88558caa1d1089ef8e327184162fb05f",
+  "bank_hash": "38f2c8d6531fba0a6773ad66aaaba0b637d52a0ff76b4631e83ad98d3cfad351",
+  "route": "shadow_strategy",
+  "retrieved_skill_ids": [
+    "S07_v2_3602556c556a"
+  ],
+  "selected_skill_id": "intermediate_algebra_4a5d6d54c25d8d89",
+  "family": "S07",
+  "skill_status": "shadow",
+  "trigger_result": {
+    "value": true,
+    "all_of": [
+      {
+        "value": true,
+        "feature": "subject:intermediate_algebra",
+        "reason": "observed"
+      },
+      {
+        "value": true,
+        "any_of": [
+          {
+            "value": true,
+            "feature": "math:rational_equation",
+            "reason": "observed"
+          },
+          {
+            "value": false,
+            "feature": "math:rational_inequality",
+            "reason": "observed"
+          }
+        ]
+      },
+      {
+        "value": true,
+        "not": {
+          "value": false,
+          "feature": "lex:trigonometric",
+          "reason": "observed"
+        }
+      },
+      {
+        "value": true,
+        "not": {
+          "value": false,
+          "feature": "lex:hypothetical_options",
+          "reason": "observed"
+        }
+      },
+      {
+        "value": true,
+        "guard_obligation": "denominator_nonzero",
+        "guard_passed": false,
+        "reason": "deferred_to_solver"
+      }
+    ]
+  },
+  "guard_result": [
+    {
+      "kind": "denominator_nonzero",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Record and exclude zeros of every original denominator.",
+      "policy": "verify_or_fallback",
+      "public_evidence": [
+        {
+          "latex": "x^2+4x+1",
+          "symbols": [
+            "x"
+          ]
+        },
+        {
+          "latex": "x^2-10x",
+          "symbols": [
+            "x"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "inequality_sign",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Never multiply an inequality by an unknown-sign denominator; use sign cases or a sign chart.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    },
+    {
+      "kind": "back_substitution",
+      "status": "solver_obligation_unverified",
+      "passed": null,
+      "instruction": "Retain substitution range and separately handle excluded zero cases; check solutions/endpoints in the original relation.",
+      "policy": "verify_or_fallback",
+      "public_evidence": []
+    }
+  ],
+  "guard_enforcement": "original compact content; V2 obligations listed for audit only, not injected",
+  "router_decision_reason": "independent shadow validation bypasses cost gate",
+  "skill_injected": true,
+  "skill_prompt_tokens": 79,
+  "skill_prompt_tokens_method": "UTF8 bytes/3 estimate; provider input total is actual",
+  "input_tokens": 153,
+  "output_tokens": 1499,
+  "total_tokens": 1652,
+  "reasoning_tokens": 1218,
+  "latency": 6.830539420014247,
+  "llm_call_count": 1,
+  "infrastructure_attempts": 1,
+  "call_id": "895c62a14d65732f3e8bf21494742a2c0e9fdf7173450721595cd914f4d2480e",
+  "solution": "First note the domain restrictions:\n\\[\nx^2+4x+1\\neq 0,\\qquad x^2-10x=x(x-10)\\neq 0\n\\]\nso \\(x\\neq 0,10\\), and \\(x\\neq -2\\pm\\sqrt3\\).\n\nCross-multiply:\n\\[\n(x-2)(x^2-10x)=(x-5)(x^2+4x+1)\n\\]\n\nExpand both sides:\n\\[\nx^3-12x^2+20x=x^3-x^2-19x-5\n\\]\n\nCancel \\(x^3\\):\n\\[\n-12x^2+20x=-x^2-19x-5\n\\]\n\nBring all terms to one side:\n\\[\n-11x^2+39x+5=0\n\\]\n\\[\n11x^2-39x-5=0\n\\]\n\nThe discriminant is\n\\[\n(-39)^2-4(11)(-5)=1521+220=1741>0\n\\]\nso there are two real roots.\n\nFor a quadratic \\(ax^2+bx+c=0\\), the sum of roots is \\(-\\frac ba\\). Thus\n\\[\n\\text{sum}=\\frac{39}{11}\n\\]\n\nThese roots do not violate the domain restrictions.\n\nThe answer is \\(\\frac{39}{11}\\).",
+  "truncated": false,
+  "gold_exposed": false,
+  "error_type": null,
+  "math_retries": 0,
+  "seal": "c3fce1a608934fe23a910ad4b450b1953c4843c561d91702a4ce22b7573baac7"
+}

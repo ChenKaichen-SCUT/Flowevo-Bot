@@ -1,0 +1,267 @@
+[
+  {
+    "task_id": "math_train_counting_probability_306",
+    "problem": "There is an unlimited supply of congruent equilateral triangles made of colored paper.  Each triangle is a solid color with the same color on both sides of the paper. A large equilateral triangle is constructed from four of these paper triangles as shown.  Two large triangles are considered distinguishable if it is not possible to place one on the other, using translations, rotations, and/or reflections, so that their corresponding small triangles are of the same color. Given that there are six different colors of triangles from which to choose, how many distinguishable large equilateral triangles can be constructed?\n\n[asy]\ndraw((0,0)--(10,0)--(5,8.7)--cycle);\ndraw((5,0)--(2.5,4.3)--(7.5,4.3)--cycle);\n[/asy]",
+    "responses": [
+      {
+        "run_id": "flowevo_bot_v2_math500",
+        "task_id": "math_train_counting_probability_306",
+        "subject": "counting_probability",
+        "level": "Level 5",
+        "original_category": "Counting & Probability",
+        "method": "C_RevisedContent",
+        "task_order": 3,
+        "model": "deepseek-flash",
+        "prompt_hash": "c688a8cd85e44593da3dd92d1d7cc9351837dd2354aceabe5e67710eb824d99b",
+        "config_hash": "517c8422f0e5c4fe90e3296edf9362fa88558caa1d1089ef8e327184162fb05f",
+        "bank_hash": "38f2c8d6531fba0a6773ad66aaaba0b637d52a0ff76b4631e83ad98d3cfad351",
+        "route": "shadow_strategy",
+        "retrieved_skill_ids": [
+          "S04_v2_591ca36f47b0"
+        ],
+        "selected_skill_id": "S04_v2_591ca36f47b0",
+        "family": "S04",
+        "skill_status": "shadow",
+        "trigger_result": {
+          "value": true,
+          "all_of": [
+            {
+              "value": true,
+              "feature": "subject:counting_probability",
+              "reason": "observed"
+            },
+            {
+              "value": true,
+              "feature": "lex:count_request",
+              "reason": "observed"
+            },
+            {
+              "value": true,
+              "feature": "lex:count_constraints",
+              "reason": "observed"
+            },
+            {
+              "value": true,
+              "optional_evidence": {
+                "value": false,
+                "feature": "lex:order",
+                "reason": "observed"
+              }
+            },
+            {
+              "value": true,
+              "guard_obligation": "disjoint_exhaustive_cases",
+              "guard_passed": false,
+              "reason": "deferred_to_solver"
+            }
+          ]
+        },
+        "guard_result": [
+          {
+            "kind": "order_repetition",
+            "status": "solver_obligation_unverified",
+            "passed": null,
+            "instruction": "Establish order, distinguishability, and permitted repetitions from the question.",
+            "policy": "verify_or_fallback",
+            "public_evidence": []
+          },
+          {
+            "kind": "disjoint_exhaustive_cases",
+            "status": "solver_obligation_unverified",
+            "passed": null,
+            "instruction": "Ensure cases exhaust the valid sample space and count overlaps exactly once.",
+            "policy": "verify_or_fallback",
+            "public_evidence": []
+          },
+          {
+            "kind": "equal_orbit_size",
+            "status": "solver_obligation_unverified",
+            "passed": null,
+            "instruction": "Divide a symmetry count only after proving equal orbit sizes or a free action; otherwise count fixed points/cases.",
+            "policy": "verify_or_fallback",
+            "public_evidence": []
+          }
+        ],
+        "guard_enforcement": "conditional natural-language solver instructions; not machine proof",
+        "router_decision_reason": "independent shadow validation bypasses cost gate",
+        "skill_injected": true,
+        "skill_prompt_tokens": 105,
+        "skill_prompt_tokens_method": "UTF8 bytes/3 estimate; provider input total is actual",
+        "input_tokens": 301,
+        "output_tokens": 1850,
+        "total_tokens": 2151,
+        "reasoning_tokens": 1689,
+        "latency": 10.571233960974496,
+        "llm_call_count": 1,
+        "infrastructure_attempts": 1,
+        "call_id": "7773cffb8d0566501fa5a820d9b10380fbae089f5f4577a8f222b3fb9dd267cc",
+        "solution": "The central small triangle is unique: every symmetry of the large equilateral triangle keeps the center triangle fixed. The three corner triangles can be permuted arbitrarily by rotations/reflections.\n\nSo:\n\n1. Choose the color of the central triangle:  \n   \\[\n   6\n   \\]\n   choices.\n\n2. For the three corner triangles, only the multiset of colors matters, since any permutation of the corners is achievable by symmetry.  \n   The number of multisets of size \\(3\\) chosen from \\(6\\) colors is\n   \\[\n   \\binom{6+3-1}{3}=\\binom{8}{3}=56.\n   \\]\n\nThus the total number of distinguishable large triangles is\n\\[\n6\\cdot 56=336.\n\\]\n\nThe answer is 336.",
+        "truncated": false,
+        "gold_exposed": false,
+        "error_type": null,
+        "math_retries": 0,
+        "seal": "34b9985e880941b0563afc44650bcc30b6715e50b298fcb2ead90f4877b2f7f3",
+        "answer": "336",
+        "original_correct": null,
+        "rechecked_correct": true,
+        "parse_status": "symbolic",
+        "truncation_status": false,
+        "scoring_difference_reason": "last_final_answer_and_structured_equivalence:symbolic",
+        "correct": true
+      },
+      {
+        "run_id": "flowevo_bot_v2_math500",
+        "task_id": "math_train_counting_probability_306",
+        "subject": "counting_probability",
+        "level": "Level 5",
+        "original_category": "Counting & Probability",
+        "method": "A_NoBank",
+        "task_order": 51,
+        "model": "deepseek-flash",
+        "prompt_hash": "8bf3a136f413fb94804a3f8a46801b784932e4788b27f9f548f8d03a2aea6f4a",
+        "config_hash": "517c8422f0e5c4fe90e3296edf9362fa88558caa1d1089ef8e327184162fb05f",
+        "bank_hash": "38f2c8d6531fba0a6773ad66aaaba0b637d52a0ff76b4631e83ad98d3cfad351",
+        "route": "base",
+        "retrieved_skill_ids": [],
+        "selected_skill_id": null,
+        "family": "S04",
+        "skill_status": null,
+        "trigger_result": null,
+        "guard_result": [],
+        "guard_enforcement": "not_applicable",
+        "router_decision_reason": "base/no reliable match",
+        "skill_injected": false,
+        "skill_prompt_tokens": 0,
+        "skill_prompt_tokens_method": "UTF8 bytes/3 estimate; provider input total is actual",
+        "input_tokens": 221,
+        "output_tokens": 4096,
+        "total_tokens": 4317,
+        "reasoning_tokens": 4096,
+        "latency": 21.30413690401474,
+        "llm_call_count": 1,
+        "infrastructure_attempts": 1,
+        "call_id": "ba7602b84918a2ca5609d639383a4a31f0a557064f7cec097bcd068967443673",
+        "solution": "",
+        "truncated": true,
+        "gold_exposed": false,
+        "error_type": "output_limit",
+        "math_retries": 0,
+        "seal": "a9fed9dbe8c09881e6ae87976ff4c974f9b8bc334eab10789f0f269c8c6d4166",
+        "answer": null,
+        "original_correct": null,
+        "rechecked_correct": false,
+        "parse_status": "truncated",
+        "truncation_status": true,
+        "scoring_difference_reason": "output_limit",
+        "correct": false
+      },
+      {
+        "run_id": "flowevo_bot_v2_math500",
+        "task_id": "math_train_counting_probability_306",
+        "subject": "counting_probability",
+        "level": "Level 5",
+        "original_category": "Counting & Probability",
+        "method": "B_OriginalContent",
+        "task_order": 59,
+        "model": "deepseek-flash",
+        "prompt_hash": "ccd7cd70111a96fa74c97949829d988b1710882f8b6de7fe2ff8cc5f4b526462",
+        "config_hash": "517c8422f0e5c4fe90e3296edf9362fa88558caa1d1089ef8e327184162fb05f",
+        "bank_hash": "38f2c8d6531fba0a6773ad66aaaba0b637d52a0ff76b4631e83ad98d3cfad351",
+        "route": "shadow_strategy",
+        "retrieved_skill_ids": [
+          "S04_v2_591ca36f47b0"
+        ],
+        "selected_skill_id": "counting_probability_669101e83d955915",
+        "family": "S04",
+        "skill_status": "shadow",
+        "trigger_result": {
+          "value": true,
+          "all_of": [
+            {
+              "value": true,
+              "feature": "subject:counting_probability",
+              "reason": "observed"
+            },
+            {
+              "value": true,
+              "feature": "lex:count_request",
+              "reason": "observed"
+            },
+            {
+              "value": true,
+              "feature": "lex:count_constraints",
+              "reason": "observed"
+            },
+            {
+              "value": true,
+              "optional_evidence": {
+                "value": false,
+                "feature": "lex:order",
+                "reason": "observed"
+              }
+            },
+            {
+              "value": true,
+              "guard_obligation": "disjoint_exhaustive_cases",
+              "guard_passed": false,
+              "reason": "deferred_to_solver"
+            }
+          ]
+        },
+        "guard_result": [
+          {
+            "kind": "order_repetition",
+            "status": "solver_obligation_unverified",
+            "passed": null,
+            "instruction": "Establish order, distinguishability, and permitted repetitions from the question.",
+            "policy": "verify_or_fallback",
+            "public_evidence": []
+          },
+          {
+            "kind": "disjoint_exhaustive_cases",
+            "status": "solver_obligation_unverified",
+            "passed": null,
+            "instruction": "Ensure cases exhaust the valid sample space and count overlaps exactly once.",
+            "policy": "verify_or_fallback",
+            "public_evidence": []
+          },
+          {
+            "kind": "equal_orbit_size",
+            "status": "solver_obligation_unverified",
+            "passed": null,
+            "instruction": "Divide a symmetry count only after proving equal orbit sizes or a free action; otherwise count fixed points/cases.",
+            "policy": "verify_or_fallback",
+            "public_evidence": []
+          }
+        ],
+        "guard_enforcement": "original compact content; V2 obligations listed for audit only, not injected",
+        "router_decision_reason": "independent shadow validation bypasses cost gate",
+        "skill_injected": true,
+        "skill_prompt_tokens": 79,
+        "skill_prompt_tokens_method": "UTF8 bytes/3 estimate; provider input total is actual",
+        "input_tokens": 280,
+        "output_tokens": 2575,
+        "total_tokens": 2855,
+        "reasoning_tokens": 2427,
+        "latency": 13.584358397987671,
+        "llm_call_count": 1,
+        "infrastructure_attempts": 1,
+        "call_id": "22183664bc89f53850618753d7afbfe570dc680146b7e20798bb2602fcfbc891",
+        "solution": "The central small triangle is fixed by every symmetry of the large equilateral triangle.  \nThe three corner small triangles can be permuted arbitrarily by rotations/reflections of the large triangle.\n\nSo:\n\n- Choose the color of the central triangle: \\(6\\) ways.\n- For the three corner triangles, order does not matter because any permutation is considered the same. We are choosing a multiset of size \\(3\\) from \\(6\\) colors.\n\nThe number of such multisets is\n\\[\n\\binom{6+3-1}{3}=\\binom{8}{3}=56.\n\\]\n\nThus the total number of distinguishable large triangles is\n\\[\n6 \\cdot 56 = 336.\n\\]\n\nThe answer is 336.",
+        "truncated": false,
+        "gold_exposed": false,
+        "error_type": null,
+        "math_retries": 0,
+        "seal": "a97424777a424cb7a2d3f77df0f0ef81289752295b5bc851ad275a01426d915c",
+        "answer": "336",
+        "original_correct": null,
+        "rechecked_correct": true,
+        "parse_status": "symbolic",
+        "truncation_status": false,
+        "scoring_difference_reason": "last_final_answer_and_structured_equivalence:symbolic",
+        "correct": true
+      }
+    ],
+    "interpretation": "NoBank exhausted output budget with empty visible answer; both original and revised skills completed a correct answer. Not evidence that a completed wrong derivation was corrected."
+  }
+]

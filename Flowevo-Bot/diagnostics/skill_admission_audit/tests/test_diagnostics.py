@@ -91,3 +91,10 @@ def test_all_requested_deliverables():
  assert len(list((P/'reports').glob('*.md')))==9
  for file in ('skills_full.json','skill_diagnostics.csv','admission_decisions.jsonl','skill_task_matches.csv','task_pairwise.csv','cost_breakdown.csv','prompt_config_comparison.csv'):
   assert (P/'data'/file).stat().st_size>0
+
+
+def test_geometry_apparent_benefit_is_unit_format_artifact():
+ assert grade_one(('diagnostic','18 square centimeters','18',False))['final_correct'] is False
+ assert grade_one(('diagnostic',r'\(18\) square centimeters','18',False))['final_correct'] is True
+ review=read_json(P/'data/evidence/grading_case_review.json')
+ assert review['grading_false_negative_count']==2 and not review['historical_scores_changed']

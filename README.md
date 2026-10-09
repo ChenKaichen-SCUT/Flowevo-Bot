@@ -6,7 +6,7 @@
 
 [Skill Admission 研究摘要](Flowevo-Bot/diagnostics/skill_admission_audit/reports/00_EXECUTIVE_SUMMARY.md) · [12 个 Skill 原文](Flowevo-Bot/diagnostics/skill_admission_audit/reports/01_ALL_SKILLS.md) · [诊断包下载](Flowevo-Bot/diagnostics/skill_admission_audit.zip)
 
-本轮为零新增 API 的离线诊断：9/12 策略不能匹配来源题、8/12 缺少可用开发验证；另外发现条件语义和一次评分假阴性。500题Bot本轮请求路径等价于空库，测试token节省不能归因于BoT复用。原始结果与核心实现均保留，未降低阈值或新增真实实验。
+本轮为零新增 API 的离线诊断：9/12 策略不能匹配来源题、8/12 缺少可用开发验证；另外发现条件语义和两次评分假阴性。500题Bot本轮请求路径等价于空库，测试token节省不能归因于BoT复用。原始结果与核心实现均保留，未降低阈值或新增真实实验。
 
 ## 工作区结构
 

@@ -8,7 +8,7 @@
 - data/skill_task_matches.csv：12×350=4200条开发匹配记录；不使用标签生成特征。
 - data/task_pairwise.csv：500题实际配对，不修改历史分数。
 - data/cost_breakdown.csv、prompt_config_comparison.csv：账本与公平性审计。
-- data/evidence：71条必要来源轨迹、4个准确率不一致开发题、真实prompt示例和provenance证据，未打包整个历史响应库。
+- data/evidence：71条必要来源轨迹、4个准确率不一致开发题及两例评分假阴性诊断、真实prompt示例和provenance证据，未打包整个历史响应库。
 - scripts：可复现的只读诊断/渲染及人工质量评注。
 - tests：网络禁用、契约/反例/账本/历史哈希验证。
 - manifest.json：源commit、哈希、数据/模型与unknown项。报告时间使用Asia/Shanghai。

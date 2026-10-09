@@ -35,7 +35,7 @@
 
 - S02 明确 OR文字/AND机器条件失配。Distiller校验只要求preconditions属于词汇表、出现在compact中，不要求它们在来源题或独立题可满足；9条来源自匹配为0仍通过schema。
 - 空pairwise的 independent 字段仍设true，admit再用非空检查隔离；决策防护实际生效，但状态语义混合了“缺数据”和“有害”。
-- S12一次评分假阴性不是Admission布尔逻辑错误，却污染其输入。不得据此认定应该放宽reject_observed_harmful_patterns。
+- S12和S06各有一次评分假阴性，分别制造了账面负迁移与账面正迁移；不是Admission布尔逻辑错误，却污染其输入。不得据此认定应该放宽reject_observed_harmful_patterns。
 - 预算实验 `experiment_bank.validate_batch` 直接写 structurally_distinct=True；之前确实做过全局近重复检查，但这不能证明数学结构独立。该字段证据强度过高。
 - 单卡token_stats未纳入第一次失败蒸馏及未入库训练题成本，而全局bank.cost_calls和成本报告包含这些支出。全局总数正确；单卡摊销估计不是全局总成本分摊。
 - n=1时saving_lower_bound=0是程序默认值，不能当作估计置信区间。

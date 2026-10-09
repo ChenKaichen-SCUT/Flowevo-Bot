@@ -2,9 +2,9 @@
 
 本轮完成12个真实策略的离线诊断，新增LLM调用0、token0、API成本0；原500题分数、核心实现与策略库均未改动。
 
-最优先应改 Skill 表示/Distiller 的条件契约，并先修复评分诊断输入，而非直接放宽Admission或重写Router。12/12通过形式schema，0/12有充分证据成为可靠经济的active；S04/S06/S07有值得保留的局部核心，但证据不够且S04需补对称条件。
+最优先应改 Skill 表示/Distiller 的条件契约，并先修复评分诊断输入，而非直接放宽Admission或重写Router。12/12通过形式schema，0/12有充分证据成为可靠经济的active；S04/S07有值得保留并验证的局部核心，但证据不够且S04需补对称条件。S06原账面+1已确认为格式差异，不视为真实帮助证据。
 
-9条策略连来源题都不匹配，8条开发eligible为0；另外S07仅1对，S04/S06因成本增加失败，S12因一例评分假阴性+一例截断触发harm。S12的观察不能证明两次数学推导错误。Admission状态按代码重放12/12一致；数据契约、评价和structural证据字段存在已复现问题。Router本轮未收到active候选，潜在保守界是次级问题。
+9条策略连来源题都不匹配，8条开发eligible为0；另外S07仅1对，S04/S06因成本增加失败，S12因一例评分假阴性+一例截断触发harm。S06还有一例格式假阴性制造了账面benefit。S12的观察不能证明两次数学推导错误。Admission状态按代码重放12/12一致；数据契约、评价和structural证据字段存在已复现问题。Router本轮未收到active候选，潜在保守界是次级问题。
 
 | ID | 学科 | 真实套路（中文释义） | eligible | 首阻断 | 建议 |
 | --- | --- | --- | --- | --- | --- |
@@ -13,7 +13,7 @@
 | S03 | counting_probability | 等可能有利数除总数 | 0/50 | independent_evidence | 区分离散/连续/序贯概率结构；将模型可证条件与题面检索词分开 |
 | S04 | counting_probability | 分类计数与去重 | 18/50 | saving_lower_bound | 保留分类计数核心，补自由作用/固定点条件后验证；不直接激活原卡 |
 | S05 | geometry | 几何测量转代数不变量 | 0/50 | independent_evidence | 先拆出长方体三面面积不变量等明确子家族，避免把函数 composition 用作一般组合 |
-| S06 | geometry | 三角关系转方程 | 10/50 | saving_lower_bound | 保留相似比或角追踪单一子套路，在更窄独立题上做紧凑卡消融 |
+| S06 | geometry | 三角关系转方程 | 10/50 | saving_lower_bound | 保留题型骨架供离线整理，先修复评分；本轮证据不支持优先为该卡新增API验证 |
 | S07 | intermediate_algebra | 有理式代换/清分母 | 1/50 | dev_count | 最高优先保留核心：固定同号分母/重复块的可逆降阶；先修复检索与压缩条件再独立配对 |
 | S08 | intermediate_algebra | 代数降阶再验域 | 0/50 | independent_evidence | 重做按可执行变换的聚类，避免仅靠 ^2 和末次解答中的关键词 |
 | S09 | number_theory | 整数约束与有界枚举 | 0/50 | independent_evidence | 先分离进制位数区间子套路并修复可观察条件；暂不展开大规模验证 |

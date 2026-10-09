@@ -25,7 +25,7 @@ def main():
   for tid in s['source_task_ids']:
    report+=f"- `{tid}`（{sources[tid]['problem']['subject']}）：{sources[tid]['problem']['problem']}\n"
  save('01_ALL_SKILLS.md',report)
- report='# Skill 抽象质量逐条审查\n\n质量判定与 schema 合规分开：12/12 schema合规，0/12获得足够证据证明可靠、经济的跨题复用。S04/S06/S07值得保留核心再验证，不是合格 active 的认定。所有有效性判断都标 insufficient_evidence 或单次观察。\n'
+ report='# Skill 抽象质量逐条审查\n\n质量判定与 schema 合规分开：12/12 schema合规，0/12获得足够证据证明可靠、经济的跨题复用。S04/S07值得保留核心再验证，不是合格 active 的认定；S06的账面+1来自格式评分差异。所有有效性判断都标 insufficient_evidence 或单次观察。\n'
  for i,s in enumerate(skills,1):
   sid=f'S{i:02}';n=notes[sid];st=stats[sid]
   report+=f"\n## {sid} {n['name_zh']}\n\n**诊断：** {n['assessment']}。\n\n**具体性、宽泛性与粒度：** {n['specificity']}。没有证据表明任一条只记忆单题答案；问题更多是多个策略的菜单式聚合和过窄词面条件。\n\n**适用性与数学条件：** {n['math']}。\n\n**原始证据：** {n['evidence']}。原卡原文见01报告，完整来源见source_traces。\n\n**成本潜力：** 独立使用 {st['dev_actual_uses']} 次；每次平均节省 {fmt(st['mean_saving'])} token，正数才表示节省。完整卡没有可执行算子（optional_executor=null），目前增加的是提示，没有直接消除API调用的机制。\n\n**未验证疑点：** {n['uncertainty']}。实质结构泛化：insufficient_evidence。\n\n**下一步：** {n['priority']}。\n"
@@ -36,7 +36,7 @@ S10/S11为跨学科的同一“精确有理/循环节归一化”家族；当前
 
 理论上“定义域核验→有理式变换”和“同一具体几何构型→代数求解”可组合，前提是变量、目标与域条件兼容；不能叠加多个宽泛工具菜单。原实现要求 `candidate.strategy_pattern in selected.composition_tags` 且反向成立，而本批 strategy_pattern 是长描述、tags 是短关键词，66对候选中0对兼容。默认 max_injected_skills=1，本次不会触发组合分支；这是潜在数据契约问题，不是此次零复用的主因。
 
-S04 的对称商反例是本轮纯本地构造的数学核验，不是新增模型数据：3位二进制标号串8个，旋转轨道4个，不能直接8/3。它证明缺条件的普适写法有风险，不证明现有18对执行中发生了该错误。S12 的两个失败是评分/截断事件，不应记为两次数学推理错误。
+S04 的对称商反例是本轮纯本地构造的数学核验，不是新增模型数据：3位二进制标号串8个，旋转轨道4个，不能直接8/3。它证明缺条件的普适写法有风险，不证明现有18对执行中发生了该错误。S12 的两个失败是评分/截断事件，不应记为两次数学推理错误；S06的唯一账面改善也来自评分格式差异。四个不一致案例中只有S04的112→111是已核实的数学推导改进。
 '''
  save('02_SKILL_QUALITY_REVIEW.md',report)
  report='''# Admission 逐关诊断
@@ -68,7 +68,7 @@ S04 的对称商反例是本轮纯本地构造的数学核验，不是新增模�
 
 - S02 明确 OR文字/AND机器条件失配。Distiller校验只要求preconditions属于词汇表、出现在compact中，不要求它们在来源题或独立题可满足；9条来源自匹配为0仍通过schema。
 - 空pairwise的 independent 字段仍设true，admit再用非空检查隔离；决策防护实际生效，但状态语义混合了“缺数据”和“有害”。
-- S12一次评分假阴性不是Admission布尔逻辑错误，却污染其输入。不得据此认定应该放宽reject_observed_harmful_patterns。
+- S12和S06各有一次评分假阴性，分别制造了账面负迁移与账面正迁移；不是Admission布尔逻辑错误，却污染其输入。不得据此认定应该放宽reject_observed_harmful_patterns。
 - 预算实验 `experiment_bank.validate_batch` 直接写 structurally_distinct=True；之前确实做过全局近重复检查，但这不能证明数学结构独立。该字段证据强度过高。
 - 单卡token_stats未纳入第一次失败蒸馏及未入库训练题成本，而全局bank.cost_calls和成本报告包含这些支出。全局总数正确；单卡摊销估计不是全局总成本分摊。
 - n=1时saving_lower_bound=0是程序默认值，不能当作估计置信区间。
@@ -78,7 +78,7 @@ S04 的对称商反例是本轮纯本地构造的数学核验，不是新增模�
  save('03_ADMISSION_DIAGNOSIS.md',report)
  report='# 学科、Trigger 与未来复用机会\n\n所有在线特征均来自 ProblemView.problem，不读取标准解答；类别来自原MATH type→标准七类映射。训练每类100、开发每类50，候选轮转选取上限12；不是Algebra采样占优。全部7类有候选，只有4类有eligible验证。\n\n'
  rows=readcsv(P/'data/subject_coverage.csv');report+=table(['学科','训练','正确轨迹','候选','开发','trigger匹配对','eligible对','实际配对'],[[r[k] for k in ['subject','training_tasks','correct_traces','candidate_skills','dev_tasks','trigger_pairs','eligible_pairs','actual_pairs']] for r in rows])
- report+='\nRetrieval Coverage在此定义为同学科且至少一个trigger命中的题，不要求最终状态active：155/350=44.29%。Eligible Coverage（完整机器前置/负触发条件）39/350=11.14%。生产检索器active_only的实际检索覆盖为0。语义上的“真正满足数学条件”未被这些词面特征证明；eligible只代表现实现有调用资格。\n\n已有skill-on开发日志覆盖39道，每题1对共78调用。观察到2道由错转对、2道由对转错；Useful Coverage若定义为观测到准确率增益，则2/350=0.57%，仅单次观察，不能等同稳定帮助。若按token节省定义，须读取dev_pairwise的逐题差值，不把匹配当收益。\n'
+ report+='\nRetrieval Coverage在此定义为同学科且至少一个trigger命中的题，不要求最终状态active：155/350=44.29%。Eligible Coverage（完整机器前置/负触发条件）39/350=11.14%。生产检索器active_only的实际检索覆盖为0。语义上的“真正满足数学条件”未被这些词面特征证明；eligible只代表现实现有调用资格。\n\n已有skill-on开发日志覆盖39道，每题1对共78调用。历史评分记录2道由错转对、2道由对转错；其中S06的由错转对是格式假象，S12的一次由对转错也是格式假象，另一次为截断。账面Useful Coverage为2/350=0.57%；经本轮数学过程核查可确认的改善仅S04一题，即1/350=0.29%，依然只是单次观察，不能等同稳定帮助。若按token节省定义，须读取dev_pairwise的逐题差值，不把匹配当收益。\n'
  for i,s in enumerate(skills,1):
   k=f'S{i:02}';x=stats[k]
   report+=f"\n## {k} {s['name']}\n\n同学科 {x['dev_subject']} → trigger {x['dev_trigger']} → 全前置 {x['dev_precondition']} → 负条件排除 {x['dev_negative_excluded']} → eligible {x['dev_eligible']} →实际 {x['dev_actual_uses']}。欠缺前置词频：`{x['missing_preconditions']}`。\n"
@@ -105,7 +105,7 @@ S01把“二次表达式”又要求题面显式写polynomial，19道命中全�
 
 '''
  scenario=summary['counterfactual_active'];report+=table(['仅移除的门槛','规则上active','实际效果结论'],[['不移除',scenario['keep_all'],'无'],['最低来源数',scenario['disable_min_source'],'来源均已>=3，故无影响'],['最低开发样本数',scenario['disable_min_dev'],'S07仍被0下界挡住'],['正成本收益',scenario['disable_positive_cost'],'S04/S06可规则晋升，但均已观察到平均更贵'],['历史使用量',scenario['disable_historical_usage'],'不存在此门槛，not_applicable']])
- report+='\n在仅移除Admission成本门槛的反事实里，S04/S06仍不会通过原Router：样本置信度不足、平均节省为负、下界为负、准确率风险上界也远大于1%。这只是对现有统计的规则敏感性，不创建active证书、不改变原库，不预测新题效果。\n\n证据不足不能当作负收益：8个零样本策略的未来价值unknown；S07只有1对，虽省1162 token但不足以可靠预测。S04/S06的平均成本增加则是真实执行证据。模型调用的输入和输出都被计入，没有发现把短prompt直接当作总成本降低的代码；但每卡总成本均值不按题复杂度建模，数据范围很窄。\n'
+ report+='\n在仅移除Admission成本门槛的反事实里，S04/S06仍不会通过原Router：样本置信度不足、平均节省为负、下界为负、准确率风险上界也远大于1%。这只是对现有统计的规则敏感性，不创建active证书、不改变原库，不预测新题效果。\n\n证据不足不能当作负收益：8个零样本策略的未来价值unknown；S07只有1对，虽省1162 token但不足以可靠预测。S04/S06的平均成本增加是真实执行证据；S06的账面准确率+1已被本轮识别为格式评分差异。模型调用的输入和输出都被计入，没有发现把短prompt直接当作总成本降低的代码；但每卡总成本均值不按题复杂度建模，数据范围很窄。\n'
  save('05_ROUTER_AND_GATE_ANALYSIS.md',report)
  report='''# 成本与基线公平性审计
 
@@ -131,7 +131,7 @@ S01把“二次表达式”又要求题面显式写polynomial，19道命中全�
 
 Bot输入62,237，FlowEvo169,251；输出460,783对472,704，少11,921。89.98%的总节省来自输入去掉历史。输出中的服务端reasoning_tokens为370,503对384,102；仅看到总量小幅变化，未见任何策略被使用，因此没有“BoT压缩推理”的执行证据。
 
-模型精确不可变版本unknown，provider只返回deepseek-flash别名。thinking参数没有显式设置；依据当时保存的官方接口说明默认enabled/high，temperature在此模式无效，因此不能保证确定性。两组顺序执行，未交错随机化；缓存命中输入22,016对128，负载/服务端随机性及截断30对27是需披露的混杂。这里比较token数量，不据此推断人民币账单。数学评分器相同不等于无误，S12开发题已发现格式假阴性。
+模型精确不可变版本unknown，provider只返回deepseek-flash别名。thinking参数没有显式设置；依据当时保存的官方接口说明默认enabled/high，temperature在此模式无效，因此不能保证确定性。两组顺序执行，未交错随机化；缓存命中输入22,016对128，负载/服务端随机性及截断30对27是需披露的混杂。这里比较token数量，不据此推断人民币账单。数学评分器相同不等于无误，S12和S06开发题各发现一次格式假阴性，分别影响harm和benefit。
 
 ## Bot-NoBank 等价范围
 
@@ -171,11 +171,11 @@ Bot输入62,237，FlowEvo169,251；输出460,783对472,704，少11,921。89.98%�
 
 依据S12的precalculus_250：两边都求得y-x=1即A，skill输出 `(A) Line` 后又输出 `(A)`；extract_answer用首次匹配，评分器不接受前者，形成假阴性。precalculus_88则为空响应、4096token截断。涉及evaluator.extract_answer、experiment_grader.grade_one、parallel_experiment.RecordedClient与validate_batch。
 
-先离线测试最后答案提取、选择题选项规范化及截断分型，保留原score字段、另加诊断标签，不能悄悄修改历史结果。检查所有证据门槛的输入之前，不应因这两例去放宽Admission。风险是过宽答案提取误接受矛盾答案，需对错/多答案/复合集合的负例。
+S06的geometry_367还暴露单位文本问题：两边同为18平方厘米，裸数字加单位被判错，带LaTeX括号却被判对。先离线测试最后答案提取、选择题选项、数字带单位规范化及截断分型，保留原score字段、另加诊断标签，不能悄悄修改历史结果。检查所有证据门槛的输入之前，不应因这两例去放宽Admission。风险是过宽答案提取误接受矛盾答案，需对错/多答案/复合集合的负例。
 
 ## 优先级2：有针对性的 shadow 开发验证及成本证据
 
-优先S07的可逆有理式降阶核心（1对少1162但不可靠），其次S06的窄三角结构、S04的分类计数核心（分别10/18对弱准确率增益但更贵）。使用独立且适用条件明确的题，不从测试集选题；先检查来源/新题是否实质结构不同。
+优先S07的可逆有理式降阶核心（1对少1162但不可靠），其次S04的分类计数核心（18对有1次核实的数学改进但更贵）。S06的10对中账面+1是格式假象，应先做离线整理，暂不列为优先新增API验证。使用独立且适用条件明确的题，不从测试集选题；先检查来源/新题是否实质结构不同。
 
 Admission目前的状态重放无计算错误。empty→quarantine的命名可改成“无证据”，但那不提升效能。将n/(n+10)与Wilson界的含义记录清楚；全局成本与单卡成本分摊分开。只有证据支持之后才能研究分阶段晋升，不应为active数量而降门槛。涉及skill_validator、experiment_bank与token_accounting。会增加少量API验证成本；消融应同时报告总token和正确率，非只看prompt长度。
 
@@ -206,9 +206,9 @@ S04/S06平均增加74.94/119token，且都没有executor。即使覆盖修好，
 
 本轮完成12个真实策略的离线诊断，新增LLM调用0、token0、API成本0；原500题分数、核心实现与策略库均未改动。
 
-最优先应改 Skill 表示/Distiller 的条件契约，并先修复评分诊断输入，而非直接放宽Admission或重写Router。12/12通过形式schema，0/12有充分证据成为可靠经济的active；S04/S06/S07有值得保留的局部核心，但证据不够且S04需补对称条件。
+最优先应改 Skill 表示/Distiller 的条件契约，并先修复评分诊断输入，而非直接放宽Admission或重写Router。12/12通过形式schema，0/12有充分证据成为可靠经济的active；S04/S07有值得保留并验证的局部核心，但证据不够且S04需补对称条件。S06原账面+1已确认为格式差异，不视为真实帮助证据。
 
-9条策略连来源题都不匹配，8条开发eligible为0；另外S07仅1对，S04/S06因成本增加失败，S12因一例评分假阴性+一例截断触发harm。S12的观察不能证明两次数学推导错误。Admission状态按代码重放12/12一致；数据契约、评价和structural证据字段存在已复现问题。Router本轮未收到active候选，潜在保守界是次级问题。
+9条策略连来源题都不匹配，8条开发eligible为0；另外S07仅1对，S04/S06因成本增加失败，S12因一例评分假阴性+一例截断触发harm。S06还有一例格式假阴性制造了账面benefit。S12的观察不能证明两次数学推导错误。Admission状态按代码重放12/12一致；数据契约、评价和structural证据字段存在已复现问题。Router本轮未收到active候选，潜在保守界是次级问题。
 
 '''
  rows=[]
@@ -235,7 +235,7 @@ S04/S06平均增加74.94/119token，且都没有executor。即使覆盖修好，
 - data/skill_task_matches.csv：12×350=4200条开发匹配记录；不使用标签生成特征。
 - data/task_pairwise.csv：500题实际配对，不修改历史分数。
 - data/cost_breakdown.csv、prompt_config_comparison.csv：账本与公平性审计。
-- data/evidence：71条必要来源轨迹、4个准确率不一致开发题、真实prompt示例和provenance证据，未打包整个历史响应库。
+- data/evidence：71条必要来源轨迹、4个准确率不一致开发题及两例评分假阴性诊断、真实prompt示例和provenance证据，未打包整个历史响应库。
 - scripts：可复现的只读诊断/渲染及人工质量评注。
 - tests：网络禁用、契约/反例/账本/历史哈希验证。
 - manifest.json：源commit、哈希、数据/模型与unknown项。报告时间使用Asia/Shanghai。

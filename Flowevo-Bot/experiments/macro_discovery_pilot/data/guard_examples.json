@@ -1,0 +1,124 @@
+[
+  {
+    "question": "Find the remainder when $x^2+1$ is divided by $0$.",
+    "macro_id": "polynomial_remainder",
+    "trigger_match": true,
+    "guard_pass": false,
+    "execution_attempted": false,
+    "execution_verified": false,
+    "full_task_verified": false,
+    "fallback_reason": "one_variable_required",
+    "scope": "none",
+    "steps": [],
+    "direct_answer": null,
+    "local_total_seconds": 0.00373396702343598
+  },
+  {
+    "question": "Find the remainder when $x^4+2$ is divided by $(x-2)^2$.",
+    "macro_id": "polynomial_remainder",
+    "trigger_match": true,
+    "guard_pass": true,
+    "execution_attempted": true,
+    "execution_verified": true,
+    "full_task_verified": true,
+    "fallback_reason": null,
+    "scope": "full_task",
+    "steps": [
+      "parse_two_QQ_polynomials",
+      "quotient_ring_reduction",
+      "independent_coefficient_recurrence",
+      "identity_and_degree_verification"
+    ],
+    "direct_answer": "32 x - 46",
+    "execution_seconds": 6.984901847317815e-05,
+    "verification_seconds": 0.0003556400188244879,
+    "input_structure": {
+      "dividend": "x**4 + 2",
+      "divisor": "x**2 - 4*x + 4",
+      "degrees": [
+        4,
+        2
+      ]
+    },
+    "output_structure": {
+      "quotient": "x**2 + 4*x + 12",
+      "remainder": "32*x - 46"
+    },
+    "certificate": {
+      "identity_zero": true,
+      "degree_bound": true,
+      "independent_recurrence": true
+    },
+    "local_total_seconds": 0.010543418989982456
+  },
+  {
+    "question": "Find the remainder when $x^3+1$ is divided by $x+1$, then evaluate it at 2.",
+    "macro_id": "polynomial_remainder",
+    "trigger_match": false,
+    "guard_pass": false,
+    "execution_attempted": false,
+    "execution_verified": false,
+    "full_task_verified": false,
+    "fallback_reason": "outside_trigger",
+    "scope": "none",
+    "steps": [],
+    "direct_answer": null
+  },
+  {
+    "question": "Find the sum of the rational roots of $x^3-x+1=0$.",
+    "macro_id": "root_invariants",
+    "trigger_match": true,
+    "guard_pass": false,
+    "execution_attempted": false,
+    "execution_verified": false,
+    "full_task_verified": false,
+    "fallback_reason": "subset_roots_not_supported",
+    "scope": "none",
+    "steps": [],
+    "direct_answer": null,
+    "local_total_seconds": 1.3249984476715326e-05
+  },
+  {
+    "question": "Find the sum of the reciprocals of the roots of $x^3-x^2=0$.",
+    "macro_id": "root_invariants",
+    "trigger_match": true,
+    "guard_pass": true,
+    "execution_attempted": true,
+    "execution_verified": true,
+    "full_task_verified": false,
+    "fallback_reason": null,
+    "scope": "verified_intermediate",
+    "steps": [
+      "numeric_polynomial_normalization",
+      "coefficient_to_elementary_sums",
+      "newton_power_sums",
+      "reconstruction_and_companion_verification"
+    ],
+    "direct_answer": null,
+    "execution_seconds": 3.816001117229462e-05,
+    "verification_seconds": 0.0005131520447321236,
+    "input_structure": {
+      "polynomial": "x**3 - x**2",
+      "degree": 3,
+      "variable": "x"
+    },
+    "output_structure": {
+      "elementary_sums": [
+        "1",
+        "0",
+        "0"
+      ],
+      "power_sums": [
+        "1",
+        "1",
+        "1"
+      ]
+    },
+    "certificate": {
+      "monic_reconstruction": true,
+      "companion_trace_check": true
+    },
+    "verified_context": "For ALL 3 roots, counted with multiplicity: e1=1, e2=0, e3=0. Power sums: p1=1, p2=1, p3=1. Coefficients and Newton sums verified exactly. These are intermediate invariants; determine the requested expression and check any extra constraints.",
+    "local_total_seconds": 0.004345147986896336
+  }
+]

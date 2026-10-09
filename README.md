@@ -1,8 +1,14 @@
 # FlowEvo + Buffer of Thoughts / Flowevo-Bot
 
-这是完整研究工作区的可发布快照，包含原始实现的本地修改版、独立 Flowevo-Bot 项目、MATH/GSM8K 数据集、历史实验、离线诊断和 V2 真实研究。
+这是完整研究工作区的可发布快照，包含原始实现的本地修改版、独立 Flowevo-Bot 项目、MATH/GSM8K 数据集、历史实验、离线诊断、V2 和 RMMD 真实研究。
 
 ## 先阅读最新研究结论
+
+[RMMD 宏发现研究](Flowevo-Bot/experiments/macro_discovery_pilot/README.md) · [三组结果](Flowevo-Bot/experiments/macro_discovery_pilot/reports/06_SMALL_BUDGET_EXPERIMENT.md) · [配对与完整成本](Flowevo-Bot/experiments/macro_discovery_pilot/reports/07_PAIRED_COST_ANALYSIS.md) · [本轮ZIP](Flowevo-Bot/macro_discovery_pilot.zip)
+
+最新一轮从1,840条真实记录筛出603条干净训练首次成功轨迹，实现根对称量和多项式余式两个宏。14题三组均14/14正确：NoBank 9,936、Compact 14,396、Executable 10,564 tokens。4道余式题由精确执行完成，不调用LLM；根中间量增加的消耗抵消了其收益。本轮38次调用共34,896 tokens，107项回归通过。决策“继续改进”，优先任务级解析与可执行覆盖，未运行新MATH500。不得将14道条件筛选题当作MATH总体结果。
+
+下列为保持原样的上一轮 V2 结论。
 
 [V2 实验结果](Flowevo-Bot/experiments/flowevo_bot_v2_math500/03_MATH500_RESULTS.md) · [实现报告](Flowevo-Bot/experiments/flowevo_bot_v2_math500/01_IMPLEMENTATION_REPORT.md) · [机制与成本](Flowevo-Bot/experiments/flowevo_bot_v2_math500/04_MECHANISM_ANALYSIS.md) · [完整研究包](Flowevo-Bot/experiments/flowevo_bot_v2_math500.zip)
 

@@ -2,7 +2,11 @@
 
 按照父目录《指引.txt》实现的独立数学策略库研究原型。将 FlowEvo 的数学解题/历史解答基线与 BoT 的策略蒸馏思想结合，加入多题聚合、七学科检索、独立 admission、成本路由和 gold 隔离。
 
-**最新版本已完成真实 V2 研究：20题×3组、63次API调用（含蒸馏），102,316 tokens；0 active，按指引停止正式500。** [本轮结果](experiments/flowevo_bot_v2_math500/03_MATH500_RESULTS.md) · [研究包说明](experiments/flowevo_bot_v2_math500/README.md)。此前已完成[500题历史实验](experiments/math500_goldfree_20261009/REPORT.md)。以下原始CLI示例仍为v1离线演示，mock分数不代表模型性能。
+**最新 RMMD 宏发现试验：603 条干净训练轨迹，14 题三组均14/14正确；NoBank 9,936、Compact 14,396、Executable 10,564 tokens。38次API共34,896 tokens，未运行新500题。** 余式工具直接完成4题省2,950 tokens，但根对称量中间提示增加消耗；决策为继续改进任务级解析与可执行覆盖，暂停扩展当前提示路线。[最新研究包](experiments/macro_discovery_pilot/README.md) · [三组结果](experiments/macro_discovery_pilot/reports/06_SMALL_BUDGET_EXPERIMENT.md) · [配对与成本](experiments/macro_discovery_pilot/reports/07_PAIRED_COST_ANALYSIS.md) · [独立ZIP](macro_discovery_pilot.zip)。这些是条件筛选的小样本，不能外推MATH总体准确率。
+
+历史研究完整保留：[V2 20题研究](experiments/flowevo_bot_v2_math500/03_MATH500_RESULTS.md) · [V1 500题实验](experiments/math500_goldfree_20261009/REPORT.md)。以下原始CLI示例仍为v1离线演示，mock分数不代表模型性能。
+
+RMMD新增模块位于 `src/flowevo_bot/rmmd/`。安装 `pip install -e '.[dev,experiment,rmmd]'`；运行 `python -m pytest tests experiments/macro_discovery_pilot/tests -q`。离线报告重建见本轮README，付费执行已结束，不应覆盖冻结目录重跑。
 
 V2 使用 `scripts/run_v2_research.py` 分阶段运行，修复模块位于 `src/flowevo_bot/v2/`；旧实现保留以重放历史结果。安装数学实验依赖 `pip install -e '.[dev,experiment]'`。报告可离线重建：`python scripts/report_v2_research.py`；完整性检验：`python scripts/verify_v2_research.py`。
 

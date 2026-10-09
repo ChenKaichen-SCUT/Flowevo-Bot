@@ -1,0 +1,61 @@
+{
+  "seed": 42,
+  "manifest": "data/manifests/test.json",
+  "llm": {
+    "model": "deepseek-flash",
+    "base_url": "https://api.deepseek.com",
+    "api_key_env": "DEEPSEEK_API_KEY",
+    "temperature": 0.0,
+    "max_output_tokens": 4096,
+    "timeout": 180,
+    "max_calls": 4000,
+    "max_total_tokens": 20000000,
+    "allow_paid_api": false
+  },
+  "strategy": {
+    "enabled": true,
+    "subject_routing": true,
+    "cross_subject_retrieval": false,
+    "top_k": 3,
+    "max_injected_skills": 1,
+    "max_skill_prompt_tokens": 100
+  },
+  "distillation": {
+    "enabled": true,
+    "min_source_traces": 3,
+    "merge_duplicates": true,
+    "supervised_distillation": false
+  },
+  "admission": {
+    "enabled": true,
+    "min_source_traces": 3,
+    "min_dev_eligible_cases": 10,
+    "require_independent_validation": true,
+    "require_positive_net_saving": true,
+    "reject_observed_harmful_patterns": true,
+    "allow_shadow_candidates": true,
+    "expected_future_uses": 100
+  },
+  "router": {
+    "cost_aware": true,
+    "allow_skip_skill": true,
+    "max_allowed_accuracy_drop": 0.01,
+    "min_confidence": 0.8,
+    "enable_verified_execution": false
+  },
+  "evaluation": {
+    "allow_test_gold_feedback": false,
+    "freeze_bank": true,
+    "save_pairwise_results": true,
+    "max_format_retries": 0
+  },
+  "modes": [
+    "base_onepass",
+    "flowevo_goldfree",
+    "flowevo_context_goldfree",
+    "bot_template",
+    "subject_strategy",
+    "subject_strategy_admission",
+    "subject_strategy_costaware"
+  ]
+}

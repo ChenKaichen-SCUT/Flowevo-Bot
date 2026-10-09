@@ -1,0 +1,20 @@
+﻿field,flowevo,flowevo_bot,interpretation
+model,deepseek-flash,deepseek-flash,alias same; immutable backend checkpoint unknown
+precise_backend_version,unknown,unknown,provider returns alias only
+dataset_manifest,b81237199acc6e98f7f216715e26c82bf7e2592eeb7a7b5e2622dfa9ee1491da,b81237199acc6e98f7f216715e26c82bf7e2592eeb7a7b5e2622dfa9ee1491da,same ordered 500 task list
+system_prompt,You are an expert programmer and mathematician.,You are an expert programmer and mathematician.,identical in all 1000 requests
+base_user_prompt,native math base prompt,same base prompt,byte-identical after removal of history prefix
+history_injection,461 tasks; 39 without,0 tasks,actual input difference
+strategy_injection,0,0,Bot active skill count 0; FlowEvo uses historical solution context
+temperature,0,0,requested only; provider default thinking enabled makes this ineffective
+max_tokens,4096,4096,same thinking/output budget
+thinking_parameter,omitted,omitted,provider default; exact effective server settings not recorded
+retry,0,0,500 paid calls each
+concurrency,64,64,configured HTTP workers
+output_instruction,The answer is [your answer].,The answer is [your answer].,same
+scorer,"math-verify==0.8.0, conservative exact fallback, 3 second parsing/verification timeouts","math-verify==0.8.0, conservative exact fallback, 3 second parsing/verification timeouts",same; known format false negative remains in historical scores
+token_source,provider usage,provider usage,no estimated calls
+cache_hit_input_tokens,22016,128,token counts include cache hits; RMB cost not inferred
+execution_order,first 500-task condition,second 500-task condition,not randomized/interleaved; provider load/sampling confound
+truncated_responses,30,27,treated as wrong in both; output cost retained
+subject_metadata,original MATH type carried in manifest; native retriever ignores subject,same metadata; subject-aware retriever,"same provenance, different algorithm use"

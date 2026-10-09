@@ -1,0 +1,28 @@
+{
+  "calls": [
+    {
+      "call_id": "34ece25b5e4a141f92a2f602e0fcc17bab42acc64ddebcaf682838ef1464f0d3",
+      "task_id": "math_test_algebra_595",
+      "purpose": "base_solve",
+      "model": "deepseek-flash",
+      "route": "base",
+      "skill_ids": [],
+      "prompt_tokens": 866,
+      "completion_tokens": 1558,
+      "total_tokens": 2424,
+      "latency": 7.762524936988484,
+      "estimated": false,
+      "estimation_method": null,
+      "simulated": false,
+      "prompt_hash": "de801438155be9fd83001343957a4f680383308d1dd68d9c4ae3c223dada6446",
+      "response_hash": "701b8fb493b0dce0c1b90e731f4a188163a7f1416967d73837e56e8947fb0988"
+    }
+  ],
+  "responses": {
+    "34ece25b5e4a141f92a2f602e0fcc17bab42acc64ddebcaf682838ef1464f0d3": "The slopes of the five segments of \\(f(x)\\) are:\n\n\\[\n3,\\,-2,\\,-4,\\,\\frac72,\\,0\n\\]\n\nFor \\(g(x)=f(x)+ax\\), each slope becomes:\n\n\\[\n3+a,\\,-2+a,\\,-4+a,\\,\\frac72+a,\\,a\n\\]\n\nFor \\(g\\) to be invertible, all these slopes must have the same sign.\n\nSince \\(a\\) is negative, they cannot all be positive. So they must all be negative:\n\n\\[\n\\frac72+a<0 \\implies a<-\\frac72\n\\]\n\nThe largest negative integer satisfying this is\n\n\\[\na=-4\n\\]\n\nFor \\(h(x)=f(x)+bx\\), all slopes become:\n\n\\[\n3+b,\\,-2+b,\\,-4+b,\\,\\frac72+b,\\,b\n\\]\n\nSince \\(b\\) is positive, they cannot all be negative. So they must all be positive:\n\n\\[\n-4+b>0 \\implies b>4\n\\]\n\nThe smallest positive integer satisfying this is\n\n\\[\nb=5\n\\]\n\nThus,\n\n\\[\na^2+b^2=(-4)^2+5^2=16+25=41\n\\]\n\nThe answer is \\(\\boxed{41}\\)."
+  },
+  "failures": {},
+  "prompts": {
+    "34ece25b5e4a141f92a2f602e0fcc17bab42acc64ddebcaf682838ef1464f0d3": "Problem: The complete graph of $y=f(x),$ which consists of five line segments, is shown in red below. (On this graph, the distance between grid lines is $1.$)\n\nLet $a$ and $b$ be the largest negative integer and the smallest positive integer, respectively, such that the functions $g(x)=f(x)+ax$ and $h(x)=f(x)+bx$ are invertible. What is $a^2+b^2?$\n\n[asy]\nsize(150);\nreal ticklen=3;\nreal tickspace=2;\n\nreal ticklength=0.1cm;\nreal axisarrowsize=0.14cm;\npen axispen=black+1.3bp;\nreal vectorarrowsize=0.2cm;\nreal tickdown=-0.5;\nreal tickdownlength=-0.15inch;\nreal tickdownbase=0.3;\nreal wholetickdown=tickdown;\nvoid rr_cartesian_axes(real xleft, real xright, real ybottom, real ytop, real xstep=1, real ystep=1, bool useticks=false, bool complexplane=false, bool usegrid=true) {\n\nimport graph;\n\nreal i;\n\nif(complexplane) {\n\nlabel(\"$\\textnormal{Re}$\",(xright,0),SE);\n\nlabel(\"$\\textnormal{Im}$\",(0,ytop),NW);\n\n} else {\n\nlabel(\"$x$\",(xright+0.4,-0.5));\n\nlabel(\"$y$\",(-0.5,ytop+0.2));\n\n}\n\nylimits(ybottom,ytop);\n\nxlimits( xleft, xright);\n\nreal[] TicksArrx,TicksArry;\n\nfor(i=xleft+xstep; i<xright; i+=xstep) {\n\nif(abs(i) >0.1) {\n\nTicksArrx.push(i);\n\n}\n\n}\n\nfor(i=ybottom+ystep; i<ytop; i+=ystep) {\n\nif(abs(i) >0.1) {\n\nTicksArry.push(i);\n\n}\n\n}\n\nif(usegrid) {\n\nxaxis(BottomTop(extend=false), Ticks(\"%\", TicksArrx ,pTick=gray(0.22),extend=true),p=invisible);//,above=true);\n\nyaxis(LeftRight(extend=false),Ticks(\"%\", TicksArry ,pTick=gray(0.22),extend=true), p=invisible);//,Arrows);\n\n}\n\nif(useticks) {\n\nxequals(0, ymin=ybottom, ymax=ytop, p=axispen, Ticks(\"%\",TicksArry , pTick=black+0.8bp,Size=ticklength), above=true, Arrows(size=axisarrowsize));\n\nyequals(0, xmin=xleft, xmax=xright, p=axispen, Ticks(\"%\",TicksArrx , pTick=black+0.8bp,Size=ticklength), above=true, Arrows(size=axisarrowsize));\n\n} else {\n\nxequals(0, ymin=ybottom, ymax=ytop, p=axispen, above=true, Arrows(size=axisarrowsize));\n\nyequals(0, xmin=xleft, xmax=xright, p=axispen, above=true, Arrows(size=axisarrowsize));\n\n}\n};\nrr_cartesian_axes(-5,5,-5,5);\ndraw((-5,-4)--(-2,5)--(-1,3)--(1,-5)--(3,2)--(5,2),red+1);\ndot((-5,-4),red);\ndot((-2,5),red);\ndot((-1,3),red);\ndot((1,-5),red);\ndot((3,2),red);\ndot((5,2),red);\n[/asy]\n\nSolve step by step. End with: The answer is [your answer]."
+  }
+}

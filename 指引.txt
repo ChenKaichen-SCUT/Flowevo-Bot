@@ -1,0 +1,896 @@
+# Flowevo-Bot 下一阶段研究指引：Skill 质量、Admission 失败及成本机制的系统诊断
+
+## 一、任务背景与目标
+
+你现在是一名负责 LLM Agent 科研实验、算法分析与代码审计的高级研究工程师。
+
+当前工作目录中已经有 Flowevo-Bot 项目。它融合了 FlowEvo 和 Buffer of Thoughts（BoT）的部分设计，目标是从历史数学解题轨迹中提炼可复用的中等粒度解题策略，并通过 Skill Admission 和 Cost-Aware Router，在保持正确率的同时减少后续 MATH 任务的 token 消耗。
+
+此前已经完成一组真实实验：
+
+| 指标 | FlowEvo（禁用 gold 反思） | Flowevo-Bot |
+|---|---:|---:|
+| 正确率 | 462/500（92.4%） | 464/500（92.8%） |
+| 输入 tokens | 169,251 | 62,237 |
+| 输出 tokens | 472,704 | 460,783 |
+| 测试总 tokens | 641,955 | 523,020 |
+| 包括建库的总 tokens | 1,437,390 | 1,592,751 |
+
+相关实验采用相同的 500 道分层抽取 MATH 题、DeepSeek Flash，关闭了当前题 gold-answer reflection。
+
+已有结论：
+
+1. Flowevo-Bot 测试阶段减少了约 18.53% 的 token。
+2. 两种方法正确率差异不显著。
+3. 但 Flowevo-Bot 的建库成本较高，因此计入建库后总体成本反而上升。
+4. **当前生成的 12 个候选 Skill 全部未成为 active。**
+5. **Flowevo-Bot 的 500 道测试题全部走普通 LLM 解题路径。**
+6. 因此，目前不能把测试阶段 token 减少归因于 BoT 策略复用。
+
+本轮研究的核心任务是：
+
+**系统诊断这 12 个 Skill 为什么没有被激活、它们是否具有真正的跨题泛化能力、当前 Admission/Router 是否存在过度保守或实现错误，以及后续应该如何改进。**
+
+特别注意：
+
+本轮以诊断和证据收集为主。不要为了让 Skill 被激活而直接降低阈值，更不要在未完成分析之前重写整个算法。
+
+---
+
+## 二、执行原则
+
+### 2.1 优先使用已有数据
+
+首先检查当前 Flowevo-Bot、FlowEvo 项目以及已有的实验日志、Skill Bank、checkpoint 和完整模型请求记录。
+
+尽可能通过已有数据完成分析。
+
+**默认禁止新增付费 LLM 调用。**
+
+如果某项诊断必须重新调用 DeepSeek Flash，应说明：
+
+- 为什么现有数据不足；
+- 需要多少道任务；
+- 预计多少次调用；
+- 预计消耗多少 token；
+- 该实验能够排除哪一种解释。
+
+未经我明确同意，不得启动新的真实推理实验。
+
+### 2.2 不修改原实验结果
+
+本次不得：
+
+- 覆盖已经完成的 500 题结果；
+- 修改原 FlowEvo 源码；
+- 修改历史 Skill Bank 快照；
+- 更改历史正确率；
+- 为提高 Skill 激活率而直接放宽 Admission；
+- 使用测试集结果调参；
+- 将模拟数据当作真实实验数据。
+
+允许新增**只读诊断脚本**及必要的离线测试。
+
+如果必须调整代码才能记录某种关键内部状态，应先保存原始版本，并明确标注此次修改属于 instrumentation，不属于算法改进。
+
+### 2.3 禁止 Gold 泄漏
+
+整个诊断过程中仍需区分：
+
+- 训练题；
+- 独立开发/验证题；
+- 正式测试题。
+
+测试题的 gold answer 只能供最终离线评分。
+
+不能把当前测试题 gold 传给 solver、router、distiller 或 retry prompt。
+
+尤其需要检查历史 Skill 是否源于经过 gold-feedback 修正的轨迹，不能仅依据最终答案正确就认定其来源合规。
+
+---
+
+# 三、阶段一：完整审计 12 个候选 Skill
+
+这是本次最重要的工作。
+
+请从真实 Skill Bank 和相关日志中读取当前全部 12 个候选 Skill。
+
+**必须完整展示真实内容，不得只给统计数量，也不得自行生成理想化 Skill 替代已有记录。**
+
+## 3.1 每个 Skill 必须提取的信息
+
+对每个 Skill，提取：
+
+**基础信息**
+
+- `skill_id`
+- `name`
+- `subject`
+- `strategy_pattern`
+- `status`
+- 创建时间和版本
+- 来源任务数量
+- 来源 task IDs
+
+**策略本身**
+
+- `trigger_features`
+- `preconditions`
+- `negative_triggers`
+- `strategy_steps`
+- `verification_rules`
+- `composition_tags`
+- `compact_prompt`
+- `optional_executor`（如果存在）
+
+**学习过程**
+
+- 来源解题轨迹的数量；
+- 来源题目所属学科；
+- 是否多道题归纳而来；
+- 来源题目是否具有实质性结构差异；
+- 是否使用过 gold-assisted 轨迹；
+- Distiller 输出是否符合 Schema；
+- 是否发生合并、压缩或去重。
+
+**验证和激活信息**
+
+- 验证题数量；
+- 符合 Trigger 的验证题数量；
+- 通过前置条件的数量；
+- 使用 Skill 后成功数量；
+- 不使用 Skill 时成功数量；
+- Skill 对正确率的正负影响；
+- Skill 对 token 的影响；
+- 是否具备计算净收益所需的数据；
+- Admission 状态与原因。
+
+如字段不存在，必须明确记录为 `missing`，不能推测。
+
+## 3.2 生成人类可读的 Skill 清单
+
+生成文件：
+
+`reports/01_ALL_SKILLS.md`
+
+每个 Skill 使用单独小节，完整展示它的真实策略内容。
+
+我希望能直接阅读这份文档，判断：
+
+> 它究竟是不是一个有适用条件、具有通用意义的解题套路？
+
+例如，一个好的 Skill 可能是：
+
+> 遇到某类素数整除条件时，先处理特殊素数，再通过同余约束缩小候选范围，最后回代验证。
+
+而差的 Skill 可能只是：
+
+> 遇到素数问题时，考虑使用数论方法。
+
+这两种情况要明确区分。
+
+## 3.3 评价 Skill 抽象质量
+
+对 12 个 Skill 逐条进行诊断，重点检查：
+
+1. **过于具体**：是否只适用于来源题目或简单换数字的变形？
+2. **过于宽泛**：是否只是一般建议，无法实质缩短推理？
+3. **粒度失衡**：是否太细以至于单次收益很小，或太大以至于几乎无法匹配？
+4. **适用条件不清**：能否仅根据新题题面判断适用？
+5. **数学正确性**：是否包含不成立的数学结论、遗漏条件或非法变形？
+6. **重复性**：12 个 Skill 中是否存在实质相同的套路？
+7. **组合潜力**：哪些可以合理组合，哪些组合可能互相干扰？
+8. **成本潜力**：是否有能力替代一段真实推理，而不仅是增加一段 prompt？
+
+对于每个 Skill，应给出：
+
+- 诊断结论；
+- 支撑该结论的原始证据；
+- 当前尚未验证的疑点；
+- 是否值得进入下一阶段独立验证。
+
+没有充分数据时，应标记 `insufficient_evidence`，而不是主观认定有效或无效。
+
+生成：
+
+`reports/02_SKILL_QUALITY_REVIEW.md`
+
+---
+
+# 四、阶段二：逐条还原 Admission 为什么失败
+
+当前 12 个 Skill 全部没有成为 active。
+
+需要查明它们各自被哪一道门槛拦截。
+
+## 4.1 审计 Admission 实现
+
+找到并检查：
+
+- Skill Admission 的入口；
+- 全部验证规则；
+- 全部阈值；
+- 阈值来源；
+- 各项判断的执行顺序；
+- 当某个统计字段缺失时的处理逻辑；
+- 是否存在默认拒绝行为；
+- Skill 从 candidate/shadow 变成 active 的完整条件。
+
+不能只报告最终 `active = false`。
+
+必须尽可能恢复每个 Skill 的逐关判断过程。
+
+## 4.2 建立 Admission 决策表
+
+例如：
+
+| Skill | 来源数量 | Dev 可用数 | 正确性 | 净节省 | 主要拒绝原因 |
+|---|---:|---:|---|---|---|
+| S01 | 实际值 | 实际值 | 实际值 | 实际值 | 实际原因 |
+| S02 | 实际值 | 实际值 | 实际值 | 实际值 | 实际原因 |
+| ... | ... | ... | ... | ... | ... |
+| S12 | 实际值 | 实际值 | 实际值 | 实际值 | 实际原因 |
+
+每个 Skill 不仅要记录**首次拒绝的门槛**，还应记录能够从已有数据判断出的其他未通过门槛。
+
+特别区分以下情况：
+
+**A. 质量失败**
+
+Skill 本身存在数学错误、明显负迁移或适用条件不成立。
+
+**B. 覆盖率不足**
+
+Skill 可能正确，但独立验证题中很少出现适用结构。
+
+**C. 样本不足**
+
+并未发现明显错误，但有效验证数量过少，无法作出可靠判断。
+
+**D. 成本不合算**
+
+使用 Skill 后实际增加 token，或预期节省不足以抵消额外开销。
+
+**E. 预测器缺乏数据**
+
+Cost-Aware Router 没有足够的开发集统计，导致所有候选均被保守拒绝。
+
+**F. 实现或配置问题**
+
+例如字段没有正确传递、类别名称不匹配、状态转换错误、统计值缺失、阈值单位不一致等。
+
+这些原因不能混为一谈，因为对应的算法改进完全不同。
+
+生成：
+
+`reports/03_ADMISSION_DIAGNOSIS.md`
+
+`data/admission_decisions.jsonl`
+
+其中 JSONL 应保留每个 Skill 的各门槛输入值、阈值、判断结果、缺失字段、首次拒绝点和所有可确定的失败原因。
+
+---
+
+# 五、阶段三：分析 Trigger、学科分类和未来复用机会
+
+我设计 Flowevo-Bot 时，希望根据 MATH 七类学科组织 Skill：
+
+- Prealgebra
+- Algebra
+- Intermediate Algebra
+- Geometry
+- Number Theory
+- Counting & Probability
+- Precalculus
+
+请检查当前真实数据中是否正确使用了这些类别。
+
+## 5.1 类别覆盖分析
+
+统计：
+
+- 各学科有多少训练题；
+- 各学科有多少正确轨迹；
+- 各学科形成多少候选 Skill；
+- 各学科有多少验证题；
+- 各学科产生多少匹配；
+- 哪些学科完全没有 Skill。
+
+如果只有 Algebra 一类生成了大多数 Skill，需要说明这是由样本分布、Distiller 行为，还是类别映射错误造成的。
+
+## 5.2 Trigger 检测
+
+对每个 Skill，使用**现有独立开发题**进行离线匹配。
+
+统计：
+
+1. 学科类别一致的题数；
+2. Trigger 命中的题数；
+3. Preconditions 通过的题数；
+4. Negative Trigger 排除的题数；
+5. 具备实际调用资格的题数。
+
+输出每个 Skill 的真实匹配示例，至少包括：
+
+- 命中该 Skill 的典型题；
+- 没有命中的相近题；
+- 命中但前置条件不成立的题（如果存在）。
+
+每条示例附 task ID 和可查阅的原题文本或可靠引用位置。
+
+不能读取开发题或测试题的标准解答来生成在线 Trigger 特征。
+
+## 5.3 区分两种覆盖率
+
+需要分别统计：
+
+**Retrieval Coverage**
+
+有多少题能找到相关 Skill？
+
+**Eligible Coverage**
+
+有多少题真正满足 Skill 的适用条件？
+
+二者不能混为一谈。
+
+另外，如果已有对应的独立解题执行日志，再统计 Useful Coverage；没有执行证据时不能把匹配命中当成有效帮助。
+
+生成：
+
+`reports/04_TRIGGER_COVERAGE.md`
+
+`data/skill_task_matches.csv`
+
+---
+
+# 六、阶段四：专门审计 Cost-Aware Router
+
+我非常关心这个模块是否过度保守。
+
+因为现在所有 Skill 都没有被使用，可能出现：
+
+> Skill 实际上有价值，但成本预测器无法证明它能节省 token，于是全部拒绝。
+
+请检查：
+
+1. Router 使用哪些特征？
+2. 成本预测数据来自哪里？
+3. 是否有足够的真实开发集样本？
+4. 是否根据已观察的成本进行预测，还是用固定常数？
+5. 当一个 Skill 完全没有使用历史时，如何估计它的收益？
+6. 是否存在冷启动问题？
+7. 哪些 Skill 是 Admission 拒绝，哪些是 Router 拒绝？
+8. 如果没有任何 Skill 被实际使用，Router 是否永远无法积累真实收益数据？
+9. Prompt 变短是否被错误地当作整个任务成本下降？
+10. 是否正确计算了输入、输出和可能的 fallback 成本？
+
+特别注意：
+
+**Admission 和 Router 是两个不同阶段。**
+
+如果 Skill 从未成为 active，那么测试中的 zero reuse 可能根本不是 Router 造成的。
+
+必须先划清责任，不能笼统写“路由过于保守”。
+
+## 6.1 离线反事实门槛分析
+
+仅基于已有数据，模拟以下条件：
+
+- 只关闭最低来源题数限制；
+- 只关闭最低验证题数限制；
+- 只关闭正向成本收益门槛；
+- 只关闭历史使用量限制；
+- 保持所有验证门槛。
+
+记录每种情况下哪些 Skill 在**规则意义上**可能改变状态。
+
+注意：
+
+这些只是离线规则敏感性分析。
+
+不能把“去掉门槛后可以进入 active”解释成“使用后会提高正确率或降低 token”。
+
+若缺少实际 Skill-on 验证数据，需要标记为未知。
+
+生成：
+
+`reports/05_ROUTER_AND_GATE_ANALYSIS.md`
+
+---
+
+# 七、阶段五：分析 token 成本到底来自哪里
+
+请使用已有逐请求账本，还原前一次实验的全部成本。
+
+已知：
+
+FlowEvo：
+
+- 测试成本：641,955 tokens
+- 包括建库：1,437,390 tokens
+
+Flowevo-Bot：
+
+- 测试成本：523,020 tokens
+- 包括建库：1,592,751 tokens
+
+首先核对这些数字是否能够由真实请求记录精确汇总。
+
+然后分别统计：
+
+**训练/建库成本**
+
+- 历史解题；
+- 轨迹收集；
+- Thought Distillation；
+- Skill 验证；
+- Skill Revision；
+- 其他调用。
+
+**正式测试成本**
+
+- Base LLM 调用；
+- 输入 prompt；
+- 生成输出；
+- retry；
+- Skill retrieval 或 routing 所产生的模型调用（如果存在）。
+
+## 7.1 输入和输出 token 分开分析
+
+需要回答：
+
+为什么 Bot 输入 tokens 从 169,251 降到了 62,237？
+
+具体是因为：
+
+- 不再注入历史解答；
+- prompt 格式更短；
+- system prompt 不同；
+- Skill Bank 没有激活；
+- 重试次数不同；
+- 模型参数或输出上限不同；
+- 其他实现差异。
+
+请检查真实 prompt 和配置，不能仅凭表面数字猜测。
+
+对输出 tokens 也要分析：为什么两组相对接近？
+
+需要说明是否存在真正的推理过程压缩证据。
+
+## 7.2 检查基线公平性
+
+逐项比较 FlowEvo 与 Bot：
+
+- 模型名称与精确版本；
+- 题目列表和顺序；
+- system/user prompt；
+- temperature；
+- max output tokens；
+- 输出格式；
+- retry；
+- 并发；
+- Skill 是否注入；
+- 任务判分方法；
+- token usage 的统计来源。
+
+如果两组条件除了 Skill 之外还有差异，应如实列出。
+
+不能把全部 18.53% 节省归因于 Skill 设计。
+
+## 7.3 建立 Bot-NoBank 对照的可行性
+
+请检查是否能利用已有日志和现有代码，证明当前 Bot 运行实际上等价于：
+
+`Bot-NoBank`
+
+也就是完全不建立 Skill Bank、也不使用 Skill 的同一解题路径。
+
+若不能严格证明等价，则不要直接宣称两者相同。
+
+提出后续必要的最小实验，但本轮不执行新增 API 调用。
+
+生成：
+
+`reports/06_COST_AND_BASELINE_AUDIT.md`
+
+`data/cost_breakdown.csv`
+
+`data/prompt_config_comparison.csv`
+
+---
+
+# 八、阶段六：检查是否存在数据泄漏或数据重复
+
+这一阶段不能省略。
+
+检查：
+
+1. Skill 来源是否为训练集；
+2. 训练题与验证题是否重叠；
+3. 训练题与测试题是否存在完全重复；
+4. 是否存在明显的近重复题；
+5. 是否在构建 Skill 时使用过测试题 gold；
+6. 是否从以前的 gold-assisted 轨迹中构建 Skill；
+7. Skill 的来源记录是否完整；
+8. 是否使用测试集表现选择了更好的 Skill；
+9. 当前学科 `type` 的获得方式是否在两套系统中一致；
+10. 是否有测试阶段产生的 Skill 意外进入已经冻结的 Bank。
+
+对于无法判断的内容，明确标记 `unknown`，不能推断安全。
+
+生成：
+
+`reports/07_PROVENANCE_AND_LEAKAGE_AUDIT.md`
+
+---
+
+# 九、阶段七：形成具体的算法改进建议
+
+只有完成以上诊断，才能提出下一步修改方案。
+
+不要一开始就决定“应该降低 Admission 门槛”。
+
+根据真实证据，分别讨论：
+
+### 方案 A：改进 Thought Distiller
+
+适用于：
+
+- Skill 太宽泛；
+- Skill 太具体；
+- 缺少明确 Trigger；
+- 多道题没有被正确抽象；
+- Skill 之间高度重复。
+
+建议关注是否需要更好的多题聚类、策略抽象、技能合并和简短策略卡。
+
+### 方案 B：改进 Skill Admission
+
+适用于：
+
+- Skill 有价值但独立验证数据不足；
+- 阈值过于机械；
+- 冷启动问题严重；
+- 成本收益预测缺乏证据。
+
+可以讨论 shadow evaluation、分阶段晋升、置信区间约束等机制。
+
+### 方案 C：改进 Cost-Aware Router
+
+适用于：
+
+- Active Skill 已存在；
+- 但 Router 经常错误拒绝；
+- 成本预测严重偏差；
+- 检索覆盖率不错但实际使用率很低。
+
+### 方案 D：改变 Skill 的注入方式
+
+适用于：
+
+- Skill 复用有一定准确率帮助；
+- 但输入 prompt 或输出推理增加；
+- 整体无法节省 token。
+
+可以研究更紧凑的宏策略、结构化提示、局部直接执行和动态缩短策略提示。
+
+### 方案 E：调整 Skill 粒度或分类
+
+适用于：
+
+- 现有套路没有足够的未来复用机会；
+- 过度细碎或过于宽泛；
+- 学科标签无法有效代表解题结构。
+
+可以研究学科内的策略家族、合理的宏策略粒度，以及有限的跨类别组合。
+
+**每个改进建议必须引用本次诊断得到的具体证据，而不是泛泛提出更多复杂机制。**
+
+最终给出优先级排序：
+
+- 最值得先做的改进；
+- 次优先级；
+- 当前不建议做的改进。
+
+每个建议还需包含：
+
+- 预期解决的问题；
+- 对应代码位置；
+- 所需实验；
+- 可能的失败原因；
+- 是否会增加 API 成本；
+- 该改进应由什么消融实验验证。
+
+不要在本轮直接实施这些改进。
+
+生成：
+
+`reports/08_RECOMMENDATIONS.md`
+
+---
+
+# 十、统一的数据输出格式
+
+为了后续让我进一步分析，需要额外生成以下机器可读文件。
+
+## 10.1 skills_full.json
+
+包含全部 12 个 Skill 的原始内容、状态及 provenance。
+
+必须可直接读取，不要只输出截断的文本片段。
+
+## 10.2 skill_diagnostics.csv
+
+每行对应一个 Skill，建议至少包含：
+
+```text
+skill_id
+name
+subject
+strategy_pattern
+status
+source_task_count
+source_gold_exposed
+compact_prompt_tokens
+
+dev_total
+dev_trigger_matches
+dev_precondition_passes
+dev_actual_uses
+
+dev_skill_correct
+dev_base_correct
+
+estimated_token_saving
+observed_token_saving
+
+first_rejection_gate
+all_rejection_reasons
+missing_evidence
+
+quality_assessment
+suggested_next_action
+```
+
+缺失数据留空并用状态字段标注，不能填虚假的零值。
+
+## 10.3 admission_decisions.jsonl
+
+逐条记录 Admission 的真实判断过程，包括：
+
+```text
+skill_id
+gate_name
+observed_value
+required_threshold
+decision
+reason
+evidence_source
+```
+
+## 10.4 skill_task_matches.csv
+
+保存 Skill 与独立开发题的匹配关系：
+
+```text
+skill_id
+task_id
+subject
+trigger_match
+precondition_pass
+negative_trigger
+eligible
+reason
+```
+
+## 10.5 task_pairwise.csv
+
+若已有两组 500 题的原始结果，按照相同 `task_id` 配对，至少包含：
+
+```text
+task_id
+subject
+flowevo_correct
+bot_correct
+flowevo_input_tokens
+flowevo_output_tokens
+bot_input_tokens
+bot_output_tokens
+flowevo_route
+bot_route
+```
+
+输出：
+
+- 两者都对；
+- FlowEvo 对、Bot 错；
+- FlowEvo 错、Bot 对；
+- 两者都错。
+
+不能仅根据两个总体成功数推测配对变化。
+
+## 10.6 cost_breakdown.csv
+
+按真实调用用途、阶段和模型汇总成本。
+
+## 10.7 manifest.json
+
+记录：
+
+```text
+project_commit
+source_repository_commits
+config_hashes
+dataset_manifest_hashes
+bank_hashes
+model_name
+run_ids
+report_generation_time
+new_llm_calls
+new_tokens
+new_api_cost
+```
+
+如果无法获取某项信息，必须标为未知。
+
+---
+
+# 十一、交付目录与打包方式
+
+请在 Flowevo-Bot 下新建独立目录：
+
+```text
+diagnostics/
+└── skill_admission_audit/
+    ├── README.md
+    ├── manifest.json
+    ├── reports/
+    │   ├── 00_EXECUTIVE_SUMMARY.md
+    │   ├── 01_ALL_SKILLS.md
+    │   ├── 02_SKILL_QUALITY_REVIEW.md
+    │   ├── 03_ADMISSION_DIAGNOSIS.md
+    │   ├── 04_TRIGGER_COVERAGE.md
+    │   ├── 05_ROUTER_AND_GATE_ANALYSIS.md
+    │   ├── 06_COST_AND_BASELINE_AUDIT.md
+    │   ├── 07_PROVENANCE_AND_LEAKAGE_AUDIT.md
+    │   └── 08_RECOMMENDATIONS.md
+    ├── data/
+    │   ├── skills_full.json
+    │   ├── skill_diagnostics.csv
+    │   ├── admission_decisions.jsonl
+    │   ├── skill_task_matches.csv
+    │   ├── task_pairwise.csv
+    │   ├── cost_breakdown.csv
+    │   └── prompt_config_comparison.csv
+    ├── scripts/
+    │   └── 本轮新增的离线诊断脚本
+    └── tests/
+        └── 本轮诊断的离线核验结果
+```
+
+请同时生成一个：
+
+`skill_admission_audit.zip`
+
+压缩包需要包含所有诊断报告、12 个 Skill 的真实内容、机器可读数据与必要的离线分析脚本。
+
+不要包含 API key、环境变量、用户隐私、无关缓存或整个历史模型响应库。
+
+如果有体积过大的原始日志，只需在 manifest 中记录可靠路径、哈希及引用关系，并导出本轮实际使用的必要证据。
+
+---
+
+# 十二、最终给我的总结应该怎么写
+
+完成后，不能只说“诊断完成，文件已经生成”。
+
+必须直接在最终回复中提供一份**可独立阅读、足以决定下一步改进方向的研究摘要**。
+
+按照以下结构输出。
+
+## A. 总体结论
+
+说明：
+
+- 发现了几个候选 Skill；
+- 其中有几个质量合格；
+- 有几个具备未来复用潜力；
+- 有几个因为验证不足被阻止；
+- 有几个存在明确质量问题；
+- 有没有发现 Admission 或 Router 的代码错误。
+
+## B. 12 个 Skill 的简表
+
+必须列出所有 12 个 Skill：
+
+| ID | 学科 | 套路名称 | 覆盖情况 | Admission 失败原因 | 推荐 |
+|---|---|---|---|---|---|
+
+不能只展示最好的几条。
+
+## C. 失败原因统计
+
+按原因给出数量：
+
+- 质量问题；
+- 适用题太少；
+- 验证样本不足；
+- 成本增加；
+- 预测不确定；
+- 代码/配置问题；
+- 其他。
+
+如果一个 Skill 同时有多个问题，应明确区分主因和全部原因，不能让汇总误导读者。
+
+## D. 成本分析
+
+回答：
+
+**为什么测试阶段节省 18.53%，却在计入建库后总体更贵？**
+
+尤其说明哪些开销是一次性的，哪些会随新题持续增加。
+
+## E. 最值得保留的 Skill
+
+如果存在至少 1～3 个有潜力的 Skill，请展示其完整或足够详细的内容，说明适用范围和已有证据。
+
+如果没有任何具有足够证据的 Skill，也应如实报告。
+
+## F. 最值得先修改的模块
+
+明确给出：
+
+**下一步最应该改 Thought Distiller、Skill Admission、Cost-Aware Router，还是 Skill 表示形式？**
+
+不能仅给出多个可能方向而不排序。
+
+需要解释为什么。
+
+## G. 下一轮最小实验建议
+
+提出一个尽量低成本、可以验证主要诊断结论的实验。
+
+说明：
+
+- 需要的训练题数量；
+- 开发验证题数量；
+- 方法组别；
+- 预计 API 调用；
+- 预计 token；
+- 必须观察的指标；
+- 什么结果支持下一步继续；
+- 什么结果意味着需要停止或改变方向。
+
+本轮只提出方案，不实际调用 API。
+
+## H. 交付文件
+
+列出诊断数据包与关键文件的真实路径。
+
+如果环境支持文件交付，提供可以直接下载的压缩包。
+
+---
+
+# 十三、最终停止条件
+
+完成以下工作后停止：
+
+1. 找到全部 12 个真实 Skill。
+2. 输出每个 Skill 的完整内容和来源。
+3. 还原其 Admission 状态与拒绝原因。
+4. 完成学科和 Trigger 覆盖率分析。
+5. 检查 Cost-Aware Router 的冷启动与预测机制。
+6. 解释本轮的 token 差异及潜在混杂因素。
+7. 完成 gold/provenance 检查。
+8. 生成全部报告、CSV/JSON 数据与压缩包。
+9. 给出基于证据的改进优先级。
+10. 提出下一轮最小真实实验方案。
+
+**到此停止，不要自动修改核心算法，不要降低 Admission 阈值，不要启用候选 Skill 进行新的正式测试，也不要启动新的 DeepSeek API 调用。**
+
+本轮最重要的交付物不是一版更复杂的新算法，而是：
+
+> **一套能够明确回答“为什么 12 个候选 Skill 没有真正复用，以及接下来怎样让它们变得值得复用”的完整证据。**
+
+请现在开始检查本地 Flowevo-Bot 源码和已有实验数据，并实际生成以上诊断结果，不要只输出计划或推测。

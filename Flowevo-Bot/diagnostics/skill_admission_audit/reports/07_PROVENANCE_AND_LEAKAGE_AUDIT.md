@@ -1,0 +1,13 @@
+# Provenance、Gold 与重复检查
+
+审计并非只信provenance布尔值：将12卡的71个来源ID逐条链接到真实train-build问题、首轮封存答案、prompt及调用账本，复算trace哈希。71/71均只有1次trace_generation，无retry；首轮内容与bank来源一致；真实prompt逐字等于仅含题面的base_prompt；不是过去FlowEvo经gold-feedback修正的轨迹。12次最终蒸馏的examples仅包含task_id、problem、model_first_solution，未传标准答案或参考解答。正确性标签仅用于训练后选择成功历史，这是本研究允许的训练筛选，并非让模型看gold反思。
+
+训练700、开发350、测试500三组ID和数字掩蔽后的规范化文本检查通过；按既有prefix/suffix分块及SequenceMatcher>=0.9进行明显近重复检查也通过。该算法不是全语义去重：不能排除语义等价题、重写题或模型预训练污染。source内部文本差异不等于数学结构差异，预算验证脚本的structurally_distinct=True不应被过度解读。
+
+测试gold只供全部答案封存后的评分；solver接受ProblemView，router/匹配仅看题面与类别。两方法共用同一manifest，学科来自MATH type，无需答案推断；FlowEvo原生检索按benchmark而不按学科，Bot才按学科，这是算法差异，不是标签来源不同。
+
+测试前source_frozen_before_test记录与现存代码一致，bank哈希在所有1000份封存提交中一致；bank来源都是train-build，没有测试题进入冻结库。revision在正式测试开始前进行，日志原因是JSON截断/词汇不合规。没发现用这500题的表现选择更优skill或调整阈值的证据。
+
+未知边界：更早会话是否曾看过其他测试题、提供方不可变模型版本、预训练污染，以及日志之外的人工调参历史为unknown。此前已排除潜在调试过的代数前500题，本批不能宣称绝对干净的标准MATH-500。
+
+本次新增脚本禁用网络，测试集结果只用于离线配对/成本审计，未传给任何真实solver调用。没有新的模型调用，也没有覆盖原实验、银行、核心源码或分数。`tests/read_only_check.json`和manifest提供完整输入哈希证据。

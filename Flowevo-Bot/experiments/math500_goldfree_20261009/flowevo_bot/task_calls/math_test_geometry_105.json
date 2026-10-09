@@ -1,0 +1,28 @@
+{
+  "calls": [
+    {
+      "call_id": "568acd265722e3a9917a6f375f7c883ab972c29de5d9550f8c74f29f22feb225",
+      "task_id": "math_test_geometry_105",
+      "purpose": "base_solve",
+      "model": "deepseek-flash",
+      "route": "base",
+      "skill_ids": [],
+      "prompt_tokens": 310,
+      "completion_tokens": 3872,
+      "total_tokens": 4182,
+      "latency": 17.808483308006544,
+      "estimated": false,
+      "estimation_method": null,
+      "simulated": false,
+      "prompt_hash": "93e8181a013fab1d568268ab272e66849b5dcab212617d718fc38694b2c8870a",
+      "response_hash": "39d6e29af305d107352d82ac98d840565e3eaae12c4fd7b9065616c9c2398acd"
+    }
+  ],
+  "responses": {
+    "568acd265722e3a9917a6f375f7c883ab972c29de5d9550f8c74f29f22feb225": "Let the radius be \\(1\\). Put \\(C\\) at the origin, with \\(N\\) on the positive \\(x\\)-axis and \\(M\\) on the negative \\(x\\)-axis.\n\nSince arc \\(MA=40^\\circ\\), the central angle from \\(M\\) to \\(A\\) is \\(40^\\circ\\). Thus \\(A\\) is at central angle\n\\[\n180^\\circ-40^\\circ=140^\\circ\n\\]\nfrom \\(CN\\). Since \\(P\\) lies on \\(CN\\), we have\n\\[\n\\angle ACP=140^\\circ.\n\\]\nGiven \\(\\angle CAP=10^\\circ\\), triangle \\(ACP\\) has\n\\[\n\\angle APC=180^\\circ-140^\\circ-10^\\circ=30^\\circ.\n\\]\nBy the Law of Sines in \\(\\triangle ACP\\),\n\\[\n\\frac{CP}{\\sin 10^\\circ}=\\frac{AC}{\\sin 30^\\circ}\n=\\frac{1}{1/2}=2,\n\\]\nso\n\\[\nCP=2\\sin 10^\\circ.\n\\]\n\nNow let \\(\\beta=\\operatorname{arc}BN\\). Then \\(\\angle BCP=\\beta\\). In \\(\\triangle BCP\\), we are given \\(\\angle CBP=10^\\circ\\). By the Law of Sines,\n\\[\n\\frac{CP}{\\sin 10^\\circ}=\\frac{BC}{\\sin(170^\\circ-\\beta)}.\n\\]\nSince \\(CP=2\\sin10^\\circ\\) and \\(BC=1\\),\n\\[\n2=\\frac{1}{\\sin(170^\\circ-\\beta)},\n\\]\nso\n\\[\n\\sin(170^\\circ-\\beta)=\\frac12.\n\\]\nThus\n\\[\n170^\\circ-\\beta=30^\\circ \\quad \\text{or} \\quad 150^\\circ.\n\\]\nThe first gives \\(\\beta=140^\\circ\\), which would make \\(B=A\\), not allowed since \\(A\\) and \\(B\\) are distinct. Hence\n\\[\n170^\\circ-\\beta=150^\\circ \\implies \\beta=20^\\circ.\n\\]\n\nTherefore, arc \\(BN\\) is\n\\[\n\\boxed{20^\\circ}.\n\\]\n\nThe answer is [20]."
+  },
+  "failures": {},
+  "prompts": {
+    "568acd265722e3a9917a6f375f7c883ab972c29de5d9550f8c74f29f22feb225": "Problem: Distinct points $A$ and $B$ are on a semicircle with diameter $MN$ and center $C$.  The point $P$ is on $CN$ and $\\angle CAP = \\angle CBP = 10^\\circ$.  If arc $MA$ is equal to $40^\\circ$, then find arc $BN$ (in degrees).\n\n[asy]\nimport geometry;\nimport graph;\n\nunitsize(2 cm);\n\npair A, B, C, M, N, P;\n\nM = (-1,0);\nN = (1,0);\nC = (0,0);\nA = dir(140);\nB = dir(20);\nP = extension(A, A + rotate(10)*(C - A), B, B + rotate(10)*(C - B));\n\ndraw(M--N);\ndraw(arc(C,1,0,180));\ndraw(A--C--B);\ndraw(A--P--B);\n\nlabel(\"$A$\", A, NW);\nlabel(\"$B$\", B, NE);\nlabel(\"$C$\", C, S);\nlabel(\"$M$\", M, SW);\nlabel(\"$N$\", N, SE);\nlabel(\"$P$\", P, S);\n[/asy]\n\nSolve step by step. End with: The answer is [your answer]."
+  }
+}

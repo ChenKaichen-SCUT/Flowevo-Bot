@@ -1,0 +1,28 @@
+{
+  "calls": [
+    {
+      "call_id": "d5eff216462a539513f8764db8ddafa348d092aae5897f58ad49154d87c16200",
+      "task_id": "math_test_algebra_595",
+      "purpose": "skill_solve",
+      "model": "deepseek-flash",
+      "route": "history",
+      "skill_ids": [],
+      "prompt_tokens": 1105,
+      "completion_tokens": 1844,
+      "total_tokens": 2949,
+      "latency": 8.944581204035785,
+      "estimated": false,
+      "estimation_method": null,
+      "simulated": false,
+      "prompt_hash": "f7b99b5f6500ceb3f9cccd3bfd848f77393ffffabad4eacccf0612a023f476df",
+      "response_hash": "cdd4efd26329b089823dd4bdeb9ea08a1988267842ea5446cab6cde4027d0608"
+    }
+  ],
+  "responses": {
+    "d5eff216462a539513f8764db8ddafa348d092aae5897f58ad49154d87c16200": "For a continuous piecewise-linear function to be invertible, it must be strictly monotonic. Thus all slopes of its segments must have the same sign.\n\nThe slopes of the five segments of \\(f(x)\\) are:\n\n\\[\n3,\\quad -2,\\quad -4,\\quad \\frac72,\\quad 0.\n\\]\n\nFor \\(g(x)=f(x)+ax\\), each slope becomes the original slope plus \\(a\\).  \nFor \\(g\\) to be invertible, all these new slopes must be either all positive or all negative.\n\n### Increasing case\nNeed the smallest slope to be positive:\n\n\\[\n-4+a>0 \\implies a>4.\n\\]\n\nSo the smallest positive integer \\(b\\) is\n\n\\[\nb=5.\n\\]\n\n### Decreasing case\nNeed the largest slope to be negative:\n\n\\[\n\\frac72+a<0 \\implies a<-\\frac72.\n\\]\n\nSo the largest negative integer \\(a\\) is\n\n\\[\na=-4.\n\\]\n\nTherefore,\n\n\\[\na^2+b^2=(-4)^2+5^2=16+25=41.\n\\]\n\nThe answer is \\(\\boxed{41}\\)."
+  },
+  "failures": {},
+  "prompts": {
+    "d5eff216462a539513f8764db8ddafa348d092aae5897f58ad49154d87c16200": "Here is a similar solved problem for reference:\nExample:\nProblem: Real numbers $a$ and $b$ are chosen with $1<a<b$ such that no triangle with positive area has side lengths $1, a,$ and $b$ or $\\tfrac{1}{b}, \\tfrac{1}{a},$ and $1$. What is the smallest possible value\nSolution:\nFor a triangle with positive area, the triangle inequalities must be strict.\n\nFor sides \\(1,a,b\\) with \\(1<a<b\\), the only nontrivial condition is\n\\[\nb<1+a.\n\\]\nSo having no positive-area triangle requires\n\\[\nb\\ge a+1.\n\\]\n\nFor sides \\(\\frac1b,\\frac1a,1\\), since \\(a,b>1\\), the largest side is \\(1\\). Thus a positive-area triangle would require\n\\[\n1<\\frac1a+\\frac1b.\n\\]\nSo having no positive-area triangle requires\n\\[\n\\frac1a+\\frac1b\\le 1.\n\\]\n\nWe need \\(1<a<b\\), \\(b\\ge a+1\\), and \\(\\frac1a+\\frac1b\\le \n\nProblem: The complete graph of $y=f(x),$ which consists of five line segments, is shown in red below. (On this graph, the distance between grid lines is $1.$)\n\nLet $a$ and $b$ be the largest negative integer and the smallest positive integer, respectively, such that the functions $g(x)=f(x)+ax$ and $h(x)=f(x)+bx$ are invertible. What is $a^2+b^2?$\n\n[asy]\nsize(150);\nreal ticklen=3;\nreal tickspace=2;\n\nreal ticklength=0.1cm;\nreal axisarrowsize=0.14cm;\npen axispen=black+1.3bp;\nreal vectorarrowsize=0.2cm;\nreal tickdown=-0.5;\nreal tickdownlength=-0.15inch;\nreal tickdownbase=0.3;\nreal wholetickdown=tickdown;\nvoid rr_cartesian_axes(real xleft, real xright, real ybottom, real ytop, real xstep=1, real ystep=1, bool useticks=false, bool complexplane=false, bool usegrid=true) {\n\nimport graph;\n\nreal i;\n\nif(complexplane) {\n\nlabel(\"$\\textnormal{Re}$\",(xright,0),SE);\n\nlabel(\"$\\textnormal{Im}$\",(0,ytop),NW);\n\n} else {\n\nlabel(\"$x$\",(xright+0.4,-0.5));\n\nlabel(\"$y$\",(-0.5,ytop+0.2));\n\n}\n\nylimits(ybottom,ytop);\n\nxlimits( xleft, xright);\n\nreal[] TicksArrx,TicksArry;\n\nfor(i=xleft+xstep; i<xright; i+=xstep) {\n\nif(abs(i) >0.1) {\n\nTicksArrx.push(i);\n\n}\n\n}\n\nfor(i=ybottom+ystep; i<ytop; i+=ystep) {\n\nif(abs(i) >0.1) {\n\nTicksArry.push(i);\n\n}\n\n}\n\nif(usegrid) {\n\nxaxis(BottomTop(extend=false), Ticks(\"%\", TicksArrx ,pTick=gray(0.22),extend=true),p=invisible);//,above=true);\n\nyaxis(LeftRight(extend=false),Ticks(\"%\", TicksArry ,pTick=gray(0.22),extend=true), p=invisible);//,Arrows);\n\n}\n\nif(useticks) {\n\nxequals(0, ymin=ybottom, ymax=ytop, p=axispen, Ticks(\"%\",TicksArry , pTick=black+0.8bp,Size=ticklength), above=true, Arrows(size=axisarrowsize));\n\nyequals(0, xmin=xleft, xmax=xright, p=axispen, Ticks(\"%\",TicksArrx , pTick=black+0.8bp,Size=ticklength), above=true, Arrows(size=axisarrowsize));\n\n} else {\n\nxequals(0, ymin=ybottom, ymax=ytop, p=axispen, above=true, Arrows(size=axisarrowsize));\n\nyequals(0, xmin=xleft, xmax=xright, p=axispen, above=true, Arrows(size=axisarrowsize));\n\n}\n};\nrr_cartesian_axes(-5,5,-5,5);\ndraw((-5,-4)--(-2,5)--(-1,3)--(1,-5)--(3,2)--(5,2),red+1);\ndot((-5,-4),red);\ndot((-2,5),red);\ndot((-1,3),red);\ndot((1,-5),red);\ndot((3,2),red);\ndot((5,2),red);\n[/asy]\n\nSolve step by step. End with: The answer is [your answer]."
+  }
+}

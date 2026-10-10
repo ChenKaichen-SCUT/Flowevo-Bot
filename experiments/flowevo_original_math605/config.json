@@ -1,0 +1,31 @@
+{
+  "model": "deepseek-flash",
+  "endpoint": "https://api.deepseek.com/chat/completions",
+  "max_tokens": 2048,
+  "temperature": 0,
+  "gold_reflection": false,
+  "gold_feedback_in_requests": false,
+  "condition": "ours",
+  "condition_config": {
+    "display": "Ours (compile + reuse + adaptive escalation)",
+    "cot": true,
+    "compile": true,
+    "use_skill": true,
+    "retry": false,
+    "max_retries": 3
+  },
+  "skill_injection": false,
+  "skill_policy": "Unmodified original math retrieval returns none; unique task IDs; native successful solutions still compiled during sequential replay.",
+  "api_workers": 64,
+  "local_workers_max": 12,
+  "max_http_attempts": 1210,
+  "max_total_tokens": 3000000,
+  "max_transport_attempts_per_task": 2,
+  "schedule_seed": 20261010,
+  "thinking": "Provider default enabled, omitted",
+  "reasoning_effort": "Provider default high, omitted",
+  "scope": "Same 605 unique tasks: official AFlow validation119 + test486; no resampling",
+  "scoring": "Upstream loader extraction + runner extraction/normalization/verify, no V3 or manual correction",
+  "budget_choice": "Native upstream default 2048; prior user ban on gold reflection retained. Historical 16384 completions regraded separately without new calls.",
+  "transport_adaptation": "Parallel streaming prefetch with exact original prompts/settings; original sequential runner replay checks each request. Empty content follows native LLMClient error semantics; API usage recorded before error to avoid original token undercount."
+}

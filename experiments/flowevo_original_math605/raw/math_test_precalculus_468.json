@@ -1,0 +1,71 @@
+{
+  "task_id": "math_test_precalculus_468",
+  "request": {
+    "model": "deepseek-flash",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are an expert programmer and mathematician."
+      },
+      {
+        "role": "user",
+        "content": "Problem: Suppose that the minimum value of $f(x) = \\cos 2x - 2a (1 + \\cos x)$ is $-\\frac{1}{2}.$  Find $a.$\n\nSolve step by step. End with: The answer is [your answer]."
+      }
+    ],
+    "temperature": 0.0,
+    "max_tokens": 2048,
+    "stream": true,
+    "stream_options": {
+      "include_usage": true
+    }
+  },
+  "request_hash": "81261cbdcb90959268f7c99a41c3c56ca4a56b058b22f047e2dee73cf434ae44",
+  "response": {
+    "id": "eec53860-92ce-4c54-bf49-8e1f25228d7c",
+    "model": "deepseek-flash",
+    "created": 1791644869,
+    "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+    "object": "chat.completion",
+    "usage": {
+      "prompt_tokens": 98,
+      "completion_tokens": 1202,
+      "total_tokens": 1300,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 843
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 98
+    },
+    "choices": [
+      {
+        "index": 0,
+        "finish_reason": "stop",
+        "message": {
+          "role": "assistant",
+          "content": "Let  \n\\[\nf(x)=\\cos 2x-2a(1+\\cos x).\n\\]\nUse \\(\\cos 2x=2\\cos^2 x-1\\). Then\n\\[\nf(x)=2\\cos^2 x-1-2a(1+\\cos x).\n\\]\nLet \\(c=\\cos x\\), where \\(c\\in[-1,1]\\). Then\n\\[\nf(x)=2c^2-2ac-2a-1.\n\\]\nSo we need the minimum of\n\\[\ng(c)=2c^2-2ac-2a-1\n\\]\non \\([-1,1]\\) to equal \\(-\\frac12\\).\n\nThis is a quadratic with vertex at\n\\[\nc=\\frac{a}{2}.\n\\]\nIf the vertex lies in \\([-1,1]\\), the minimum value is\n\\[\ng\\left(\\frac a2\\right)\n=2\\left(\\frac a2\\right)^2-2a\\left(\\frac a2\\right)-2a-1\n=-\\frac{a^2}{2}-2a-1.\n\\]\nSet this equal to \\(-\\frac12\\):\n\\[\n-\\frac{a^2}{2}-2a-1=-\\frac12.\n\\]\nMultiply by \\(-2\\):\n\\[\na^2+4a+1=0.\n\\]\nThus\n\\[\na=-2\\pm\\sqrt3.\n\\]\nFor the vertex to be in \\([-1,1]\\), we need \\(\\frac a2\\in[-1,1]\\), so \\(a\\in[-2,2]\\). Only\n\\[\na=-2+\\sqrt3\n\\]\nsatisfies this.\n\nThe answer is \\(\\boxed{-2+\\sqrt3}\\).",
+          "reasoning_content": "We need answer math. Need solve. Let's parse.\n\nProblem: minimum value of f(x)= cos 2x - 2a(1+cos x) is -1/2. Find a.\n\nNeed consider domain? x presumably real. a maybe real. Need find a such that global minimum equals -1/2. Function periodic. Let's simplify.\n\ncos 2x = 2cos^2 x -1. Then f = 2c^2 -1 -2a(1+c), where c=cos x ∈ [-1,1].\n= 2c^2 -2a c -2a -1. (since -2a(1+c)= -2a -2ac). Yes.\n\nLet g(c)=2c^2 -2a c -2a -1, c∈[-1,1]. Need minimum over c∈[-1,1] equals -1/2.\n\nThis is quadratic in c with coefficient 2 >0, vertex at c = a/2? derivative 4c -2a=0 -> c=a/2. If vertex in interval, min at c=a/2. If a/2 outside, min at endpoint nearest vertex.\n\nCompute g(a/2)=2(a^2/4)-2a(a/2)-2a -1 = a^2/2 - a^2 -2a -1 = -a^2/2 -2a -1 = -1/2? solve if vertex inside [-1,1]: -a^2/2 -2a -1 = -1/2 -> -a^2/2 -2a -1/2=0 -> multiply -2: a^2+4a+1=0 -> a = -2 ± sqrt3. These approx -0.268, -3.732. Condition a/2 ∈ [-1,1] => a∈[-2,2]. Only -2+√3 ≈ -0.268 valid. So a candidate.\n\nIf vertex outside [a>2 or a<-2], min at endpoint depending. Need see if also yields -1/2.\n\nFor a>2: vertex c=a/2>1, quadratic decreasing on [-1,1]? derivative at c<1: 4c-2a<0, so minimum at c=1. g(1)=2 -2a -2a -1 =1 -4a. Set = -1/2 => 1-4a=-1/2 => -4a=-3/2 => a=3/8. Not >2. invalid.\n\nFor a<-2: vertex < -1, derivative >? at c>-1, 4c-2a >? a negative, -2a positive, derivative positive on [-1,1], min at c=-1. g(-1)=2 +2a -2a -1 =1. Wait 2(-1)^2 -2a(-1)-2a -1 =2+2a-2a-1=1. Cannot -1/2. invalid.\n\nThus only a=-2+√3. Need check maybe endpoints if vertex in interval? Already.\n\nNeed present step by step. Could also use trig identity. Need ensure if a maybe? Let's verify with candidate. a = √3 -2 ≈ -0.2679. c=a/2≈ -0.13397 in interval. g min =? -a^2/2 -2a -1. compute a^2=(7-4√3)? Wait (-2+√3)^2=7-4√3. -a^2/2 -2a -1 = -(7-4√3)/2 -2(-2+√3)-1 = -3.5+2√3 +4 -2√3 -1 = -0.5 yes.\n\nNeed final with box. But user requests \"End with: The answer is [your answer].\" Include step by step.\n\nLet's craft concise."
+        }
+      }
+    ]
+  },
+  "response_hash": "fd8c8bad8c9fa2bebc23d6f9a00a99a868c7b08fbf1456a50bbb3ca785594f9a",
+  "input_tokens": 98,
+  "output_tokens": 1202,
+  "total_tokens": 1300,
+  "reasoning_tokens": 843,
+  "final_content_tokens": 359,
+  "finish_reason": "stop",
+  "model_version": "deepseek-flash",
+  "backend_revision": "aeb56401ca74e127821c4f9126dcb669",
+  "max_tokens": 2048,
+  "gold_reflection": false,
+  "skill_injected": false,
+  "actual_attempt_id": "math_test_precalculus_468__a1",
+  "started_at": "2026-10-10T15:07:49.371903+00:00",
+  "finished_at": "2026-10-10T15:07:55.463019+00:00",
+  "latency_seconds": 6.088024848024361,
+  "raw_stream": "raw/math_test_precalculus_468__a1.sse.gz"
+}

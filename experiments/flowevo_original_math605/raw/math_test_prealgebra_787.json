@@ -1,0 +1,71 @@
+{
+  "task_id": "math_test_prealgebra_787",
+  "request": {
+    "model": "deepseek-flash",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are an expert programmer and mathematician."
+      },
+      {
+        "role": "user",
+        "content": "Problem: 22 people attend a party. Each person shakes hands with at most 20 other people. What is the maximum possible number of handshakes, assuming that any two people can shake hands at most once?\n\nSolve step by step. End with: The answer is [your answer]."
+      }
+    ],
+    "temperature": 0.0,
+    "max_tokens": 2048,
+    "stream": true,
+    "stream_options": {
+      "include_usage": true
+    }
+  },
+  "request_hash": "dd5a36b9df251604d0685de5fe528c5c9abc15884216a1c829a02a8dd2975afe",
+  "response": {
+    "id": "f63cfd63-bd61-4a8f-811d-2df693f845b6",
+    "model": "deepseek-flash",
+    "created": 1791644824,
+    "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+    "object": "chat.completion",
+    "usage": {
+      "prompt_tokens": 97,
+      "completion_tokens": 431,
+      "total_tokens": 528,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 257
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 97
+    },
+    "choices": [
+      {
+        "index": 0,
+        "finish_reason": "stop",
+        "message": {
+          "role": "assistant",
+          "content": "There are \\(\\binom{22}{2}=231\\) possible pairs of people.\n\nIf everyone shook hands with everyone else, each person would shake hands with \\(21\\) others. But each person is allowed at most \\(20\\), so each person must fail to shake hands with at least one other person.\n\nTo maximize handshakes, we minimize the number of “missing” handshakes. A single missing handshake can account for one missing handshake for two people. We can pair the 22 people into 11 pairs, and in each pair, the two people do not shake hands. Then each person misses exactly one handshake, so each shakes hands with exactly \\(20\\) others.\n\nThus the maximum number of handshakes is\n\n\\[\n\\binom{22}{2}-11=231-11=220.\n\\]\n\nThe answer is 220.",
+          "reasoning_content": "We need answer. Need solve. Need be careful. Problem: 22 people, each person shakes hands with at most 20 other people. Simple graph on 22 vertices max degree ≤20. Max number edges? Trivial complete graph K22 has 231 edges, each degree 21. Constraint degree ≤20 means missing at least one incident edge per vertex, but an edge can cover two vertices if missing. To maximize edges, minimize number of missing edges from complete graph such that every vertex has degree at most 20 => each vertex incident to at least one missing edge. In complement graph, every vertex degree at least 1 (no isolated vertices). Min edges in complement with 22 vertices no isolated = perfect matching? Since 22 even, min edges = 11 (matching). Then max handshakes = C(22,2)-11 = 231-11=220. Check degree for each vertex: missing exactly one -> degree 20. Achievable by pairing people into 11 pairs who do not shake; everyone shakes with all except partner. Each shakes 20. Answer 220.\n\nNeed provide step-by-step. Final end exact. Ensure maybe possible if 22 people each at most 20. Yes.\n\nLet's craft concise."
+        }
+      }
+    ]
+  },
+  "response_hash": "32c1ad28efed4fb183be805575299879086b118cad51f3eb8671e9a4116b8333",
+  "input_tokens": 97,
+  "output_tokens": 431,
+  "total_tokens": 528,
+  "reasoning_tokens": 257,
+  "final_content_tokens": 174,
+  "finish_reason": "stop",
+  "model_version": "deepseek-flash",
+  "backend_revision": "aeb56401ca74e127821c4f9126dcb669",
+  "max_tokens": 2048,
+  "gold_reflection": false,
+  "skill_injected": false,
+  "actual_attempt_id": "math_test_prealgebra_787__a1",
+  "started_at": "2026-10-10T15:07:02.328564+00:00",
+  "finished_at": "2026-10-10T15:07:08.233290+00:00",
+  "latency_seconds": 5.880962516006548,
+  "raw_stream": "raw/math_test_prealgebra_787__a1.sse.gz"
+}

@@ -1,0 +1,71 @@
+{
+  "task_id": "math_test_precalculus_521",
+  "request": {
+    "model": "deepseek-flash",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are an expert programmer and mathematician."
+      },
+      {
+        "role": "user",
+        "content": "Problem: In triangle $ABC,$\n\\[\\tan \\left( \\frac{B - C}{2} \\right) \\tan \\frac{A}{2} = \\frac{1}{29} \\quad \\text{and} \\quad \\tan \\left( \\frac{C - A}{2} \\right) \\tan \\frac{B}{2} = \\frac{1}{27}.\\]Find $\\tan \\left( \\frac{A - B}{2} \\right) \\tan \\frac{C}{2}.$\n\nSolve step by step. End with: The answer is [your answer]."
+      }
+    ],
+    "temperature": 0.0,
+    "max_tokens": 2048,
+    "stream": true,
+    "stream_options": {
+      "include_usage": true
+    }
+  },
+  "request_hash": "27849cc36224a1c2182b57a1ed0e70146f83a19f76589204b225694153d3c834",
+  "response": {
+    "id": "64d87d12-bd0b-4595-8a3f-c09f1f3cf515",
+    "model": "deepseek-flash",
+    "created": 1791644842,
+    "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+    "object": "chat.completion",
+    "usage": {
+      "prompt_tokens": 160,
+      "completion_tokens": 2048,
+      "total_tokens": 2208,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 2048
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 160
+    },
+    "choices": [
+      {
+        "index": 0,
+        "finish_reason": "length",
+        "message": {
+          "role": "assistant",
+          "content": "",
+          "reasoning_content": "We need solve. Need provide step by step. Let's derive.\n\nWe have triangle angles A+B+C=π. Need find x = tan((A-B)/2) tan(C/2), given:\ntan((B-C)/2) tan(A/2)=1/29.\ntan((C-A)/2) tan(B/2)=1/27.\n\nNeed solve. Let's denote maybe half-angle variables.\n\nLet x = A/2, y = B/2, z = C/2. Then x+y+z=π/2.\n\nGiven:\ntan(y-z) tan x = 1/29.   (1)\ntan(z-x) tan y = 1/27.   (2)\nFind tan(x-y) tan z. (3)\n\nSince x+y+z=π/2. There are identities. Let a=tan x, b=tan y, c=tan z. Since x+y+z=π/2, we have ab+bc+ca=1. (Indeed tan sum infinite => 1 - (ab+bc+ca)=0 if denominator zero? For x+y+z=π/2, tan sum undefined => 1 - ab - bc - ca =0).\n\nAlso tan(y-z) = (b-c)/(1+bc). Because y,z positive, sum? y+z<π/2. Formula tan(y-z)=(b-c)/(1+bc).\n\ntan(z-x)=(c-a)/(1+ca).\ntan(x-y)=(a-b)/(1+ab).\n\nGiven:\na (b-c)/(1+bc)=1/29. Since ab+bc+ca=1 => 1+bc =? 1+bc = ab+ca+2bc? Not simple. But maybe 1+bc = a(b+c)+2bc? Wait ab+ac+bc=1 => 1+bc = ab+ac+2bc? no.\n\nLet's set variables.\n\nGiven equations:\na(b-c)/(1+bc)=1/29.  (E1)\nb(c-a)/(1+ca)=1/27.  (E2)\nNeed r = c(a-b)/(1+ab). (F)\n\nUse identity? There is relation between these three expressions. Let define:\nX = tan x tan(y-z)\nY = tan y tan(z-x)\nZ = tan z tan(x-y).\nGiven X=1/29, Y=1/27. Need Z. There may be relation X+Y+Z = ? Because x+y+z=π/2.\n\nCompute X+Y+Z = a(b-c)/(1+bc) + b(c-a)/(1+ca) + c(a-b)/(1+ab). Maybe simplifies to? Let's calculate. Let a,b,c satisfy ab+bc+ca=1. We can express denominators:\n1+bc = ab+bc+ca+bc = a(b+c)+2bc? Hmm.\n\nMaybe use substitution: since x+y+z=π/2, let maybe p=tan x, q=tan y, r=tan z with pq+qr+rp=1.\n\nCompute X = a(b-c)/(1+bc). Since 1+bc =? From pq+pr+qr=1 => 1+bc = ab+ac+bc+bc = a(b+c)+2bc. But maybe factor if use c = (1-ab)/(a+b). Then 1+bc =? Let's derive.\n\nUsing c = (1-ab)/(a+b). Then 1+bc = 1 + b(1-ab)/(a+b) = (a+b + b - ab^2)/(a+b)= (a+2b - a b^2)/(a+b). Not elegant.\n\nAlternatively use sine/cos half angles perhaps.\n\nLet's derive relation. Let α=(B-C)/2 = y-z, β=(C-A)/2 = z-x, γ=(A-B)/2 = x-y. Notice α+β+γ = (B-C+C-A+A-B)/2 =0. So α+β+γ=0. Given tan α tan x = 1/29, tan β tan y = 1/27, find tan γ tan z. Also x+y+z=π/2.\n\nMaybe use tangent addition with α+β+γ=0. Variables x,y,z.\n\nObserve y = x + γ? Since γ=x-y, so y=x-γ. z? α=y-z -> z=y-α=x-γ-α. Since α+β+γ=0, β=-α-γ.\n\nGiven in terms x,γ,α. Not immediate.\n\nMaybe identities: Since x+y+z=π/2, tan x tan y + tan y tan z + tan z tan x =1.\n\nGiven tan(y-z)tan x = (tan y - tan z)/(1+tan y tan z) tan x.\nUse tan(y-z) =? There is identity involving tan x and sum. Since y+z=π/2 - x, so tan(y+z)=cot x = 1/a = (b+c)/(1-bc). Thus 1 - bc = a(b+c)? Wait tan(y+z)= (b+c)/(1-bc)=1/a. Hence a(b+c)=1-bc. Rearr: ab+ac+bc=1 yes.\n\nThen 1+bc =? Maybe from a(b+c)=1-bc, so 1+bc = 2bc + a(b+c)? Hmm.\n\nLet's express b-c maybe in terms? We can solve linear equations for a,b,c.\n\nE1: 29a(b-c)=1+bc.\nE2: 27b(c-a)=1+ca.\n\nLet's write:\n29ab - 29ac = 1 + bc. (1)\n27bc - 27ab = 1 + ca. Wait E2: b(c-a)=bc - ab. So 27bc -27ab =1+ca. (2)\n\nNeed Z = c(a-b)/(1+ab).\n\nAlso condition ab+bc+ca=1.\n\nThree equations for a,b,c (two given plus triangle). Need compute Z. Maybe solve algebraically.\n\nLet's use p=ab, q=bc, r=ca? Since x,y,z positive, a,b,c positive? A,B,C positive <π, half angles <π/2, so tan positive. Condition p+q+r=1.\n\nEquations:\nE1: a(b-c)=ab-ac = p - r. Denominator 1+bc=1+q = 1+q. Actually 29(p-r)/(1+q)? Wait a(b-c)=ab - ac = p - r. Yes E1 becomes:\n29(p-r)/(1+q)=1 -> 29(p-r)=1+q. Nice.\n\nE2: b(c-a)=bc - ab = q - p. Denom 1+ca=1+r. So 27(q-p)=1+r.\n\nCondition p+q+r=1.\n\nNeed Z = c(a-b) = ca - cb = r - q over (1+ab)=1+p. So Z = (r-q)/(1+p).\n\nGreat. We can solve p,q,r positive sum 1.\n\nGiven:\n29(p-r)=1+q. Since p+q+r=1, 1+q = p+2q+r? Or p-r? Let's solve.\n\nEq1: 29p -29r = 1+q. Since q=1-p-r. RHS=2-p-r. Thus 29p -29r = 2 - p - r => 30p -28r =2 => 15p -14r =1. (A)\n\nEq2: 27(q-p)=1+r. q=1-p-r. q-p=1-2p-r. RHS 1+r. So 27(1-2p-r)=1+r => 27 -54p -27r =1+r => 26 -54p -28r=0 => divide 2: 13 -27p -14r=0 => 27p +14r=13. (B)\n\nSolve A: 15p -14r=1.\nB: 27p +14r=13.\nAdd: 42p=14 => p=1/3.\nThen 15*(1/3)=5, so -14r = -4 => r=2/7? Wait 5 -14r =1 -> -14r = -4 -> r=2/7. Then q=1-p-r =1 -1/3 -2/7 = common 21: 21-7-6=8/21. So p=1/3, q=8/21, r=2/7.\n\nThen Z = (r-q)/(1+p) = (2/7 - 8/21)/(1+1/3). Compute 2/7=6/21; 6/21-8/21=-2/21. Denominator 4/3. Z=(-2/21)*(3/4)= -6/84 = -1/14. So answer -1/14? Need check sign.\n\nLet's verify equations p-r etc. Original E1 tan((B-C)/2) tan(A/2). With x=A/2, y=B/2, z=C/2. y-z=(B-C)/2. tan(y-z) = (b-c)/(1+bc). a=tan x. So product = a(b-c)/(1+bc) = (ab - ac)/(1+bc) = (p - r)/(1+q). Since p=ab, r=ca. If p=1/3, r=2/7, p-r =1/3-2/7=7/21"
+        }
+      }
+    ]
+  },
+  "response_hash": "d048439a60ef76ccb7f1ef78426e58ed65f7805ba8e72823100073ff94d81a15",
+  "input_tokens": 160,
+  "output_tokens": 2048,
+  "total_tokens": 2208,
+  "reasoning_tokens": 2048,
+  "final_content_tokens": 0,
+  "finish_reason": "length",
+  "model_version": "deepseek-flash",
+  "backend_revision": "aeb56401ca74e127821c4f9126dcb669",
+  "max_tokens": 2048,
+  "gold_reflection": false,
+  "skill_injected": false,
+  "actual_attempt_id": "math_test_precalculus_521__a1",
+  "started_at": "2026-10-10T15:07:22.936943+00:00",
+  "finished_at": "2026-10-10T15:07:32.621393+00:00",
+  "latency_seconds": 9.683723083988298,
+  "raw_stream": "raw/math_test_precalculus_521__a1.sse.gz"
+}

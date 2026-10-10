@@ -1,0 +1,36 @@
+{
+  "run_id": "failure_mechanism_a1_a2_pilot",
+  "model": "deepseek-flash",
+  "endpoint": "https://api.deepseek.com/chat/completions",
+  "system_prompt": "You are an expert programmer and mathematician.",
+  "thinking": "default enabled",
+  "reasoning_effort": "default high",
+  "gold_feedback": false,
+  "skill_injection": false,
+  "api_workers": 64,
+  "local_workers": 12,
+  "max_calls": 200,
+  "max_total_tokens": 1500000,
+  "schedule_seed": 20261020,
+  "intervention_cap": 4096,
+  "budget_rungs": [
+    4096,
+    8192,
+    16384
+  ],
+  "B2_initial_cap": 16384,
+  "shared_requests": {
+    "B0": [
+      "B1"
+    ],
+    "B2": [
+      "B2+a1",
+      "B2+a2",
+      "B2+generic"
+    ]
+  },
+  "generic_trigger": "all 40 tasks",
+  "no_cancellation": true,
+  "no_gold_retry": true,
+  "retry_on_transport_failure": false
+}

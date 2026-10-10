@@ -1,0 +1,108 @@
+{
+  "timestamp": "2026-10-10T12:45:54.998813+00:00",
+  "head": "f0afc2c8af5be165b36c05a168b2f320d08de3c1",
+  "evaluator_frozen": {
+    "timestamp": "2026-10-10T11:15:52.556737+00:00",
+    "reference_commit": "cf1b32bbd7d0fc3ff98fcb8ba4bdd63bbd2367f3",
+    "source_files": {
+      "FlowEvo/src/math_evaluation/__init__.py": "15cef5490cacc580a4a7e229eaa98b480c8bb2f7fb5152600579ace36d7603c7",
+      "FlowEvo/src/math_evaluation/adapters.py": "1d2328578feccfc4d5aacadaf25632f5a914d33f291e41a8b62bd904cea40472",
+      "FlowEvo/src/math_evaluation/certificates.py": "5c9fa862f45664e12dba8fe5d1d1c7dc1e2f9692245c13ff0038d0c71f61be44",
+      "FlowEvo/src/math_evaluation/engine.py": "692ca875680bd85f5f1115675538d34f27fc1526fb5de8a553e036e64cae6011",
+      "FlowEvo/src/math_evaluation/equivalence.py": "eed98f9c90df4ff347730ee6abcbc52be3bb4b23ce9881cbfa28a1f480210276",
+      "FlowEvo/src/math_evaluation/extraction.py": "f6c939924d7348048e70848243346e315968034f434eeb27cfb92340600eee95",
+      "FlowEvo/src/math_evaluation/models.py": "73fb642b0496ff9345ad5a10d0a225e5a58136aa3dd25e54c9fcdd193ec621c5",
+      "FlowEvo/src/math_evaluation/normalization.py": "4a47b7a99653fea8f8e4f56664c9f9c4b57b3ad815ac038e833919974b66e11b",
+      "FlowEvo/src/math_evaluation/parsing.py": "fc9c50fa09d811ac479a940419a2c6055dc3e531adc7c31b452a4082b72a5bd6",
+      "FlowEvo/src/math_evaluation/reference.py": "84e79649c673104140e64672851c428a9948cf0f17952f6721815401fdf13ae3",
+      "FlowEvo/src/math_evaluation/spec.py": "33db6cf5420f4b9397f7f582b424db01278feeb1074ead5bd5e7072f77245583",
+      "FlowEvo/src/math_evaluation/text.py": "0f1f7f7a2a30acba7efb16e4623cdfa840e7a720d812cef3d66d38427f8693a2",
+      "FlowEvo/src/math_evaluation/units.py": "91d7fd0f7c576d820d01dac1fdf6b76bab69f0ffdf7571c4059810b0ac20a12b",
+      "FlowEvo/src/code_math/evaluate_offline.py": "26b37e74ac4c461caed0e777e8ebd463ea3517af55c19ecabf948686514681f2",
+      "FlowEvo/requirements-math-evaluator-v3.txt": "b7d40afd26f8c5168afb21252656bb771bacd0503942e747dcd7bdb92a0a2c9a"
+    },
+    "source_tree_sha256": "ddf574ce8adacc73a91e59370cf0310daf82bd192bba66adcadfff563a9007e6",
+    "config": {
+      "version": "3.0.0",
+      "timeout_seconds": 4.0,
+      "max_answer_chars": 4096,
+      "max_text_chars": 100000,
+      "max_nodes": 600,
+      "max_nesting": 40,
+      "memory_limit_mb": 1536,
+      "workers": 12,
+      "require_sealed_submission": true
+    },
+    "config_hash": "6ac932c2464edb410709e5e30e373f354d3c38b8b15321c31a0914701211fab6",
+    "dependencies": {
+      "math-verify": "0.8.0",
+      "latex2sympy2_extended": "1.10.2",
+      "sympy": "1.14.0",
+      "antlr4-python3-runtime": "4.13.2",
+      "mpmath": "1.3.0"
+    },
+    "scope": "Retrospective engineering: three full development passes and historical regression cases preceded this freeze; not independent held-out evaluation."
+  },
+  "reuse": {
+    "V3_prior_run_manifest": "2408ea19ea07a0ea6c4c6acfb943500d7a8003f0be365d24ffb344625ab28346",
+    "v3_results": "b66e8c1b43117866dccd2997c43f933c17051393935805ac0f4603d61766f0dd",
+    "historical_four_scores": {
+      "base_legacy": 456,
+      "base_fixed": 449,
+      "adaptive_legacy": 485,
+      "adaptive_fixed": 476
+    },
+    "v3_scores": {
+      "base": 466,
+      "adaptive": 495
+    },
+    "previous_passed_tests_reused": 460,
+    "prior_experiments_rerun": false
+  },
+  "official_sources": [
+    "https://api-docs.deepseek.com/api/create-chat-completion/",
+    "https://api-docs.deepseek.com/guides/thinking_mode/",
+    "https://api-docs.deepseek.com/api/list-models/",
+    "https://api-docs.deepseek.com/quick_start/pricing/"
+  ],
+  "capabilities": {
+    "max_tokens": "upper bound; generation may stop earlier",
+    "reasoning_content": "separate visible API field; streamed delta or completed response, not inferred internal state",
+    "content": "final delivered text",
+    "finish_reason": "stop natural termination; length limit; other values treated incomplete",
+    "reasoning_output_accounting": "reasoning_tokens is a subset of completion_tokens when usage detail supplied",
+    "streaming": "documented SSE reasoning_content/content deltas and final usage; pilot B2 streams to verify without a separate probe",
+    "pause_resume": "No documented paused internal state for ordinary Chat Completions. Closing stream is cancellation, not resumable thinking. Not used.",
+    "prior_reasoning": "without tools, historical reasoning_content field is ignored by subsequent calls; explicitly supplied excerpts in a new user message are ordinary new context",
+    "thinking": "enabled/high default; omit parameters exactly as historical requests",
+    "temperature": "historical 0 retained for payload consistency; documented ignored in thinking mode",
+    "top_p": "omitted, same as old payload; documented thinking effective range .95..1",
+    "A1_implementation": "post-completion short fresh finalization request only after incomplete B2 and a typed observed candidate; no stream interruption",
+    "model_revision": "alias not pinned; record actual response model and fingerprint; no zero-randomness claim"
+  },
+  "historical_actual_evidence": {
+    "saved_calls": 577,
+    "reasoning_text_available_calls": 577,
+    "reasoning_usage_detail_calls": 577,
+    "finish_reason_counts": {
+      "stop": 507,
+      "length": 70
+    },
+    "stop_below_requested_cap": 507,
+    "source": "experiments/math500_scoring_and_budget_v2/api_calls.jsonl",
+    "source_sha256": "e72b5461f2a721dbc12b7312eb7273996e73ab22308d03d76f62164a8202aa11"
+  },
+  "new_generation_calls": 0,
+  "pricing_per_million_usd": {
+    "input_cache_miss_peak": 0.3,
+    "input_cache_hit_peak": 0.006,
+    "output_peak": 1.2,
+    "off_peak_multiplier": 0.5
+  },
+  "limits": {
+    "new_normal_calls": 200,
+    "total_actual_tokens": 1500000,
+    "api_workers": 64,
+    "local_workers": 12
+  }
+}

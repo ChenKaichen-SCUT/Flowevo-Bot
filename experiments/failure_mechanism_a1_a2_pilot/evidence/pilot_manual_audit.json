@@ -1,0 +1,88 @@
+{
+  "at": "2026-10-10T13:08:16.452871+00:00",
+  "reviewer": "Codex assistant plus exact SymPy arithmetic/limits; no independent human",
+  "original_v3_code_config_labels_scores_unchanged": true,
+  "pilot_generation_was_complete_before_any_proof": true,
+  "proofs": [
+    {
+      "task_id": "math_test_prealgebra_66",
+      "exact_result": "60 cents",
+      "proof": "5%*(60-48) dollars = 0.60 dollars = 60 cents. Question explicitly asks cents. Frozen V3 spec omits cent, normalizes prediction to currency quantity 3/5 while reference is dimensionless 60; typed_object_mismatch is an evaluator failure.",
+      "frozen_v3_status": "incorrect",
+      "adjudicated_math_correct": true,
+      "type": "F7"
+    },
+    {
+      "task_id": "math_test_precalculus_47",
+      "exact_result": "x=-1, equivalently r*cos(theta)=-1",
+      "proof": "x=cos(2 theta) -> -1 and y=cos(2 theta)tan(theta) -> -infinity as theta->pi/2 from below. B2 explicitly submits both equivalent forms; frozen parser rejects explanatory parenthesis.",
+      "limits": {
+        "x": "-1",
+        "y": "-oo"
+      },
+      "frozen_v3_status": "unknown",
+      "adjudicated_math_correct": true,
+      "type": "F7"
+    },
+    {
+      "task_id": "math_test_geometry_75",
+      "exact_result": "240/13",
+      "proof": "Use explicit CN=CM=4. Right 5-12-13 triangle area30; remove similar triangles with scales1/13 and8/13:30*(1-1/169-64/169)=240/13. Asy uses N=(5,0), inconsistent with explicit CN=4; generic reasoning revisits this drawing discrepancy and truncates.",
+      "drawing_conflict": "Text CN=4, Asy C=(0,0), N=(5,0). Explicit lengths determine intended solution.",
+      "type": "F5_context_conflict"
+    },
+    {
+      "task_id": "math_test_geometry_232",
+      "exact_result": "55 mm",
+      "proof": "Center height8 cm, upper line12 cm; extremal angle pi/6. No-slip center displacement8*pi/6; endpoint horizontal projection4*sqrt(3). Two touch points are separated by8*sqrt(3)-8*pi/3 cm, i.e.54.78826 mm, rounded55.",
+      "unrounded_mm": "54.7882605097823638",
+      "type": "long_verification"
+    }
+  ],
+  "adjudicated_response_records": 4,
+  "posthoc_math_correct_by_method": {
+    "B0": 38,
+    "B1": 40,
+    "B2": 40,
+    "B2+a1": 40,
+    "B2+a2": 40,
+    "B2+generic": 37
+  },
+  "posthoc_paired": {
+    "B2 vs B1": {
+      "gained": [],
+      "lost": []
+    },
+    "B2 vs B0": {
+      "gained": [
+        "math_test_geometry_232",
+        "math_test_geometry_75"
+      ],
+      "lost": []
+    },
+    "B2+a1 vs B2": {
+      "gained": [],
+      "lost": []
+    },
+    "B2+a2 vs B2": {
+      "gained": [],
+      "lost": []
+    },
+    "B2+generic vs B2": {
+      "gained": [],
+      "lost": [
+        "math_test_geometry_232",
+        "math_test_geometry_75",
+        "math_test_precalculus_47"
+      ]
+    }
+  },
+  "new_F1_records": 5,
+  "new_F1_tasks": 3,
+  "new_F2_reviewed_records": 2,
+  "new_F5_drawing_conflict_tasks": 1,
+  "B2_remaining_true_math_errors_observed": 0,
+  "B2_goal_drift_observed": 0,
+  "B2_constraint_drift_observed": 0,
+  "limitation": "Only disagreements/incomplete outputs received the additional explicit proof audit; other correct outputs retain frozen V3 evidence. No independent human adjudication; no claim of strict noninferiority."
+}

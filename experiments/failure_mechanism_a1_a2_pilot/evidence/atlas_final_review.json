@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-10T12:59:54.320208+00:00",
+  "new_api_calls": 0,
+  "reused_additional_grade_records": 157,
+  "new_manual_reviews": [
+    {
+      "record_id": "batch2:math_test_prealgebra_551__control4096",
+      "type": "F7",
+      "proof": "Union of three side-6 squares: 3*36-2*9=90. Last two only meet at a point; no triple area. Saved fixed scorer could not parse reference multiline square units. No old grading rerun."
+    },
+    {
+      "record_id": "earlier_recovery:train_cf:math_train_prealgebra_76:continue",
+      "type": "F4",
+      "proof": "Introduces an exact-payment constraint absent from the usual can-afford interpretation: 3*1000+8*25+8*10=3280 >=3275; 7 dimes insufficient even with all bills/quarters. Ten dimes is only needed to pay exactly with seven quarters. No arithmetic error; interpretation/constraint drift. Wording could invite exact-payment ambiguity.",
+      "visible_evidence": "Convert everything to cents:\n\n- Hoodie cost: \\(3275\\) cents\n- Three \\$10 bills: \\(3 \\times 1000 = 3000\\) cents\n- Eight quarters: \\(8 \\times 25 = 200\\) cents\n\nUsing all three bills and all eight quarters gives\n\n\\[\n3000+200=3200\n\\]\n\ncents, which is \\(3275-3200=75\\) cents short.\n\nLet \\(k\\) be the number of quarters she does **not** use. Then she has\n\n\\[\n3200-25k\n\\]\n\ncents, so the amount she still needs from dimes is\n\n\\[\n3275-(3200-25k)=75+25k.\n\\]\n\nThis must be a multiple of \\(10\\), since each dime is worth \\(10\\) cents.\n\n\\[\n75+25k \\equiv 0 \\pmod{10}\n\\]\n\n\\[\n5+5k \\equiv 0 \\pmod{10}\n\\]\n\nSo \\(k\\) must be odd. The smallest odd nonnegative integer is \\(k=1\\). Then\n\n\\[\n75+25(1)=100\n\\]\n\ncents, which requires\n\n\\[\n100 \\div 10 = 10\n\\]\n\ndimes.\n\nCheck: \\(3\\) ten-dollar bills, \\(7\\) quarters, and \\(10\\) dimes give\n\n\\[\n3000+175+100=3275\n\\]\n\ncents, exactly \\$32.75.\n\nThe answer is 10.",
+      "ambiguity_sensitivity": "If exact payment is imposed externally, 10 is right. This condition is not stated; reference permits change."
+    },
+    {
+      "record_id": "earlier_recovery:train_cf:math_train_prealgebra_76:repair",
+      "type": "F4",
+      "proof": "Introduces an exact-payment constraint absent from the usual can-afford interpretation: 3*1000+8*25+8*10=3280 >=3275; 7 dimes insufficient even with all bills/quarters. Ten dimes is only needed to pay exactly with seven quarters. No arithmetic error; interpretation/constraint drift. Wording could invite exact-payment ambiguity.",
+      "visible_evidence": "The candidate’s result is correct, but it should justify using all three \\$10 bills. Using fewer than three \\$10 bills would leave a larger amount to be covered by dimes, so it cannot reduce the number of dimes needed.\n\nConvert to cents:\n\n\\[\n3275 \\text{ cents} = 3(1000)+25q+10d\n\\]\n\nUsing all three \\$10 bills:\n\n\\[\n3000+25q+10d=3275\n\\]\n\n\\[\n25q+10d=275\n\\]\n\nDivide by \\(5\\):\n\n\\[\n5q+2d=55\n\\]\n\nTo minimize \\(d\\), maximize \\(q\\), but \\(q\\le 8\\). Also, \\(55-5q\\) must be even, so \\(q\\) must be odd. The largest odd \\(q\\le 8\\) is \\(q=7\\):\n\n\\[\n5(7)+2d=55\n\\]\n\n\\[\n35+2d=55\n\\]\n\n\\[\n2d=20\n\\]\n\n\\[\nd=10\n\\]\n\nCheck:\n\n\\[\n3\\cdot 1000+7\\cdot 25+10\\cdot 10=3000+175+100=3275\n\\]\n\nSo she can pay exactly with 3 ten-dollar bills, 7 quarters, and 10 dimes.\n\nThe answer is 10.",
+      "ambiguity_sensitivity": "If exact payment is imposed externally, 10 is right. This condition is not stated; reference permits change."
+    }
+  ],
+  "reviewer": "assistant mathematical audit, no independent human adjudicator",
+  "prior_event_extraction_reused": true
+}

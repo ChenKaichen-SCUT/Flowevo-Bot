@@ -1,0 +1,14 @@
+from common import *
+import platform
+
+def finalize():
+ freeze=read(OUT/'evidence/evaluator_freeze.json');tests=read(OUT/'regression_test_results.json');protection=read(OUT/'evidence/protection_audit.json');audit=read(OUT/'evidence/audit_summary.json')
+ assert tests['passed'] and protection['status']=='PASS'
+ for p,h in freeze['source_files'].items():assert sha(ROOT/p)==h,p
+ config={'mode':'offline_sealed_outputs_only','allow_paid_api':False,'max_new_llm_calls':0,'api_workers':0,'local_workers':12,'skill_injection':False,'gold_answer_feedback':False,'gold_driven_reflection':False,'history_retrieval':False,'correctness_retries':False,'evaluator':'v3','evaluator_config':freeze['config'],'comparison':['legacy','fixed','v3'],'default_integration_evaluator':'legacy','sampling':'same locally stratified 500 MATH test tasks; two outputs per task','review_seed':20261010}
+ save('config.json',config)
+ records=jl(OUT/'evidence/input_records.jsonl')
+ manifest={'run_id':'math_evaluator_v3_offline','timestamp':now(),'reference_commit':REF,'repository':'https://github.com/ChenKaichen-SCUT/Flowevo-Bot','research_type':'retrospective evaluator engineering on previously inspected data','distinct_tasks':500,'sealed_response_records':1000,'input_records_sha256':sha(OUT/'evidence/input_records.jsonl'),'config_sha256':sha(OUT/'config.json'),'evaluator_freeze':freeze,'counts':audit['branches'],'tests':{'passed':tests['passed'],'total_tests':tests['total_tests']},'mathematical_review':{'records':audit['reviewed_records'],'tasks':audit['reviewed_unique_tasks'],'unreviewed_records':audit['automatically_unreviewed_records'],'independent_human_reviewers':0,'full_truth_certification':False},'new_llm_calls':0,'new_llm_tokens':0,'old_files_protection':protection,'environment':{'python':platform.python_version(),'platform':platform.platform()},'publication':{'target_branch':'main','target_repository':'https://github.com/ChenKaichen-SCUT/Flowevo-Bot','commit_record':'Delivered commit hash verified from git ls-remote after commit; omitted here to avoid self-referential commit hash.'},'reproduction_commands':['Flowevo-Bot/.venv/bin/python experiments/math_evaluator_v3_offline/code/reproduce_history.py','Flowevo-Bot/.venv/bin/python experiments/math_evaluator_v3_offline/code/run_all_tests.py','Flowevo-Bot/.venv/bin/python experiments/math_evaluator_v3_offline/code/evaluate_all.py --output evidence/new_replay.jsonl','Flowevo-Bot/.venv/bin/python experiments/math_evaluator_v3_offline/code/compare_and_audit.py'],'artifacts':{str(p.relative_to(OUT)):{'sha256':sha(p),'bytes':p.stat().st_size} for p in sorted(OUT.rglob('*')) if p.is_file() and '__pycache__' not in p.parts and '.pytest_cache' not in p.parts and p.name not in ['run_manifest.json','archive_manifest.json']}}
+ save('run_manifest.json',manifest)
+ print({'artifacts':len(manifest['artifacts']),'tests':tests['total_tests'],'new_llm_calls':0})
+if __name__=='__main__':finalize()

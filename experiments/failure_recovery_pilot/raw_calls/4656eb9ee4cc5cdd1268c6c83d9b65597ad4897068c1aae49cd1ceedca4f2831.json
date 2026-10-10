@@ -1,0 +1,67 @@
+{
+  "call_id": "4656eb9ee4cc5cdd1268c6c83d9b65597ad4897068c1aae49cd1ceedca4f2831",
+  "task_id": "mbpp_train_751",
+  "domain": "code",
+  "stage": "train_initial",
+  "action": "initial",
+  "job_id": "train_initial:mbpp_train_751",
+  "request": {
+    "model": "deepseek-flash",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are an expert programmer and mathematician."
+      },
+      {
+        "role": "user",
+        "content": "Write a Python function that solves the following task.\nTask: Write a function to check if the given array represents min heap or not.\n\nYour function MUST pass these test cases:\n  assert check_min_heap([1, 2, 3, 4, 5, 6], 0) == True\n\nAnalyze the test cases carefully, think step by step, then write the complete Python function."
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 2048,
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "response": {
+    "id": "0239303b-735f-4cd9-9752-96f96694c0aa",
+    "object": "chat.completion",
+    "created": 1791602456,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "We need to check if a given array satisfies the **min-heap property**.  \nIn a min-heap, for every node `i`:\n\n- The value at `i` should be less than or equal to its children (if they exist).\n- Children of node at index `i` are at `2*i + 1` (left child) and `2*i + 2` (right child).\n\nThe function signature in the test case is `check_min_heap(arr, 0)`, so it takes the array and an index (starting index for checking).  \nWe can implement it recursively or iteratively.\n\n---\n\n**Step-by-step reasoning:**\n\n1. If the current index is beyond the array length, it's valid (base case for recursion).\n2. Check left child index: `2*i + 1`. If it exists and its value is less than the current node's value, return `False`.\n3. Check right child index: `2*i + 2`. If it exists and its value is less than the current node's value, return `False`.\n4. Recursively check the left subtree and right subtree.\n5. If all checks pass, return `True`.\n\n---\n\n**Implementation:**\n\n```python\ndef check_min_heap(arr, i):\n    n = len(arr)\n    \n    # If current node is beyond the array, it's valid\n    if i >= n:\n        return True\n    \n    left = 2 * i + 1\n    right = 2 * i + 2\n    \n    # Check left child\n    if left < n and arr[left] < arr[i]:\n        return False\n    \n    # Check right child\n    if right < n and arr[right] < arr[i]:\n        return False\n    \n    # Recursively check subtrees\n    return check_min_heap(arr, left) and check_min_heap(arr, right)\n```"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 96,
+      "completion_tokens": 386,
+      "total_tokens": 482,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 96
+    },
+    "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+  },
+  "request_hash": "23e662d4c1f4d89c57297c516926d02f577d03e016d73a429464055207b7c71b",
+  "response_hash": "e98e3b961445a2d1c01ac3ad865bae116c8746989cd8cefe198730043473dc50",
+  "code_hash": "04972f41268eab17bd4e14706a81080edf6ca9d8d63abd2c260ce0c6b8c0ec98",
+  "input_tokens": 96,
+  "output_tokens": 386,
+  "total_tokens": 482,
+  "started_unix": 1791602456.871407,
+  "seconds": 2.1242151260375977,
+  "http_attempts": 1,
+  "infrastructure_retries": 0,
+  "correctness_retries": 0,
+  "reserved_tokens": 2935,
+  "simulated": false
+}

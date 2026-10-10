@@ -1,0 +1,46 @@
+..............F...................F                                      [100%]
+=================================== FAILURES ===================================
+____________ test_equivalent[x=1 \\text{ or } x=7-7,1-Solve for x.] ____________
+
+p = 'x=1 \\text{ or } x=7', g = '7,1', q = 'Solve for x.'
+
+    @pytest.mark.parametrize('p,g,q',[
+     (r'\boxed{\frac{\sqrt{8}}{2}}',r'\sqrt{2}','Compute the value.'),
+     ('0.125',r'\frac18','Compute the value.'),
+     ('x^2+2x+1','(x+1)^2','Expand the polynomial.'),
+     (r'\{3,1,2\}',r'\{1,2,3\}','Find the set.'),
+     ('[0,1)', '[0,1)','Find the interval.'),
+     ('7 grams',r'7\text{gm}','What is the weight in grams?'),
+     ('180 calories','180','How many calories are required?'),
+     ('30%', '30','What percent is shaded?'),
+     ('14°',r'14^\circ','What is the angle in degrees?'),
+     ('1,234', '1234','Compute the value.'),
+     (r'\frac{9}{2,\!345}',r'\frac{9}{2345}','Compute the fraction.'),
+     ('16 square inches','16','What is the surface area of a cube of side two inches?'),
+     (r'\begin{pmatrix}0&1\\2&3\end{pmatrix}',r'\begin{pmatrix}0 & 1 \\ 2 & 3\end{pmatrix}','Find the matrix.'),
+     ('z=2,5','5,2','Find all values of z.'),
+     ('x=1 \\text{ or } x=7','7,1','Solve for x.'),
+     ('49 square units less','49','By how much does its area change?'),
+     ('Mira',r'\text{Mira}','Mira and Liam compete. Who wins?'),
+     ('3 feet',r'3\text{ft}','What is the length in feet?'),
+    ] )
+    def test_equivalent(p,g,q):
+>    assert score(p,g,q)['correct'] is True
+E    assert None is True
+
+experiments/math_truncation_and_scoring_audit/tests/test_scoring.py:32: AssertionError
+______________________ test_historical_regression_all500 _______________________
+
+    def test_historical_regression_all500():
+     root=Path(__file__).resolve().parents[1]
+     rows=json.loads((root/'evidence/rescored_500_detailed.json').read_text())
+     assert len(rows)==500
+>    assert all(r['correct'] is True for r in rows if r['original_correct'])
+E    assert False
+E     +  where False = all(<generator object test_historical_regression_all500.<locals>.<genexpr> at 0x76aff8567ca0>)
+
+experiments/math_truncation_and_scoring_audit/tests/test_scoring.py:78: AssertionError
+=========================== short test summary info ============================
+FAILED experiments/math_truncation_and_scoring_audit/tests/test_scoring.py::test_equivalent[x=1 \\text{ or } x=7-7,1-Solve for x.]
+FAILED experiments/math_truncation_and_scoring_audit/tests/test_scoring.py::test_historical_regression_all500
+2 failed, 33 passed in 14.19s

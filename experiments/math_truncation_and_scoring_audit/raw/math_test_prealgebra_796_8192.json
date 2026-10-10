@@ -1,0 +1,95 @@
+{
+  "task_id": "math_test_prealgebra_796",
+  "budget": 8192,
+  "request": {
+    "model": "deepseek-flash",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are an expert programmer and mathematician."
+      },
+      {
+        "role": "user",
+        "content": "Problem: In the diagram, $PW$ is parallel to $QX$, $S$ and $T$ lie on $QX$, and $U$ and $V$ are the points of intersection of $PW$ with $SR$ and $TR$, respectively. If $\\angle SUV = 120^\\circ$ and $\\angle VTX = 112^\\circ$, what is the measure of $\\angle URV$? [asy]\nsize(6cm); defaultpen(linewidth(0.75) + fontsize(11));\n// Useful function\npath extend(pair a, pair b, int n=10) { return a--(a + n * (b - a));}\n\n// Points\nreal ust = 60; real vtx = 112;\npair q = (0, 0); pair p = (0, 0.5); pair w = (2, p.y); pair x = (2, 0);\npair s = (0.3, 0); pair t = s + (1, 0);\npair u = shift(s) * (p.y / Tan(ust), p.y); pair v = shift(t) * (p.y / Tan(vtx), p.y);\npair r = IP(extend(s, u), extend(t, v));\n\n// Draw lines\ndraw(s--r--t);\ndraw(p--w, Arrow(position=0.8, size=5));\ndraw(q--x, Arrow(position=0.8, size=5));\n\n// Labels\nlabel(\"$P$\", p, W); label(\"$Q$\", q, W); label(\"$W$\", w, E); label(\"$X$\", x, E);\nlabel(\"$R$\", r, N); label(\"$U$\", u, NW); label(\"$V$\", v, NE); label(\"$S$\", s, NW);\n\nlabel(\"$T$\", t, NE);\n\n[/asy]\n\nSolve step by step. End with: The answer is [your answer]."
+      }
+    ],
+    "temperature": 0.0,
+    "max_tokens": 8192
+  },
+  "endpoint": "https://api.deepseek.com/chat/completions",
+  "response": {
+    "id": "b6cc4f3f-9534-4bf5-aebd-05cb339b621d",
+    "object": "chat.completion",
+    "created": 1791608901,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Since \\(PW \\parallel QX\\), the segment \\(UV\\) is parallel to \\(ST\\).\n\nAt \\(U\\),  \n\\[\n\\angle SUV = 120^\\circ.\n\\]\nBecause \\(UV \\parallel ST\\), the angle between \\(SU\\) and \\(ST\\) is supplementary:\n\\[\n\\angle UST = 180^\\circ - 120^\\circ = 60^\\circ.\n\\]\nThus in triangle \\(RST\\),\n\\[\n\\angle RST = 60^\\circ.\n\\]\n\nAt \\(T\\),  \n\\[\n\\angle VTX = 112^\\circ.\n\\]\nSince \\(TX\\) and \\(TS\\) are opposite rays,\n\\[\n\\angle VTS = 180^\\circ - 112^\\circ = 68^\\circ.\n\\]\nBecause \\(R\\) lies on ray \\(TV\\), we have\n\\[\n\\angle RTS = 68^\\circ.\n\\]\n\nNow in triangle \\(RST\\),\n\\[\n\\angle URV = \\angle SRT = 180^\\circ - 60^\\circ - 68^\\circ = 52^\\circ.\n\\]\n\nThe answer is \\(52^\\circ\\).",
+          "reasoning_content": "We need answer geometry problem. Need solve step by step. Need parse diagram. We need find angle URV given PW parallel QX, S,T on QX, U,V intersections of PW with SR,TR. Angle SUV = 120°, angle VTX = 112°. Need angle URV. Let's understand geometry.\n\nWe have two parallel horizontal lines? PW parallel QX. Let QX be lower horizontal, PW upper horizontal. Points S and T lie on QX. U and V lie on PW, with U on SR, V on TR. R is intersection of SU and TV (since S,U,R collinear and T,V,R collinear). Thus triangle RST? Actually S,T on base QX, U,V on line PW parallel base, R above? Need diagram maybe R above PW? Let's infer from Asy. Coordinates: q=(0,0), p=(0,0.5), w=(2,0.5), x=(2,0). So QX y=0, PW y=0.5. s=(0.3,0), t=(1.3,0). u = shift(s)*(p.y/Tan(ust), p.y). ust=60, tan60=1.732, p.y=0.5, dx=0.2887. So u=(0.5887,0.5), to right of S. v = shift(t)*(p.y/Tan(vtx), p.y). vtx=112, tan112≈ -2.475, dx=-0.202, so v=(1.098,0.5), left of T. r = intersection of line s-u and t-v. Let's compute likely r above? Line s-u slope (0.5)/(0.2887)=1.732, going up right. Line t-v dx=-0.202, slope=0.5/(-0.202)=-2.475, going up left. They intersect above y=0.5. Yes R above PW. So triangle SRT with base ST on lower line, and a segment? U,V on line parallel base between S/T and R.\n\nAngles: angle SUV = 120°. Need identify: angle SUV is at U, between US and UV. Since U,V lie on PW horizontally. SU is line from U to S down-left. UV is horizontal right (from U to V). Given 120°. In Asy, ust=60? They set ust variable =60 but angle SUV =? Let's check coordinates. At U, vector US = S-U = (-0.2887,-0.5). Vector UV = V-U? V=(1.098,0.5), U=(0.5887,0.5) so right. Angle between US and UV: US angle from +x: atan2(-0.5,-0.2887)= -120°? Actually vector left/down angle 240° or -120°. UV angle 0°. Smaller angle = 120°. Yes angle SUV = 120. Good.\n\nAngle VTX = 112°. At V? Wait notation angle VTX: vertex T? Angle V T X: points V-T-X. Since T on QX, X to right, V on PW above-left? In coordinates T=(1.3,0), V=(1.098,0.5), X=(2,0). Vector T->V = (-0.202,0.5) angle 112° from +x (since tan angle? yes). Vector T->X = (0.7,0) angle 0°. So angle between TV and TX is 112°. Good. (But they say vtx =112 in Asy.) So angle VTX = 112.\n\nNeed find angle URV at R between RU and RV, where R intersection of SU and TV. We know line SU with base? angle SUV = 120 gives relation between line SR and horizontal PW/QX. Since UV horizontal. At U, ray US is along line SR downward to S; ray UV horizontal right. Interior angle from US to UV is 120. So angle between line SR (toward S down-left) and positive horizontal is 120°? Need derive. Let's denote base QX/PW horizontal. Points S,T on lower, U,V on upper. R above.\n\nAt U, angle SUV = angle between US (toward S) and UV (toward V). Since UV is horizontal to right. US is down-left. The smaller angle is 120 (obtuse). Thus direction of US from U has angle 240°? Wait angle between ray U->S and ray U->V (east) = 120. If ray U->S is down-left, its polar angle could be 240° (or -120). The difference from east (0) to 240 is 120 (minor). Yes.\n\nLine SR: from S to U goes up-right with angle 60° (opposite of U->S = 60°). So angle with positive horizontal (base from S to T to right) is 60°. Thus ∠UST? At S, between SU and ST (right horizontal) = 60°. We may use.\n\nAt T, angle VTX = 112: ray T->V direction? V is above-left, so polar angle = 180 - ? Wait angle between T->V and T->X (east) =112. Since T->V points up-left, its polar angle is 180-68 =112? Actually if angle from east counterclockwise to up-left is >90; vector components negative x positive y, angle = 180 - arctan(y/|x|). Given angle =112, so it is 112° from east. Thus line TR from T to V/R has angle 112°. At R, ray R->T is opposite, angle 292° (down-right).\n\nNow triangle RST: S and T on base, R above. At S, line SR has angle from S to R? S->R goes up-right along same as S->U, angle 60° (since R beyond U). At T, line TR from T to R has same as T->V, angle 112° (up-left). So angles of triangle at S and T? Triangle vertices R,S,T. At S, angle between SR (60°) and ST (east 0°) is 60°. At T, angle between TR (112°) and TS (west 180°). The interior angle at T is between ray T->R (112°) and T->S (180°), difference = 68°. Then angle at R = 180 - 60 - 68 = 52°. Wait that's angle SR-T? Actually angle URV is between RU and RV, which lies on rays R->U (down-left along SR) and R->V (down-right along TR). At R, angle between RU and RV is same as angle between RS and RT? Let's see R is above, U,V below R. Ray R->U goes down-left along line RS; ray R->V goes down-right along line RT. The angle URV is the interior angle at R of triangle RST? Triangle RST: rays R->S down-left, R->T down-right. U lies on RS between R and S, V lies on RT between R and T. So yes ∠URV = ∠SRT = angle at R = 52°. Is it that simple? Let's verify with Asy values: ust=60, vtx=112. At T, since angle VTX=112, angle VTS? T->X east, T->S west. Interior angle at T between T->V (112°) and T->S (180°) =68. Sum angles =60+68=128, R angle=52. The diagram maybe asks angle URV = 52. Need ensure no subtle orientation or maybe angle SUV=120 gives line SU angle? Yes.\n\nLet's formulate step-by-step. Need maybe use parallel lines. Since PW || QX, UV parallel ST? U,V on PW, S,T on QX. Thus UV parallel ST. Given ∠SUV=120. At U, ∠SUV is angle between US and UV. Since UV parallel ST, the angle between US and ST? Need be careful supplementary. In triangle, angle at S between SU (or SR) and ST equals 180 - 120 = 60? Let's derive using parallel lines and transversal US: ∠SUV = angle between US and UV. UV parallel ST (with V to right, T to right). Direction U->V same as S->T. U->S is opposite to S->U. The angle between U->S and U->V equals 120. Since U->S and S->U are opposite, angle between S->U and S->T is 180 - 120 = 60? Yes. Thus ∠UST=60 (or ∠RST=60). Good.\n\nGiven ∠VTX=112: At T, V? Wait ∠VTX has vertex T (middle letter T? Actually notation ∠VTX: V-T-X, vertex T). Yes. It is angle between TV and TX. TX is along ST to the right (same as ST). Since V lies on TR (from T toward R), ∠VTS? Actually angle between TV (T->V) and TS (left) is supplementary to ∠VTX? ∠VTX = angle between TV and TX (right). Since TX and TS are opposite rays, ∠VTS = 180 - 112 = 68. In triangle RST, ray TR = TV, ray TS, so ∠RTS=68. Thus triangle RST angles at S,T =60,68, so at R=52.\n\nNeed answer. But user asks \"Solve step by step. End with: The answer is [your answer].\" Need provide reasoning concise.\n\nNeed check if angle URV equals ∠SRT or maybe 52 or 128? Let's visualize: At R, U and V are below R, U on left line, V on right line. The angle inside triangle at R is 52 (narrow). ∠URV is marked likely the smaller angle between RU and RV. Since U,V below, angle is maybe 52. If using Asy coordinates, compute R angle. Let's verify numeric: S=(0.3,0), U=(0.5887,0.5), T=(1.3,0), V=(1.098,0.5). Line S-U angle 60. Line T-V angle 112. Intersection R:\nS + λ(0.2887,0.5). T + μ(-0.202,0.5).\nSolve 0.3+0.2887λ = 1.3 -0.202μ; 0.5λ=0.5μ -> λ=μ. Then 0.3+0.2887λ = 1.3 -0.202λ =>0.4907λ=1 => λ=2.038. R≈(0.888,1.019). V is between T and R? μ=2.038, V corresponds μ=1? yes. U λ=1. Angle at R between R->U = U-R=(0.5887-0.888,0.5-1.019)=(-0.299,-0.519) angle ~240? R->V=(1.098-0.888,0.5-1.019)=(0.210,-0.519) angle -68? Difference 52. yes.\n\nNeed produce final with step-by-step. Include maybe note UV ∥ ST because PW ∥ QX. At U: ∠SUV = 120. Since UV ∥ ST, ∠UST = 180 - 120 = 60? Wait check notation: ∠UST vertex S? They might expect ∠RST = 60. Let's be precise.\n\nLet's label:\n- PW ∥ QX, and U,V on PW, S,T on QX, so UV ∥ ST.\n- At U, ∠SUV = 120. Ray UV is parallel to ray ST. Ray US is opposite ray SU. Thus the angle between ray SU and ray ST is 180° − 120° = 60°. So ∠UST = 60° (inside triangle, since R lies on SU beyond U, ∠RST=∠UST? Wait R lies on SU beyond U from S? Yes S-U-R, so ray SR = ray SU. Thus ∠RST = ∠UST = 60).\n\nAt T: ∠VTX = 112. Ray TX is opposite ray TS (since S and T on QX, X likely to right beyond T). Ray TV = ray TR? R lies on TV beyond V from T? Actually T-V-R, so ray TR=ray TV. Therefore ∠VTS? Wait ∠VTX is between TV and TX. Since TX opposite TS, the angle between TV and TS is 180−112=68. That angle is ∠VTS? Vertex T, rays TV and TS = ∠VTS. But in triangle, ∠RTS? Since R lies on ray TV, ∠RTS = angle between TR (TV) and TS = 68. Yes.\n\nThen in triangle RST, ∠R = 180 - ∠RST - ∠RTS =180 -60 -68=52.\nSince U on RS and V on RT, ∠URV = ∠SRT =52.\n\nNeed be mindful: At T, ∠VTX has vertex T, yes. If angle VTX=112, then \\angle VTS = 180 -112 =68 because TX and TS are opposite rays. But \\angle RTS = \\angle VTS? Wait R is on ray TV (from T through V to R). Yes.\n\nPotential issue: In diagram, X is to right, T at (1.3,0), X=(2,0). TX is right, TS is left, opposite. V is on ray from T to R up-left. ∠VTX = angle between TV (up-left) and TX (right) =112. Then angle between TV and TS (left) =? If TV angle 112, TS angle 180, difference 68. Yes ∠VTS=68. R lies same ray as V, so ∠RTS=68.\n\nAt U: ∠SUV has vertex U, rays US (down-left) and UV (right). Since U,V on PW and S,T on QX, UV parallel ST. Ray US goes from U to S down-left, opposite of SU. The angle between US and UV =120. The angle between SU (up-right) and ST (right) is 60? Let's verify with vector. U->S angle 240, UV angle 0, smaller difference =120. S->U angle 60, S->T angle 0, difference =60. Yes \\angle UST (between US? Wait ∠UST vertex S, rays SU (up-right) and ST (right) =60). Since R lies on ray SU beyond U, ∠RST = \\angle UST? Actually vertex S, ray SR = ray SU, yes. ∠RST = 60.\n\nThen answer 52°.\n\nNeed final include answer with degree symbol. The instruction: \"End with: The answer is [your answer].\" So final should end exactly. Could include steps before. Need not overdo.\n\nLet's craft final."
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 462,
+      "completion_tokens": 3491,
+      "total_tokens": 3953,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 3258
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 206
+    },
+    "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+  },
+  "request_hash": "2949c08ab1672420028438957a24413816ea9ec1212e5df718c26fd5e1791a47",
+  "response_hash": "905bbfb24556b92a67b232ef780467941be34be973eec6c2b57cc4ed9b723b65",
+  "code_hashes": [
+    {
+      "path": "FlowEvo-Recovery/src/flowevo_recovery/math_scoring_v2.py",
+      "sha256": "f6a583a12f4224ef3a07a9a76f7ba1895d268f7aa8ca31b1c1caac595cd0a4e8"
+    },
+    {
+      "path": "Flowevo-Bot/src/flowevo_bot/v2/evaluator.py",
+      "sha256": "529e453ddefb6b95399bcf09780a3e3a17130b878821456368b7aadcee117cf5"
+    },
+    {
+      "path": "experiments/math_truncation_and_scoring_audit/code/prepare.py",
+      "sha256": "714939186ab90dbb1208dde9d2fba716435c36bcb508271de26a1df831ec1735"
+    },
+    {
+      "path": "experiments/math_truncation_and_scoring_audit/code/rescore.py",
+      "sha256": "d67f5fab9a23f7da0cdc03d0faa2b95c185c151ac4156e9d6e2bcf905cca7c70"
+    },
+    {
+      "path": "experiments/math_truncation_and_scoring_audit/code/run_budgets.py",
+      "sha256": "23b11cc4d44115502b40afa7254fa3666d231433bbcf8d9cd58250c9809298a3"
+    },
+    {
+      "path": "experiments/math_truncation_and_scoring_audit/tests/test_protocol.py",
+      "sha256": "c270e65ddfe40ce541fc5f93dd6655ff082b8850651209c99abb4342845972b1"
+    },
+    {
+      "path": "experiments/math_truncation_and_scoring_audit/tests/test_scoring.py",
+      "sha256": "a2463b387f3f545d153e47c0da11c43b23f6135132db8d156b920611d71ffb63"
+    }
+  ],
+  "finished": "2026-10-10T05:08:38.648286+00:00",
+  "latency_seconds": 17.385830754996277,
+  "http_status": 200,
+  "input_tokens": 462,
+  "output_tokens": 3491,
+  "total_tokens": 3953,
+  "reasoning_tokens": 3258,
+  "infrastructure_retries": 0,
+  "correctness_retries": 0,
+  "gold_feedback": false,
+  "reserved_tokens": 9817
+}

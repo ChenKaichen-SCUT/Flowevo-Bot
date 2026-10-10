@@ -1,0 +1,91 @@
+{
+  "job_id": "math_test_precalculus_279__c1",
+  "task_id": "math_test_precalculus_279",
+  "candidate": 1,
+  "request": {
+    "model": "deepseek-flash",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are an expert programmer and mathematician."
+      },
+      {
+        "role": "user",
+        "content": "Problem: Given that\n\\begin{align*}\n\\cos x + \\cos y + \\cos z &= 0, \\\\\n\\sin x + \\sin y + \\sin z &= 0,\n\\end{align*}find\n\\begin{align*}\n&\\tan^2 x + \\tan^2 y + \\tan^2 z - (\\tan^2 x \\tan^2 y + \\tan^2 x \\tan^2 z + \\tan^2 y \\tan^2 z) \\\\\n&\\quad  - 3 \\tan^2 x \\tan^2 y \\tan^2 z.\n\\end{align*}\n\nSolve step by step. End with: The answer is [your answer]."
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 16384,
+    "stream": true,
+    "stream_options": {
+      "include_usage": true
+    }
+  },
+  "request_hash": "9b581da462172d45650c658da69a2da9f483be135c13b1d1ae39c317105f1e48",
+  "response": {
+    "id": "c58fd3aa-bb88-49a3-84d0-6b8ea6fbe50c",
+    "model": "deepseek-flash",
+    "created": 1791641022,
+    "object": "chat.completion",
+    "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "reasoning_content": "We need answer math problem. Need solve. Need be careful. Need produce step by step. Let's parse.\n\nGiven cos x + cos y + cos z =0, sin x + sin y + sin z=0. Find expression:\nS = tan^2 x + tan^2 y + tan^2 z - (tan^2 x tan^2 y + tan^2 x tan^2 z + tan^2 y tan^2 z) - 3 tan^2 x tan^2 y tan^2 z.\n\nWe need compute likely 0? Let's investigate.\n\nLet a = e^{ix}, b=e^{iy}, c=e^{iz}. Conditions sum cos=0, sum sin=0 equivalent a+b+c=0 in complex? Because real and imaginary parts sum zero. Yes.\n\nSo a,b,c are unit complex numbers summing to zero. Geometric: equilateral triangle centered origin. Thus {x,y,z} mod 2π differ by 2π/3. E.g. angles θ, θ+2π/3, θ+4π/3.\n\nThen tan values depend on θ. Need expression maybe 0? Let's test.\n\nLet θ=0: x=0, y=2π/3, z=4π/3. tan^2 0 =0. tan^2 120° = tan^2(-60°)? tan120=-√3, square=3. tan240=√3, square=3. Expression = 0+3+3 - (0+0+9) -3*0 =6-9=-3. Not zero. Wait check conditions: cos0+cos120+cos240=1-1/2-1/2=0; sin0+sin120+sin240=0+√3/2-√3/2=0. Expression = -3. Maybe answer? But depends on θ? Let's test θ=π/6: angles 30°,150°,270°. tan^2 30=1/3, tan^2 150=1/3, tan^2 270 undefined (cos=0). Expression undefined. Original has tan undefined. For generic θ, values? Let's derive.\n\nAngles θ, θ+120, θ+240. Let t=tan θ. Need tan(θ+120), tan(θ+240). Since 120 tangent = -√3. Let k=√3.\n\ntan(θ+120)= (t - k)/(1 + k t). tan(θ+240)= (t + k)/(1 - k t)? since tan240=√3 = k: (t+k)/(1 - k t).\n\nSquares. Let u=t^2. Compute A,B.\n\nA = (t - k)^2/(1 + k t)^2 = (u - 2kt +3)/(1+2kt+3u). B = (t + k)^2/(1 - k t)^2 = (u + 2kt+3)/(1-2kt+3u). Sum etc. Might simplify constant? Need expression. Could depend on u/t? Let's compute with θ=0 t=0 gave -3. θ=π/4 t=1? Angles 45,165,285. tan^2 45=1. tan165 = tan(-15)? tan165 = -2+√3? Square ~0.0718. tan285=tan(-75)=-(2+√3), square ~13.928. Expression: sum=15? Let's calculate maybe -3? Let p=A+B+1. pair product, triple. Need check.\n\nUse u=1, k^2=3. A=(1 -2k+3)/(1+2k+3)= (4-2k)/(4+2k)= (2-k)/(2+k). B=(4+2k)/(4-2k)= (2+k)/(2-k). Notice B=1/A. With tan^2 θ=1. Then p=1+A+1/A. A=(2-1.732)/(3.732)=0.0718; 1/A=13.928. p=15. Pair sum = A + 1/A + A*1/A? Wait terms: tan^2 x =1, tan^2 y=A, tan^2 z=B=1/A. Pair sum = 1*A + 1*B + A*B = A+1/A+1 = p? Actually p=1+A+B = same = A+B+1. Pair sum = A+B+1 same! Because AB=1. Then p - pair =0. Triple =1*A*B=1. -3 triple = -3. Expression = -3. Nice.\n\nMaybe always -3? Let's prove.\n\nLet a=tan^2 x, b=tan^2 y, c=tan^2 z. Need evaluate a+b+c - (ab+bc+ca) -3abc. There may be relation from cos sum=0 and sin sum=0. Need find this relation. Perhaps (a+b+c) - (ab+bc+ca) -3abc = -3? Let's verify with other θ. θ=π/4 gave -3. θ=0 with c? yes -3. Let's derive.\n\nUsing complex a_i unit sum zero. Need relation for tan squares. Maybe tan x tan y tan z = tan x + tan y + tan z? Wait for angles summing? If x+y+z =? For θ set: sum = θ + θ+120 + θ+240 =3θ+360? Mod? Actually =3θ+360°, not constant. There is identity for three angles? Since pairwise differences 120, maybe sum not fixed. The expression might simplify to -3 independent.\n\nLet's derive algebraically.\n\nLet X=tan x, Y=tan y, Z=tan z. Need E = X^2+Y^2+Z^2 - (X^2Y^2 + ...) -3X^2Y^2Z^2.\n\nMaybe follows from condition a+b+c=0 with a=e^{ix}. Express cos/sin in terms of tan. For each angle, cos = ±1/√(1+tan^2), sin = tan cos. The signs can vary. Conditions include signs.\n\nAlternative use e^{2ix}? Let u = tan x. We know e^{ix} = (1+ i u)/√(1+u^2) times sign? Actually tan x = u, cos x = ε /√(1+u^2), sin = ε u/√(1+u^2), where ε=sign(cos x). If cos negative, e^{ix} = (cos)+i sin = ε(1+i u)/√. Conditions involve signs.\n\nMaybe there is symmetric relation.\n\nSince a+b+c=0 and |a|=|b|=|c|=1. This implies a^3=b^3=c^3? Let's check if angles differ by 2π/3, then a^3 = e^{i3x} all equal? If y=x+2π/3, then e^{i3y}=e^{i3x+2π i}=e^{i3x}. Similarly z. So a^3=b^3=c^3 = λ. Also a+b+c=0.\n\nThus a,b,c are the three cube roots of λ. Indeed.\n\nNow tan^2 θ =? Given a=e^{iθ}. tan^2 θ = - (a - a^{-1})^2/(a+a^{-1})^2 = - (a^2 -2 + a^{-2})/(a^2+2+a^{-2}) = (a^2 -2 + a^{-2})? Wait tan^2 = - (a - a^{-1})^2/(a+a^{-1})^2 = (a^2 -2 + a^{-2})? Since -(a^2 -2 + a^{-2})/(a^2+2+a^{-2}) = (2 - a^2 - a^{-2})/(a^2+2+a^{-2}). Alternative use cos^2 = (a+a^{-1})^2/4 = (a^2+2+a^{-2})/4. sin^2 = (2 - a^2 - a^{-2})/4. tan^2 = (2 - a^2 - a^{-2})/(a^2+2+a^{-2}). Let b? Since a^3 common.\n\nLet q = a^2. The three q values are? If a,b,c are roots of t^3 - λ=0. Squaring gives q values a^2,b^2,c^2, which are also? They sum? Since a+b+c=0, (a+b+c)^2 = a^2+b^2+c^2 +2(ab+bc+ca)=0. Also ab+bc+ca =0 because? For cubic roots of t^3 - λ, sum=0, pair sum=0. Thus a^2+b^2+c^2=0. Also product abc? Since a^3=b^3=c^3=λ and abc? For roots of t^3=λ, product abc=λ? Wait polynomial t^3 - λ has roots a,b,c. Product = λ? For cubic t^3 - λ, product = λ (since constant -λ = -product, product=λ). Actually for roots sum 0, pair 0, product = λ. Also a^3=λ individually. Then abc =? If a,b,c = r, rω, rω^2, product = r^3 = λ. Yes.\n\nWhat about q_i = a_i^2. Sum q_i = a^2+b^2+c^2 = (a+b+c)^2 -2(ab+bc+ca)=0, since pair sum=0. Product q1q2q3=(abc)^2=λ^2. Pair sum q_i q_j =? (ab)^2+(bc)^2+(ca)^2. Since ab, bc, ca? Could compute = (ab+bc+ca)^2 -2abc(a+b+c)=0. So q_i also sum=0 and pair sum=0? Then q_i are roots of t^3 - λ^2 =0. Yes.\n\nThus for each angle, q=a^2, and q values are three cube roots of λ. Then tan^2 θ = (2 - q - q^{-1})/(2+q+q^{-1}). Since for q_i, sum q=0, pair sum=0, product=λ^2. But q^{-1} = q^2/λ^2? because q^3=λ^2. For roots q_i, 1/q_i = q_i^2 / λ^2. Hard.\n\nAlternative: There may be simpler relation. Let's set q_i = cos 2θ + i sin 2θ. Since q_i sum=0, pair sum=0. Let p_i = tan^2 θ. Express p_i in terms q_i:\np_i = (2 - q_i - q_i^{-1})/(2+q_i+q_i^{-1}).\n\nBut q_i^{-1} =? Since q_i are roots of T^3 = Λ. Their inverses are? q_i^{-1} = q_i^2/Λ. But maybe use sum.\n\nMaybe there is direct identity: Let p_i = tan^2 θ_i. Since q_i=(1-p_i)/(1+p_i)? Wait cos 2θ = (1 - tan^2 θ)/(1+tan^2 θ). Indeed q_i = cos 2θ + i sin2θ, but cos2θ = (1-p)/(1+p). Also sin2θ = 2 tan/(1+p), depends sign. But tan^2 only gives cos2θ. The imaginary part sign separate.\n\nCondition q_i sum=0 with |q_i|=1 implies? q_i are roots. This imposes cos2θ_i sum=0 and sin2θ_i sum=0. But q_i have sum zero. For three unit complex sum zero, q_i also 120 apart. So maybe relation between cos2θ_i. Let q_i = e^{iφ_i} with φ_i =2θ_i, and sum zero. Thus φ_i differ by 2π/3. Then cos φ_i sum=0. Therefore ∑ (1 - p_i)/(1+p_i) =0. This gives relation among p_i. Also sin? Since φ_i differ, q_i roots, not just cos sum; but from sum zero, real and imag zero. The real condition alone:\nΣ (1-p_i)/(1+p_i)=0.\nDoes this imply E? Let's see. Let p,q,r. Compute Σ (1-p)/(1+p)=0. Combine:\n(1-a)/(1+a)+(1-b)/(1+b)+(1-c)/(1+c)=0.\nMultiply (1+a)(1+b)(1+c):\n(1-a)(1+b)(1+c)+(1-b)(1+a)(1+c)+(1-c)(1+a)(1+b)=0.\nLet's expand. Let s1=a+b+c, s2=ab+bc+ca, s3=abc.\nTerm for a: (1-a)(1+b+c+bc)=1+b+c+bc -a -ab -ac -abc.\nSum cyclic:\nFor a: 1+b+c+bc -a -ab -ac -s3.\nFor b: 1+a+c+ac -b -ab -bc -s3.\nFor c: 1+a+b+ab -c -ac -bc -s3.\nSum constants 3. Linear positives: each variable appears? For term a positives b+c; term b positives a+c; term c positives a+b => each variable twice. Negative linear: -a -b -c once. Net linear: + (a+b+c) = s1. Pair positives: term a bc, term b ac, term c ab => s2. Negative pair: term a -ab-ac, term b -ab-bc, term c -ac-bc. Each pair appears twice? ab: - in a and - in b = -2ab; ac -2ac; bc -2bc. Net pair = s2 -2s2 = -s2. Triple: each term -s3 = -3s3. So equation: 3 + s1 - s2 - 3s3 =0. Ah exactly E = s1 - s2 -3s3. Thus E = -3! Great. This uses only real condition Σ cos 2θ =0. And sin condition ensures? Wait q_i sum zero => real sum zero. So real condition is necessary. But is real condition alone enough to derive E=-3. Yes because equation above equals 0 -> E = -3. Actually need Σ cos2θ_i=0. From cos sum=0 and sin sum=0, q_i sum zero, real part sum zero. Thus yes.\n\nLet's verify algebra: p = tan^2. cos 2x = (1 - tan^2 x)/(1+tan^2 x) = (1-p)/(1+p). The condition q_i sum zero implies ∑ cos2θ=0. Thus equation. Then multiply yields 3 + s1 - s2 -3s3=0. So s1 - s2 -3s3 = -3. Perfect.\n\nNeed solve step by step. Need mention tan defined? If any cos x=0, tan undefined; expression undefined. Assuming all tan defined. The conditions maybe still but expression not valid. We can ignore, or note for defined cases.\n\nLet's derive in final.\n\nNeed be careful with variables: Let a=tan^2 x, b=tan^2 y, c=tan^2 z. Need find E = a+b+c - (ab+bc+ca) -3abc.\n\nGiven cos x + cos y + cos z=0.\nUse identity cos2x = (1 - tan^2 x)/(1+tan^2 x). Need condition ∑ cos 2x =? From cos sum? Wait q_i = e^{2ix}, sum zero? Conditions on cos x and sin x imply e^{ix}+e^{iy}+e^{iz}=0. Does this imply e^{2ix}+e^{2iy}+e^{2iz}=0? Let's check: For a=e^{ix}, etc, a+b+c=0. Squaring: a^2+b^2+c^2+2(ab+bc+ca)=0. Need e^{2ix}+e^{2iy}+e^{2iz}= a^2+b^2+c^2. Is that necessarily 0? For roots of t^3 - λ, pair sum=0, so a^2+b^2+c^2=0. But from a+b+c=0 alone plus |a|=|b|=|c|=1, yes. Let's verify direct.\n\nGiven a+b+c=0. We need a^2+b^2+c^2=0? Is that true? Take a=1, b=ω, c=ω^2: squares sum =1+ω^2+ω=0. In general yes. Let's prove: From a+b+c=0, c=-(a+b). Also |a|=|b|=|c|=1. Compute 0=|a+b|^2 -1? |c|=1=|a+b|^2=2+a\\bar b+\\bar a b =2+2 cos(y-x). Thus cos(y-x)=-1/2. Similarly differences 120. Then squares sum zero. But in final maybe derive easier: Since a+b+c=0 and |a|=1 etc, the three unit vectors sum zero, so a^2+b^2+c^2=0. Or use (a+b+c)^2? That gives a^2+b^2+c^2+2(ab+bc+ca)=0. Need ab+bc+ca=0. Does a+b+c=0 and unit imply ab+bc+ca=0? Since \\overline{a+b+c}=0 => 1/a+1/b+1/c=0 => (ab+bc+ca)/(abc)=0, so ab+bc+ca=0. Ah yes because |a|=1 so \\bar a=1/a. Great. Thus a^2+b^2+c^2=0. Therefore ∑ cos2x = Re(a^2+b^2+c^2)=0. Nice.\n\nActually \\overline{a+b+c}=0, so 1/a+1/b+1/c=0, since abc nonzero. Multiply by abc: ab+bc+ca=0. Then (a+b+c)^2 = a^2+b^2+c^2 +2*0 =0. So a^2+b^2+c^2=0. Good.\n\nThen use cos2 identity.\n\nLet's expand equation:\n0 = cos2x+cos2y+cos2z\n= (1-a)/(1+a)+(1-b)/(1+b)+(1-c)/(1+c).\n\nMultiplying by (1+a)(1+b)(1+c), get\n(1-a)(1+b)(1+c)+(1-b)(1+a)(1+c)+(1-c)(1+a)(1+b)=0.\nNeed expand to 3 + (a+b+c) - (ab+bc+ca) -3abc =0. Let's re-evaluate to avoid sign error.\n\nLet's explicitly expand one term:\nT_a = (1-a)(1+b)(1+c) = (1-a)(1 + b+c+bc)\n= 1+b+c+bc - a - ab - ac - abc.\nT_b = (1-b)(1+a)(1+c) = 1+a+c+ac - b - ab - bc -abc.\nT_c = (1-c)(1+a)(1+b)=1+a+b+ab - c - ac - bc -abc.\nSum constants =3.\nLinear positives: T_a b+c; T_b a+c; T_c a+b. Count a: T_b + T_c =2a; b: T_a+T_c=2b; c:T_a+T_b=2c. Linear negatives: -a in T_a, -b in T_b, -c in T_c. Net a: 2a - a = a. same. So +s1.\nPair positives: bc in T_a; ac in T_b; ab in T_c => s2.\nPair negatives: T_a -ab -ac; T_b -ab -bc; T_c -ac -bc. Count ab: -2, ac:-2, bc:-2. Net -s2.\nTriple: -3abc. Thus sum=3+s1 -s2 -3s3=0. Hence s1-s2-3s3=-3.\n\nExpression exactly E. So answer -3.\n\nNeed consider if tan defined. If x,y,z possible with cos zero? Conditions might allow x=π/2, y? Let's see if one angle 90°, then cos that=0, need other cos sum zero. sin sum zero with sin=1. Could be. But tan undefined. Problem likely assumes expression defined.\n\nNeed maybe produce concise step-by-step.\n\nLet's ensure no hidden issue: The expression asks \"find\" given conditions. If tan undefined for some configurations but for defined configurations answer -3. Need maybe note.\n\nLet's think if any angle where tan defined but denominator 1+a etc maybe zero? a=tan²≥0, so 1+a >0, fine.\n\nAlternative approach using complex roots. But the identity cos2 is neat.\n\nLet's formulate final answer with variables.\n\nDetailed steps:\n1. Let a = tan^2 x, b = tan² y, c = tan² z. Expression E = a+b+c -ab-bc-ca -3abc.\n2. From conditions: e^{ix}+e^{iy}+e^{iz}=0. Since each has modulus 1, conjugating gives e^{-ix}+e^{-iy}+e^{-iz}=0. Let u=e^{ix}, etc. Then \\bar u+\\bar v+\\bar w=0 -> 1/u+1/v+1/w=0 -> uv+vw+wu=0. Also (u+v+w)^2=0 -> u²+v²+w²+2(uv+vw+wu)=0 -> u²+v²+w²=0. Taking real parts, cos 2x+cos2y+cos2z=0.\n3. Use cos2x = (1 - tan²x)/(1+tan²x) = (1-a)/(1+a). Similarly.\n4. So:\n(1-a)/(1+a)+(1-b)/(1+b)+(1-c)/(1+c)=0.\n5. Multiply out:\n(1-a)(1+b)(1+c)+(1-b)(1+a)(1+c)+(1-c)(1+a)(1+b)=0.\nExpand:\n3+(a+b+c)-(ab+bc+ca)-3abc=0.\n6. Therefore E = a+b+c-(ab+bc+ca)-3abc = -3.\n\nNeed final line exactly: The answer is -3. The user says End with: The answer is [your answer]. So final should include that.\n\nPotential nuance: In step 2, I can simply say from e^{ix}+...=0, square? Need ensure cos2 sum zero. Could also derive:\nLet u=e^{ix}. Conditions -> u+v+w=0. Then 0=(u+v+w)^2? That gives sum of squares = -2 sum pair, not zero yet. Need pair sum zero. Use conjugate as above.\n\nActually from u+v+w=0 and |u|=1, conjugate: 1/u+1/v+1/w=0 => uv+vw+wu=0. Then square relation gives sum squares zero. Good.\n\nCould there be a more direct identity: cos x+...=0 and sin sum=0 implies sum cos2=0? Let's test x=0,y=120,z=240. cos2 sum=1+cos240+cos480(120)=1-0.5-0.5=0. Yes.\n\nLet's maybe include note: assuming all tangents are defined. The answer remains -3 for all valid such triples where expression defined.\n\nLet's think if expression could be simplified if tan undefined? No.\n\nNeed final with desired oververbosity 5, step-by-step but concise.\n\nLet's write final in a clear way.\n\nDouble-check expansion one more time by substituting sample p=(0,3,3): E=6-9-0=-3. Equation 3+s1-s2-3s3 =3+6-9-0=0. Good.\n\nLet's answer.\n\n Final only. ",
+          "content": "Let  \n\\[\na=\\tan^2 x,\\qquad b=\\tan^2 y,\\qquad c=\\tan^2 z.\n\\]\nWe need\n\\[\nE=a+b+c-(ab+bc+ca)-3abc.\n\\]\n\nFrom the given conditions,\n\\[\ne^{ix}+e^{iy}+e^{iz}=0.\n\\]\nSince each term has modulus \\(1\\), conjugating gives\n\\[\ne^{-ix}+e^{-iy}+e^{-iz}=0.\n\\]\nMultiplying by \\(e^{i(x+y+z)}\\), we get\n\\[\ne^{i(y+z)}+e^{i(x+z)}+e^{i(x+y)}=0,\n\\]\nso\n\\[\ne^{i(x+y)}+e^{i(y+z)}+e^{i(z+x)}=0.\n\\]\nAlso,\n\\[\n(e^{ix}+e^{iy}+e^{iz})^2=0,\n\\]\nwhich implies\n\\[\ne^{2ix}+e^{2iy}+e^{2iz}=0.\n\\]\nTaking real parts,\n\\[\n\\cos 2x+\\cos 2y+\\cos 2z=0.\n\\]\n\nNow use\n\\[\n\\cos 2x=\\frac{1-\\tan^2 x}{1+\\tan^2 x}=\\frac{1-a}{1+a}.\n\\]\nThus\n\\[\n\\frac{1-a}{1+a}+\\frac{1-b}{1+b}+\\frac{1-c}{1+c}=0.\n\\]\nMultiplying by \\((1+a)(1+b)(1+c)\\),\n\\[\n(1-a)(1+b)(1+c)+(1-b)(1+a)(1+c)+(1-c)(1+a)(1+b)=0.\n\\]\nExpanding,\n\\[\n3+(a+b+c)-(ab+bc+ca)-3abc=0.\n\\]\nTherefore,\n\\[\na+b+c-(ab+bc+ca)-3abc=-3.\n\\]\n\nThe answer is \\(\\boxed{-3}\\)."
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 176,
+      "completion_tokens": 5704,
+      "total_tokens": 5880,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 5288
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 176
+    }
+  },
+  "response_hash": "fefb8a5718e2806bf2c35165d7e89cc6801857c18cf291ea944a5585fe6d848b",
+  "model": "deepseek-flash",
+  "model_version": "deepseek-flash",
+  "backend_revision": "aeb56401ca74e127821c4f9126dcb669",
+  "input_tokens": 176,
+  "output_tokens": 5704,
+  "total_tokens": 5880,
+  "reasoning_tokens": 5288,
+  "final_content_tokens": 416,
+  "finish_reason": "stop",
+  "completion": {
+    "task_id": "math_test_precalculus_279",
+    "finish_reason": "stop",
+    "final_answer_present": true,
+    "extracted_answer": "-3",
+    "extraction_status": "boxed",
+    "visible_chars": 853,
+    "output_limit_reached": false,
+    "completion_status": "complete",
+    "retry_required": false,
+    "retry_reason": null
+  },
+  "max_tokens": 16384,
+  "started_at": "2026-10-10T14:03:42.535138+00:00",
+  "finished_at": "2026-10-10T14:04:07.760608+00:00",
+  "latency_seconds": 25.226964030996896,
+  "actual_attempt_id": "math_test_precalculus_279__c1__a1",
+  "reused": false,
+  "gold_feedback": false,
+  "gold_reflection": false,
+  "skill_injected": false,
+  "thinking": "default enabled; omitted",
+  "reasoning_effort": "default high; omitted",
+  "sampling": "temperature=0 sent but ignored in thinking mode; no provider seed support; independent calls, backend stochasticity unpinned",
+  "raw_stream": "raw/math_test_precalculus_279__c1__a1.sse.gz"
+}

@@ -1,0 +1,91 @@
+{
+  "job_id": "math_test_precalculus_373__c2",
+  "task_id": "math_test_precalculus_373",
+  "candidate": 2,
+  "request": {
+    "model": "deepseek-flash",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are an expert programmer and mathematician."
+      },
+      {
+        "role": "user",
+        "content": "Problem: In an isosceles triangle, the altitudes intersect on the incircle.  Compute the cosine of the vertex angle.\n\nSolve step by step. End with: The answer is [your answer]."
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 16384,
+    "stream": true,
+    "stream_options": {
+      "include_usage": true
+    }
+  },
+  "request_hash": "2fc5d0ddfbf04931c60ad2e5b68f4b3b53142b32504d0dedcb1a78a673f6b942",
+  "response": {
+    "id": "df923090-e484-4018-970f-90c3e72fe985",
+    "model": "deepseek-flash",
+    "created": 1791640782,
+    "object": "chat.completion",
+    "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "reasoning_content": "We need answer math problem. Need parse. \"In an isosceles triangle, the altitudes intersect on the incircle. Compute the cosine of the vertex angle.\" Need determine vertex angle (apex angle of isosceles). Altitudes intersect at orthocenter. It lies on incircle (the circle tangent to sides). Need compute cos of vertex angle.\n\nWe need solve. Let's denote isosceles triangle with apex angle A (vertex angle), base angles B=C. Need condition orthocenter H lies on incircle. Find cos A.\n\nWe need be careful: For obtuse triangle, orthocenter outside. Incircle inside. If H on incircle, possible? Incircle inside triangle. Orthocenter of obtuse triangle outside (unless right on vertex). For acute triangle, orthocenter inside. For isosceles, if apex angle acute? Base angles = (180-A)/2. If A can be obtuse >90, orthocenter outside below base, not on incircle (inside triangle) so no. If A acute, H inside. If A=90, H at apex? Isosceles right with apex A=90, orthocenter at apex, not on incircle (incircle tangent? apex outside circle). If base angles? A acute (<90) implies base angles >45. H inside. Condition.\n\nLet's set coordinates.\n\nLet isosceles triangle with apex at top, base horizontal. Let altitude symmetry y-axis. Set apex A at (0,h), base endpoints (-a,0),(a,0). Vertex angle A at apex between sides to base. Let half-angle α = A/2. The side length l = sqrt(a^2+h^2). sin α = a/l, cos α = h/l. Base length 2a. Altitude h. Apex angle = 2α. Need cos A = cos 2α.\n\nOrthocenter H: Since symmetry axis x=0. Altitude from apex is y-axis. Altitude from base endpoint to opposite side. Need y-coordinate. Let's compute.\n\nCoordinates: A=(0,h), B=(-a,0), C=(a,0). Side AC vector from A to C = (a,-h). Altitude from B perpendicular to AC. Slope of AC = -h/a, so altitude from B slope = a/h. Equation through B(-a,0): y = (a/h)(x+a). Intersect x=0 gives y_H = (a/h)*a = a^2/h. Thus H=(0,a^2/h). Since h positive. For acute, H between base and apex? Need a^2/h < h iff a<h iff α<45? Wait A=2α. If A acute <90 => α<45 => a/h = tan α <1 => a^2/h < h. Yes inside. If A>90 α>45, H below base y negative? Actually a^2/h > h? Wait H y = a^2/h. If a>h, a^2/h > h? >h, above apex? Wait coordinate base y=0, apex y=h. H y = a^2/h. If a>h, y_H > h, above apex outside opposite? Let's test obtuse apex: base wide, apex low, orthocenter above apex. Incircle inside between base and apex, so no.\n\nIncircle: center on y-axis. Need distance to base = r, so center O=(0,r) because base y=0. Radius r. Also tangent to sides. Need r in terms of a,h. For isosceles, area = (1/2)(2a)h = a h. Semiperimeter s = a + l = a + sqrt(a^2+h^2). Inradius r = area/s = a h / (a + l). Also formula r = (base area)/... Good.\n\nCondition H lies on incircle: distance from O=(0,r) to H=(0,a^2/h) equals r. Since both on y-axis, |a^2/h - r| = r. Thus a^2/h = 0 or 2r? Wait absolute. H on circle centered (0,r) radius r. Intersections with y-axis are y=0 and y=2r. But H cannot be y=0? H on base? Only if a=0 degenerate. So H y = 2r. (If H below center, |...| maybe? y_H positive for acute. Need y_H=2r). So condition a^2/h = 2r.\n\nUsing r = a h/(a + l). Then a^2/h = 2 a h/(a+l). Assume a>0. a/h = 2 h/(a+l)? Wait divide by a: a/h = 2 h/(a+l). Cross: a(a+l) = 2 h^2. Let l = sqrt(a^2+h^2). Need solve for ratio x = a/h or α. Let t = a/h = tan α >0. Then l = h sqrt(t^2+1). Condition: a(a+l) = 2h^2 => t h * (t h + h√(t²+1)) = 2h² => t(t+√(t²+1)) = 2. Need solve for t.\n\nEquation: t² + t√(t²+1) = 2. Let s=√(t²+1). Then t s = 2 - t². Square: t²(t²+1) = (2 - t²)² = 4 -4t² + t^4. Left t^4 + t². Cancel t^4: t² = 4 -4t² =>5t²=4 => t²=4/5. t=2/√5. Need check 2 - t² =2 -4/5=6/5 positive. t s =? t√(9/5)= (2/√5)*(3/√5)=6/5 ok.\n\nSo tan α = 2/√5. Then cos A = cos 2α = (1 - t²)/(1 + t²) = (1 - 4/5)/(1+4/5)= (1/5)/(9/5)=1/9. Is that answer? Need check.\n\nBut wait condition \"altitudes intersect on incircle\" maybe \"the altitudes\" meaning the three altitude lines intersect at orthocenter. It lies on incircle. We found apex angle cos = 1/9. Need ensure no other interpretation: \"In an isosceles triangle, the altitudes intersect on the incircle.\" Maybe could mean each altitude intersects the incircle? No, \"the altitudes intersect\" means orthocenter. On incircle. Compute cosine of vertex angle.\n\nLet's verify with numerical. Let a=2, h=√5? Since t=2/√5, choose h=√5, a=2. l=3. Apex angle cos = (h²? Vertex angle between sides vectors (-a,h)? For A at (0,h), vectors to B,C = (±a,-h). Dot = -a² + h²? Actually vectors C-A=(a,-h), B-A=(-a,-h). Dot = -a² + h². lengths l²=a²+h². cos A = (h² - a²)/(a²+h²) = (5-4)/(9)=1/9. Good.\n\nCompute r = a h/(a+l)=2√5/(5)=2√5/5? Wait a+l=2+3=5. r=2√5/5 ≈0.894. H y=a²/h=4/√5≈1.789. 2r≈1.789. O y=0.894 radius 0.894. H top of incircle on axis (0,1.789). Yes.\n\nNeed present step-by-step. Could include coordinate setup. Need final \"The answer is [answer].\" Use exact.\n\nLet's ensure no issue if vertex angle maybe base angle? \"vertex angle\" in isosceles triangle means angle between equal sides (apex). Yes.\n\nNeed final concise with equations.\n\nLet's craft explanation:\nLet apex angle be 2θ, half-angle θ. Set coordinates: A=(0,h), B=(-1? choose scale). Maybe set base half = a, height = h. Then tan θ = a/h.\n\nOrthocenter H lies on symmetry axis. Altitude from B perpendicular to AC. AC slope -h/a, so altitude from B slope a/h. Through B(-a,0), at x=0 gives y=a²/h. Thus H=(0,a²/h).\n\nIncircle center O=(0,r), radius r. Since H on incircle and H lies on y-axis, its y-coordinate must be 0 or 2r. Nondegenerate gives a²/h=2r.\n\nInradius r = area / semiperimeter = (a h)/(a + sqrt(a²+h²)). So:\na²/h = 2 a h/(a + sqrt(a²+h²)).\nCancel a: a(a + sqrt(a²+h²))=2h².\n\nLet t=a/h=tan θ. Then t(t+√(t²+1))=2. Solve:\n√(t²+1)=2/t - t? Wait from t² + t√(...)=2. Let's solve clean:\nt² + t√(t²+1)=2\n=> t√(...)=2-t².\nSquare: t²(t²+1)=4-4t²+t^4\n=> t² =4-4t² =>5t²=4 => t²=4/5.\n\nThen cos vertex angle = cos 2θ = (1-t²)/(1+t²)=1/9.\n\nNeed mention positive t. Good.\n\nLet's final.",
+          "content": "Let the vertex angle be \\(2\\theta\\), where \\(\\theta\\) is half the vertex angle.\n\nPlace the isosceles triangle with apex at \\((0,h)\\) and base endpoints \\((-a,0)\\) and \\((a,0)\\). Then\n\n\\[\n\\tan \\theta = \\frac{a}{h}.\n\\]\n\nThe orthocenter lies on the symmetry axis. The altitude from \\((-a,0)\\) is perpendicular to the side from \\((0,h)\\) to \\((a,0)\\), giving its intersection with the symmetry axis at\n\n\\[\nH=\\left(0,\\frac{a^2}{h}\\right).\n\\]\n\nThe incircle center is \\((0,r)\\), so since \\(H\\) lies on the incircle and on the symmetry axis,\n\n\\[\n\\frac{a^2}{h}=2r.\n\\]\n\nThe inradius is\n\n\\[\nr=\\frac{\\text{area}}{\\text{semiperimeter}}\n=\\frac{ah}{a+\\sqrt{a^2+h^2}}.\n\\]\n\nThus\n\n\\[\n\\frac{a^2}{h}=\\frac{2ah}{a+\\sqrt{a^2+h^2}}.\n\\]\n\nCanceling \\(a\\) and simplifying,\n\n\\[\na\\left(a+\\sqrt{a^2+h^2}\\right)=2h^2.\n\\]\n\nLet\n\n\\[\nt=\\frac{a}{h}=\\tan\\theta.\n\\]\n\nThen\n\n\\[\nt\\left(t+\\sqrt{t^2+1}\\right)=2.\n\\]\n\nSolving gives\n\n\\[\nt^2=\\frac45.\n\\]\n\nTherefore,\n\n\\[\n\\cos(2\\theta)=\\frac{1-t^2}{1+t^2}\n=\\frac{1-\\frac45}{1+\\frac45}\n=\\frac{1}{9}.\n\\]\n\nThe answer is \\(\\boxed{\\frac19}\\)."
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 78,
+      "completion_tokens": 2457,
+      "total_tokens": 2535,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 2098
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 78
+    }
+  },
+  "response_hash": "582fe6f50ba6c401c428f8688a28a2fdb851444adb4b6e42f0d4d0f316e6c618",
+  "model": "deepseek-flash",
+  "model_version": "deepseek-flash",
+  "backend_revision": "aeb56401ca74e127821c4f9126dcb669",
+  "input_tokens": 78,
+  "output_tokens": 2457,
+  "total_tokens": 2535,
+  "reasoning_tokens": 2098,
+  "final_content_tokens": 359,
+  "finish_reason": "stop",
+  "completion": {
+    "task_id": "math_test_precalculus_373",
+    "finish_reason": "stop",
+    "final_answer_present": true,
+    "extracted_answer": "\\frac19",
+    "extraction_status": "boxed",
+    "visible_chars": 1040,
+    "output_limit_reached": false,
+    "completion_status": "complete",
+    "retry_required": false,
+    "retry_reason": null
+  },
+  "max_tokens": 16384,
+  "started_at": "2026-10-10T13:59:42.719601+00:00",
+  "finished_at": "2026-10-10T13:59:54.565674+00:00",
+  "latency_seconds": 11.846086887991987,
+  "actual_attempt_id": "math_test_precalculus_373__c2__a1",
+  "reused": false,
+  "gold_feedback": false,
+  "gold_reflection": false,
+  "skill_injected": false,
+  "thinking": "default enabled; omitted",
+  "reasoning_effort": "default high; omitted",
+  "sampling": "temperature=0 sent but ignored in thinking mode; no provider seed support; independent calls, backend stochasticity unpinned",
+  "raw_stream": "raw/math_test_precalculus_373__c2__a1.sse.gz"
+}

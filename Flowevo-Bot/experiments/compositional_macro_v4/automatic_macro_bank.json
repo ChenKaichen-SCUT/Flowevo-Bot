@@ -1,0 +1,144 @@
+[
+  {
+    "macro_id": "auto_integer_congruence_c14ff981351b",
+    "status": "certified_research",
+    "goal_kind": "integer_remainder",
+    "program": [
+      "reduce_literals",
+      "reduce_powers",
+      "evaluate",
+      "canonical_residue"
+    ],
+    "source_task_ids": [
+      "math_train_number_theory_210",
+      "math_train_number_theory_537",
+      "math_train_number_theory_809",
+      "math_train_prealgebra_992"
+    ],
+    "source_structures": [
+      [
+        "add",
+        [
+          "pow",
+          "Integer",
+          "NonnegativeExponent"
+        ],
+        [
+          "pow",
+          "Integer",
+          "NonnegativeExponent"
+        ],
+        [
+          "pow",
+          "Integer",
+          "NonnegativeExponent"
+        ]
+      ],
+      [
+        "add",
+        "Integer",
+        "Integer",
+        "Integer",
+        "Integer",
+        "Integer",
+        "Integer"
+      ],
+      [
+        "mul",
+        "Integer",
+        "Integer",
+        "Integer"
+      ],
+      [
+        "add",
+        [
+          "mul",
+          "Integer",
+          [
+            "pow",
+            "Integer",
+            "NonnegativeExponent"
+          ]
+        ],
+        [
+          "pow",
+          "Integer",
+          "NonnegativeExponent"
+        ]
+      ]
+    ],
+    "source_step_ids": {
+      "math_train_number_theory_210": [
+        11
+      ],
+      "math_train_number_theory_537": [
+        13
+      ],
+      "math_train_number_theory_809": [
+        3
+      ],
+      "math_train_prealgebra_992": [
+        3
+      ]
+    },
+    "guards": [
+      "whole question consumed by shared semantic grammar",
+      "int/add/mul/positive literal pow only",
+      "2<=modulus<=10000",
+      "AST<=96 nodes/depth<=12",
+      "exact intermediates<=8192 bits",
+      "exponents<=1000000",
+      "3 second worker deadline and 512 MiB address space",
+      "independent verification of every rewrite and final residue"
+    ],
+    "certificate": {
+      "passed": true,
+      "symbolic_residuals": {
+        "addition": "0",
+        "multiplication": "0",
+        "power_induction": "0"
+      },
+      "theorem": "structural congruence preservation, followed by the unique representative in [0,m)",
+      "proof_obligations": [
+        "integer division a=q*m+r with 0<=r<m",
+        "add/mul algebraic identities",
+        "positive power induction: a=b+m*q and a^k=b^k+m*t imply next powers congruent",
+        "tree rewrite leaves exponents unchanged",
+        "exact fold either preserves the integer or refuses before exceeding bit budget"
+      ],
+      "scope": "bounded IntegerExpression over int/add/mul/positive literal pow, 2<=m<=10000; no division, variables, exponent towers or arbitrary code",
+      "proof_status": "human specified induction rules with recomputed symbolic obligations; not a proof assistant proof",
+      "program": [
+        "reduce_literals",
+        "reduce_powers",
+        "evaluate",
+        "canonical_residue"
+      ],
+      "manual_prior": "type signatures, primitive semantics, congruence induction and target semantics",
+      "runtime_verification": "independent residue checker required for every intermediate state and final value"
+    },
+    "selection": "largest actual trace intermediate support, then shortest program, then lexicographic",
+    "multi_step": true,
+    "learned": [
+      "primitive subset and ordering selected by bounded enumeration",
+      "routing admission from independent source states"
+    ],
+    "manual": [
+      "integer goal grammar",
+      "four primitive operators",
+      "type rules",
+      "generic tree traversal",
+      "scope/budget guards",
+      "independent congruence verifier"
+    ],
+    "guard_learning_limit": "semantic/validity guards are manual and propagated by types; no claim of learning a new number-theoretic precondition",
+    "not_learned": [
+      "Euler theorem",
+      "new semantics parser",
+      "full natural-language reasoning",
+      "new primitive mathematics"
+    ],
+    "source_count": 4,
+    "new_api_calls": 0
+  }
+]

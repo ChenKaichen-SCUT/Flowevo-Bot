@@ -1,0 +1,36 @@
+{
+  "model": "deepseek-flash",
+  "mode": "beta_reasoning_prefix_replay",
+  "max_tokens": 2048,
+  "api_workers": 64,
+  "local_workers": 12,
+  "gold_feedback": false,
+  "skill_injection": false,
+  "max_calls": 150,
+  "max_total_tokens": 350000,
+  "instructions": {
+    "A": "Continue the mathematical analysis normally from the supplied partial reasoning. Resolve unfinished work and submit a complete answer. End with: The answer is [your answer].",
+    "B": "Use the result already supported by the supplied partial reasoning and finish the answer immediately. Avoid restarting the derivation or adding optional checks. If essential computation is missing, complete only what is needed to answer. End with: The answer is [your answer].",
+    "C": "Before finishing, briefly check only the essential mathematical conditions, critical arithmetic, and the exact quantity requested. Correct any detected error, then submit the answer without redundant re-derivation. End with: The answer is [your answer]."
+  },
+  "planned_counterfactual_calls": 84,
+  "maximum_conditional_pilot_tasks": 8,
+  "stage4_gate": {
+    "min_successful_cost_saving_states": 4,
+    "min_subjects": 2,
+    "min_paired_continuation_saving_fraction": 0.1,
+    "development_positive_transfers_min": 0,
+    "development_negative_transfers_max": 0,
+    "development_triggers_min": 2,
+    "require_public_state_rule_train_savings": true,
+    "require_known_usage": true
+  },
+  "rule_family": [
+    "candidate_clear",
+    "candidate_checked",
+    "candidate_constraints",
+    "candidate_stable"
+  ],
+  "fitting": "Fit on train tasks only. Choose safe rule with maximal total continuation savings; if no safe improving rule, always continue. Evaluate once on development tasks; do not retune.",
+  "conditional_pilot": "Only if discovery and development gates pass; at most8 new tasks, shrunk from30-50 to fit150/350000. A paired shared measured first stage for B1-B4; logical per-method costs include that stage each time. B0 fresh16384."
+}

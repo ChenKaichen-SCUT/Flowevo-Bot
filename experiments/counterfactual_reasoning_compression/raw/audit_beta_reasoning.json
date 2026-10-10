@@ -1,0 +1,85 @@
+{
+  "job_id": "audit_beta_reasoning",
+  "started_at": "2026-10-11T01:54:03.783647+08:00",
+  "reserved_tokens": 1337,
+  "request_hash": "ad3d961c1df3c06bc72ecb29a372e0a803c0d5e51ea25533081e17c8f56bfdca",
+  "endpoint": "https://api.deepseek.com/beta/chat/completions",
+  "request": {
+    "model": "deepseek-flash",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a precise assistant."
+      },
+      {
+        "role": "user",
+        "content": "Continue from your reasoning notes and return the computed integer only."
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "The hidden work item was 137+286. I computed 137+286=423. The final result is ready.\n",
+        "prefix": true
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 128,
+    "stream": true,
+    "stream_options": {
+      "include_usage": true
+    }
+  },
+  "meta": {
+    "stage": "api_feasibility",
+    "synthetic_not_benchmark": true
+  },
+  "http_status": 200,
+  "status": "completed",
+  "error": null,
+  "response": {
+    "id": "9f262f18-0c2e-46ac-949e-30ef02400859",
+    "model": "deepseek-flash",
+    "created": 1791654844,
+    "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+    "object": "chat.completion",
+    "usage": {
+      "prompt_tokens": 73,
+      "completion_tokens": 93,
+      "total_tokens": 166,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 73
+    },
+    "choices": [
+      {
+        "index": 0,
+        "finish_reason": "stop",
+        "message": {
+          "role": "assistant",
+          "reasoning_content": "We need answer only integer. But need ensure if hidden work item? The user says \"Continue from your reasoning notes and return the computed integer only. The hidden work item was 137+286. I computed 137+286=423. The final result is ready.\" This seems like they are giving context that hidden work item is 137+286 computed 423. Therefore answer integer only: 423.\n\nNeed comply. Final only integer. ",
+          "content": "423"
+        }
+      }
+    ]
+  },
+  "response_hash": "b0b36c12f1e2b0dcd26d04ac75579d89dbe87614f83d359c99aa45146b8c2a1b",
+  "usage_known": true,
+  "total_tokens": 166,
+  "input_tokens": 73,
+  "output_tokens": 93,
+  "reasoning_tokens": 91,
+  "latency_seconds": 2.4813880599685945,
+  "finished_at": "2026-10-11T01:54:06.265039+08:00",
+  "stream_observation": {
+    "cancelled": false,
+    "done": true,
+    "chunks": 94,
+    "visible_reasoning_chars": 397,
+    "received_final_usage": true
+  }
+}
